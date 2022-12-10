@@ -1,0 +1,18 @@
+@import './components/all.scss';
+@import './libs/normalize.scss';
+@import "./variables";
+
+* {
+  scroll-behavior: smooth;
+}
+
+.wrapper {
+  min-height: 100vh;
+  position: relative;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1200px;
+}

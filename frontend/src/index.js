@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import App from './App';
 import history from "./history";
 import store from "./store/configureStore";
+import './scss/app.scss';
 import './index.css';
 
 const app = (

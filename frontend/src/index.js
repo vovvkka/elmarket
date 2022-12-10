@@ -6,6 +6,7 @@ import App from './App';
 import history from "./history";
 import store from "./store/configureStore";
 import './index.css';
+import './scss/app.scss';
 
 const app = (
     <Provider store={store}>

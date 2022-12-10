@@ -1,9 +1,11 @@
 @import './components/all.scss';
 @import './libs/normalize.scss';
 @import "./variables";
+@import './components/all';
 
 * {
   scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
 }
 
 .wrapper {

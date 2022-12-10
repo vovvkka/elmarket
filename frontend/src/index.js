@@ -7,6 +7,7 @@ import history from "./history";
 import store from "./store/configureStore";
 import './scss/app.scss';
 import './index.css';
+import './scss/app.scss';
 
 const app = (
     <Provider store={store}>

@@ -2,9 +2,11 @@ import React from 'react';
 import Anonymous from "../Anonymous/Anonymous";
 import logo from '../../../assets/logo.png';
 
-const Header = () => {
+const Header = ({mainPage}) => {
+    const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
+
     return (
-        <div className='header'>
+        <div className={classes.join(' ')}>
             <div className='header__container'>
                 <div className='header__upper'>
                     <div className='header__contacts-block'>
@@ -63,7 +65,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className='header__bottom'>
-                    <img src={logo} alt="Electromarket.kg"/>
+                    <img src={logo} alt="Electromarket.kg" className='logo' draggable={false}/>
                     <div className='header__search-block'>
                         <input className='header__search' placeholder='поиск по каталогу' type="text"/>
                         <div className='header__search--icon'>

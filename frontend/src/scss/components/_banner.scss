@@ -1,3 +1,5 @@
+@import '../libs/breakpoints';
+
 .banner {
   display: flex;
   justify-content: center;
@@ -5,5 +7,22 @@
 
   img {
     user-select: none;
+    width: 1000px;
+    height: 500px;
+
+    @include media ("<=desktop") {
+      width: 750px;
+      height: 375px;
+    }
+
+    @include media ("<=tablet") {
+      width: 500px;
+      height: 350px;
+    }
+
+    @media (max-width: 500px) {
+      width: 400px;
+      height: 280px;
+    }
   }
 }

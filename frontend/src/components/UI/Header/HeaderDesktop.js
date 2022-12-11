@@ -2,7 +2,7 @@ import React from 'react';
 import Anonymous from "../Anonymous/Anonymous";
 import logo from '../../../assets/logo.png';
 
-const Header = ({mainPage}) => {
+const HeaderDesktop = ({mainPage}) => {
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     return (
@@ -88,4 +88,4 @@ const Header = ({mainPage}) => {
     );
 };
 
-export default Header;
+export default HeaderDesktop;

@@ -1,9 +1,16 @@
 @import '../variables';
+@import '../libs/breakpoints';
 
 .header {
   color: #ffffff;
   padding: 30px 0;
   background: rgba(11, 10, 10, 0.8);
+
+  &__mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &--main-page {
     background: transparent;
@@ -18,6 +25,10 @@
     display: flex;
     width: 40%;
     justify-content: space-between;
+
+    @include media ("<=desktop") {
+      width: 60%;
+    }
   }
 
   &__container {
@@ -88,6 +99,7 @@
     ul {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
 
       li {
         text-transform: uppercase;
@@ -95,8 +107,21 @@
         margin: 0 25px;
         user-select: none;
         cursor: pointer;
+
+        @include media ("<=desktop") {
+          margin-top: 10px;
+        }
       }
     }
+  }
+
+  &__user-icons {
+    display: flex;
+  }
+
+  &__user-icon {
+    margin: 0 10px;
+    cursor: pointer;
   }
 
   &__space {

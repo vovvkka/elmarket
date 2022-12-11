@@ -16,11 +16,12 @@
       color: $white;
       justify-content: flex-end;
       background:linear-gradient(0deg, rgba(240, 90, 34, 0.82), rgba(240, 90, 34, 0.82)), url("../../assets/left-card-bg.png");
-
+      background-size: cover;
     }
 
     &-2 {
       background:linear-gradient(0deg, rgba(191, 190, 186, 0.64), rgba(191, 190, 186, 0.64)), url("../../assets/right-card-bg.png");
+      background-size: cover;
       color: $black;
       justify-content: flex-start;
     }

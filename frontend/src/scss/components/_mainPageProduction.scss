@@ -15,11 +15,12 @@
     &-1 {
       color: $white;
       justify-content: flex-end;
-      background: rgba(240, 90, 34, 0.64);
+      background:linear-gradient(0deg, rgba(240, 90, 34, 0.82), rgba(240, 90, 34, 0.82)), url("../../assets/left-card-bg.png");
+
     }
 
     &-2 {
-      background: rgba(191, 190, 186, 0.64);
+      background:linear-gradient(0deg, rgba(191, 190, 186, 0.64), rgba(191, 190, 186, 0.64)), url("../../assets/right-card-bg.png");
       color: $black;
       justify-content: flex-start;
     }
@@ -53,6 +54,7 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 19px;
+    cursor: pointer;
 
     &-1 {
       border: 2px solid $white;

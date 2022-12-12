@@ -4,6 +4,7 @@ import {useLocation} from "react-router-dom";
 import Banner from "../../Banner/Banner";
 import {useMediaQuery} from "react-responsive";
 import HeaderMobile from "../Header/HeaderMobile";
+import Footer from "../Footer/Footer";
 
 const Layout = ({children}) => {
     const location = useLocation();
@@ -21,6 +22,7 @@ const Layout = ({children}) => {
             <div className='main'>
                     {children}
             </div>
+            <Footer/>
         </>
     );
 };

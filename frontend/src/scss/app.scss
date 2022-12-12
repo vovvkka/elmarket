@@ -23,3 +23,21 @@
   padding: 0 15px;
   max-width: 1500px;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #737373;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #383838;
+  transition: all 10s;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2a;
+}

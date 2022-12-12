@@ -164,4 +164,26 @@
       }
     }
   }
+
+  @include media ("<=phone") {
+    &__image {
+      &-1 {
+        width: 190px;
+        height: 90px;
+      }
+    }
+  }
+
+  @media (max-width: 400px) {
+    &__info {
+      margin-right: 5px;
+    }
+
+    &__image {
+      &-1 {
+        width: auto;
+        height: 60px;
+      }
+    }
+  }
 }

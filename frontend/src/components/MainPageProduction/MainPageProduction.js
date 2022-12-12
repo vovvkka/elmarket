@@ -16,8 +16,11 @@ const MainPageProduction = () => {
                             <button className="production__btn production__btn-1">
                                 Отправить Заявку
                             </button>
+                            <button className="production__btn production__btn--mobile production__btn-1">
+                                Отправить Заявку
+                            </button>
                         </div>
-                        <img src={cable} alt="production"/>
+                        <img className="production__image production__image-1" src={cable} alt="production"/>
                     </div>
                     <div className="production__card production__card-2">
                         <div className="production__info">
@@ -28,8 +31,11 @@ const MainPageProduction = () => {
                             <button className="production__btn production__btn-2">
                                 Отправить Заявку
                             </button>
+                            <button className="production__btn production__btn--mobile production__btn-2">
+                                Отправить Заявку
+                            </button>
                         </div>
-                        <img src={bulb} alt="production"/>
+                        <img className="production__image production__image-2" src={bulb} alt="production"/>
                     </div>
                 </div>
         </div>

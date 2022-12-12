@@ -34,6 +34,10 @@
   &__contacts {
     margin-right: 50px;
 
+    &-mobile {
+      display: none;
+    }
+
     &-title {
       text-transform: uppercase;
       font-size: 20px;
@@ -81,6 +85,18 @@
 
     &__contacts {
       display: none;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 767px) {
+    &__contacts {
+      display: none;
+
+      &-mobile {
+        margin-top: 20px;
+        color: $orange !important;
+        display: block;
+      }
     }
   }
 }

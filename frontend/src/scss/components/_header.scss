@@ -4,7 +4,9 @@
 .header {
   color: #ffffff;
   padding: 30px 0;
-  background: rgba(11, 10, 10, 0.8);
+  background:linear-gradient(0deg, rgba(11, 10, 10, 0.8), rgba(11, 10, 10, 0.8)), url("../../assets/main-page-bg.png"), center;
+  background-position: center;
+  background-size: cover;
 
   &__mobile {
     display: flex;

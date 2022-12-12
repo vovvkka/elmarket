@@ -1,0 +1,20 @@
+@import '../variables';
+
+.search {
+  display: flex;
+  align-items: center;
+
+  &__input {
+    background: transparent;
+    border: 1px solid $orange;
+    color: white;
+    padding: 15px 10px;
+    width: 300px;
+  }
+
+  &__button {
+    background: $orange;
+    padding: 10px;
+    cursor: pointer;
+  }
+}

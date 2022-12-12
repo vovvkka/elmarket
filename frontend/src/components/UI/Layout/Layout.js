@@ -17,7 +17,9 @@ const Layout = ({children}) => {
                     {!isMobile ? <HeaderDesktop mainPage/> : <HeaderMobile mainPage/>}
                     <Banner/>
                 </div> :
-                <HeaderDesktop/>
+                <>
+                    {!isMobile ? <HeaderDesktop/> : <HeaderMobile/>}
+                </>
             }
             <div className='main'>
                     {children}

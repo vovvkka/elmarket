@@ -1,0 +1,141 @@
+@import "../variables";
+@import "../libs/breakpoints";
+
+.instruments {
+  padding: 40px 10px;
+  background: #383838;
+
+  &__block {
+    display: flex;
+    position: relative;
+  }
+
+  &__info {
+    color: $white;
+    word-break: break-all;
+  }
+
+  &__title {
+    margin-left: -50px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 25px;
+
+    &--mobile {
+      display: none;
+    }
+
+    span {
+      color: $orange;
+    }
+  }
+
+  &__description {
+    padding: 45px 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 25px;
+  }
+
+  &__btn {
+    background: transparent;
+    border: 2px solid $white;
+    color: $white;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    padding: 20px 10px 20px 30px;
+
+    svg {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    &__block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__title {
+      display: none;
+
+      &--mobile {
+        margin-left: 0;
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: $white;
+        display: block;
+      }
+    }
+
+    &__image-first {
+      width: 300px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 550px) {
+    padding: 20px 10px;
+
+    &__title {
+      display: none;
+
+      &--mobile {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: $white;
+        display: block;
+      }
+    }
+
+    &__description {
+      padding: 45px 0;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 25px;
+    }
+
+    &__image-first {
+      width: 200px;
+      height: auto;
+    }
+
+    &__image-second {
+      width: 100px;
+      height: auto;
+    }
+  }
+
+  @include media("<=phone") {
+    &__image-first {
+      width: 150px;
+      height: auto;
+    }
+
+    &__image-second {
+      width: 50px;
+      height: auto;
+    }
+
+
+    &__title--mobile {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: $white;
+      display: block;
+    }
+
+    &__description {
+      padding: 45px 0;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 25px;
+    }
+  }
+}

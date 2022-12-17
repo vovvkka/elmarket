@@ -125,6 +125,17 @@
 
   &__user-icons {
     display: flex;
+
+    img {
+      margin: 0 10px;
+    }
+  }
+
+  &__user-menu {
+    img {
+      margin: 0 15px;
+      cursor: pointer;
+    }
   }
 
   &__user-icon {

@@ -16,7 +16,7 @@ export const registerUser = userData => {
 
             const response = await axiosApi.post('/users', userData);
 
-            dispatch(registerSuccess(response.data.user));
+            dispatch(registerSuccess(response.data));
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(registerFailure(e.response.data));

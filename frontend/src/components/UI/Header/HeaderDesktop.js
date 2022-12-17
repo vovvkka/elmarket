@@ -35,7 +35,7 @@ const HeaderDesktop = ({mainPage}) => {
                     <ul>
                         <li>Акции</li>
                         <li>Каталог</li>
-                        <li>О компании</li>
+                        <Link to='/about-us'><li>O компании</li></Link>
                         <li>Сервис</li>
                         <li>Гарантии</li>
                         <li>Контакты</li>

@@ -7,7 +7,7 @@ const Payment = () => {
             <div className='payment__block'>
                 <h2 className='payment__title'>Как оплатить заказ?</h2>
                 <p className='payment__text'>Компания Anas-Электро с 2005 года осуществляет комплексные мелкооптовые и оптовые поставки электрооборудования, электротехнического оборудования, электроустановочных, светотехнических и электромонтажных изделий, электромонтажного инструмента и кабельной продукции ведущих мировых производителей по выгодным ценам.</p>
-                <img src={payment} alt="Payment" width={1000}/>
+                <img className='payment__img' src={payment} alt="Payment"/>
             </div>
             <div className='payment__block'>
                 <h2 className='payment__title-2'>Оплата банковской картой без комиссии</h2>

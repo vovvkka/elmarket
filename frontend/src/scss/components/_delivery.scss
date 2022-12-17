@@ -1,0 +1,22 @@
+@import '../variables';
+
+.delivery {
+  padding: 30px 0 50px 0;
+
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+    color: #383838;
+    font-size: 25px;
+    margin: 20px 0;
+  }
+
+  &__text {
+    margin: 15px 0;
+  }
+
+  &__orange {
+    color: $orange;
+    font-weight: 500;
+  }
+}

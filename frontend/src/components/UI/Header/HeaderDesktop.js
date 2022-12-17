@@ -39,6 +39,7 @@ const HeaderDesktop = ({mainPage}) => {
                         <li>Сервис</li>
                         <li>Гарантии</li>
                         <li>Контакты</li>
+                        <Link to='/delivery'><li>Доставка</li></Link>
                         <Link to='/payment'><li>Оплата</li></Link>
                     </ul>
                     <div className='header__user-icons'>

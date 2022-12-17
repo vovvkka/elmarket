@@ -1,8 +1,18 @@
+@import '../libs/breakpoints';
+
 .payment {
   text-align: center;
 
   &__block {
     margin-bottom: 50px;
+  }
+
+  &__img {
+    width: 70%;
+
+    @include media ("<=tablet") {
+      width: 95%;
+    }
   }
 
   &__title {

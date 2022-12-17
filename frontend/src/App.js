@@ -4,6 +4,7 @@ import Layout from "./components/UI/Layout/Layout";
 import MainPage from "./containers/MainPage";
 import NotFound from "./containers/NotFound";
 import Payment from "./containers/Payment";
+import Delivery from "./containers/Delivery";
 
 const ProtectedRoute = ({isAllowed, redirectTo, ...props}) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/"/>;
@@ -16,6 +17,7 @@ const App = () => {
             <Switch>
                 <Route path="/" exact component={MainPage}/>
                 <Route path="/payment" exact component={Payment}/>
+                <Route path="/delivery" exact component={Delivery}/>
                 <Route component={NotFound}/>
             </Switch>
         </Layout>

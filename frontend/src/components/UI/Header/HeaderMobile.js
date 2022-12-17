@@ -6,7 +6,7 @@ const HeaderMobile = ({mainPage}) => {
 
     return (
         <div className={classes.join(' ')}>
-            <div className='header__container'>
+            <div className='container-sm'>
                 <div className='header__mobile'>
                     <img src={logo} alt="Electromarket.kg" className='logo' draggable={false} width='65' height='50'/>
                     <div className='header__user-icons'>

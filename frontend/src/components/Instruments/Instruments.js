@@ -39,6 +39,7 @@ const Instruments = () => {
                     </div>
                 </div>
             </div>
+            <hr/>
         </div>
     );
 };

@@ -1,13 +1,14 @@
 import React from 'react';
 import Anonymous from "../Anonymous/Anonymous";
 import logo from '../../../assets/logo.png';
+import {Link} from "react-router-dom";
 
 const HeaderDesktop = ({mainPage}) => {
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     return (
         <div className={classes.join(' ')}>
-            <div className='header__container'>
+            <div className='container-sm'>
                 <div className='header__upper'>
                     <div className='header__contacts-block'>
                         <div className='header__phone'>
@@ -38,7 +39,7 @@ const HeaderDesktop = ({mainPage}) => {
                         <li>Сервис</li>
                         <li>Гарантии</li>
                         <li>Контакты</li>
-                        <li>Оплата</li>
+                        <Link to='/payment'><li>Оплата</li></Link>
                     </ul>
                     <div className='header__user-icons'>
                         <svg width="30" height="28" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,0 +1,35 @@
+.payment {
+  text-align: center;
+
+  &__block {
+    margin-bottom: 50px;
+  }
+
+  &__title {
+    margin: 30px 0;
+    text-transform: uppercase;
+    color: #383838;
+    font-size: 20px;
+  }
+
+  &__text {
+    text-align: left;
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  &__title-2 {
+    color: #383838;
+    text-transform: uppercase;
+    font-size: 23px;
+    margin-bottom: 25px;
+  }
+
+  &__text-2 {
+    text-align: left;
+
+    p {
+      margin: 15px 0;
+    }
+  }
+}

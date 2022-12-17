@@ -20,9 +20,9 @@ const usersSlice = createSlice({
             state.registerLoading = true;
             state.registerError = null;
         },
-        registerSuccess(state, {payload: user}) {
+        registerSuccess(state, action) {
             state.registerLoading = false;
-            state.user = user;
+            state.user = action.payload;
         },
         registerFailure(state, action) {
             state.registerLoading = false;

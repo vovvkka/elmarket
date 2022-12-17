@@ -14,7 +14,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 
-app.use('users', users);
+app.use('/users', users);
 
 const run = async () => {
     await mongoose.connect(config.mongo.db, config.mongo.options);

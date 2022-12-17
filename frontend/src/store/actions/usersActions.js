@@ -8,7 +8,6 @@ import {
     logoutFailure,
     registerRequest, registerSuccess, registerFailure
 } from "../slices/usersSlice";
-import {historyPush} from "./historyActions";
 
 export const registerUser = userData => {
     return async dispatch => {
@@ -39,8 +38,10 @@ export const loginUser = userData => {
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(loginFailure(e.response.data));
+                throw e;
             } else {
                 dispatch(loginFailure({global: 'No internet'}));
+                throw e;
             }
         }
     };
@@ -54,7 +55,6 @@ export const logoutUser = () => {
             await axiosApi.delete('/users/sessions');
 
             dispatch(logoutSuccess());
-            dispatch(historyPush('/'));
         } catch (e) {
             dispatch(logoutFailure(e));
         }

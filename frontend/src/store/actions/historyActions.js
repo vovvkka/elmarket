@@ -1,4 +1,4 @@
-import history from "../../../../../taitai/frontend/src/history";
+import history from "../../history";
 
 export const historyPush = payload => {
     return () => {

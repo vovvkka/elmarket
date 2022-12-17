@@ -14,8 +14,8 @@ router.get('/:id',auth,permit('admin'), async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {username, password, displayName, role} = req.body;
-    const userData = {username, password, displayName, role};
+    const {username, password, email} = req.body;
+    const userData = {username, password, email};
 
     try {
         const user = new User(userData);

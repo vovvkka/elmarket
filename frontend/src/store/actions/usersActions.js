@@ -1,6 +1,32 @@
 import axiosApi from "../../axiosApi";
-import {loginFailure, loginRequest, loginSuccess, logoutRequest, logoutSuccess, logoutFailure} from "../slices/usersSlice";
+import {
+    loginFailure,
+    loginRequest,
+    loginSuccess,
+    logoutRequest,
+    logoutSuccess,
+    logoutFailure,
+    registerRequest, registerSuccess, registerFailure
+} from "../slices/usersSlice";
 import {historyPush} from "./historyActions";
+
+export const registerUser = userData => {
+    return async dispatch => {
+        try {
+            dispatch(registerRequest());
+
+            const response = await axiosApi.post('/users', userData);
+
+            dispatch(registerSuccess(response.data.user));
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(registerFailure(e.response.data));
+            } else {
+                dispatch(registerFailure({global: 'No internet'}));
+            }
+        }
+    };
+};
 
 export const loginUser = userData => {
     return async dispatch => {

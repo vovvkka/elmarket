@@ -37,8 +37,8 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         enum: ['user', 'admin'],
+        default: "user"
     },
-    displayName: String,
     createdAt: {
         type: Date,
         required: true,

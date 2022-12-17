@@ -5,11 +5,12 @@ import MainPage from "./containers/MainPage";
 import NotFound from "./containers/NotFound";
 import Payment from "./containers/Payment";
 import Delivery from "./containers/Delivery";
+import AboutUs from "./containers/AboutUs";
+import Warranty from "./containers/Warranty";
 
 const ProtectedRoute = ({isAllowed, redirectTo, ...props}) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/"/>;
 };
-
 
 const App = () => {
     return (
@@ -18,6 +19,8 @@ const App = () => {
                 <Route path="/" exact component={MainPage}/>
                 <Route path="/payment" exact component={Payment}/>
                 <Route path="/delivery" exact component={Delivery}/>
+                <Route path="/about-us" exact component={AboutUs}/>
+                <Route path="/warranty" exact component={Warranty}/>
                 <Route component={NotFound}/>
             </Switch>
         </Layout>

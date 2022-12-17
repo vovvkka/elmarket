@@ -2,6 +2,7 @@
 
 .payment {
   text-align: center;
+  padding: 30px 0 50px 0;
 
   &__block {
     margin-bottom: 50px;
@@ -16,7 +17,6 @@
   }
 
   &__title {
-    margin: 30px 0;
     text-transform: uppercase;
     color: #383838;
     font-size: 20px;

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 
 const validateUnique = async value => {
-    const user = await User.findOne({username: value});
+    const user = await User.findOne({email: value});
 
     if (user) return false;
 };
@@ -15,17 +15,17 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
+    },
+    email: {
+        type: String,
+        required: true,
         unique: true,
         validate: {
             validator: validateUnique,
-            message: 'Этот пользователь уже зарегистрирован',
+            message: 'Пользователь с такой почтой уже зарегистрирован',
         }
     },
     password: {
-        type: String,
-        required: true,
-    },
-    email: {
         type: String,
         required: true,
     },
@@ -37,8 +37,8 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         enum: ['user', 'admin'],
+        default: "user"
     },
-    displayName: String,
     createdAt: {
         type: Date,
         required: true,

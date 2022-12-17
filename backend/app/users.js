@@ -14,10 +14,10 @@ router.get('/:id',auth,permit('admin'), async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {username, password, displayName, role} = req.body;
-    const userData = {username, password, displayName, role};
+    const {password, email, username} = req.body;
 
     try {
+        const userData = {password, email, username};
         const user = new User(userData);
 
         user.generateToken();

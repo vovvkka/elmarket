@@ -1,6 +1,31 @@
 import axiosApi from "../../axiosApi";
-import {loginFailure, loginRequest, loginSuccess, logoutRequest, logoutSuccess, logoutFailure} from "../slices/usersSlice";
-import {historyPush} from "./historyActions";
+import {
+    loginFailure,
+    loginRequest,
+    loginSuccess,
+    logoutRequest,
+    logoutSuccess,
+    logoutFailure,
+    registerRequest, registerSuccess, registerFailure
+} from "../slices/usersSlice";
+
+export const registerUser = userData => {
+    return async dispatch => {
+        try {
+            dispatch(registerRequest());
+
+            const response = await axiosApi.post('/users', userData);
+
+            dispatch(registerSuccess(response.data.user));
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(registerFailure(e.response.data));
+            } else {
+                dispatch(registerFailure({global: 'No internet'}));
+            }
+        }
+    };
+};
 
 export const loginUser = userData => {
     return async dispatch => {
@@ -13,8 +38,10 @@ export const loginUser = userData => {
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(loginFailure(e.response.data));
+                throw e;
             } else {
                 dispatch(loginFailure({global: 'No internet'}));
+                throw e;
             }
         }
     };
@@ -28,7 +55,6 @@ export const logoutUser = () => {
             await axiosApi.delete('/users/sessions');
 
             dispatch(logoutSuccess());
-            dispatch(historyPush('/'));
         } catch (e) {
             dispatch(logoutFailure(e));
         }

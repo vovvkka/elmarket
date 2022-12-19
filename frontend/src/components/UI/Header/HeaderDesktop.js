@@ -48,7 +48,7 @@ const HeaderDesktop = ({mainPage}) => {
                         <Link to='/about-us'><li>O компании</li></Link>
                         <li>Сервис</li>
                         <Link to='/warranty'><li>Гарантия</li></Link>
-                        <li>Контакты</li>
+                        <Link to='/contacts'><li>Контакты</li></Link>
                         <Link to='/delivery'><li>Доставка</li></Link>
                         <Link to='/payment'><li>Оплата</li></Link>
                     </ul>

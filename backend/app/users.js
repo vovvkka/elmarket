@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/sessions', async (req, res) => {
-    const user = await User.findOne({username: req.body.username});
+    const user = await User.findOne({email: req.body.email});
 
     if (!user) {
         return res.status(401).send({error: 'Неправильный логин или пароль!'});

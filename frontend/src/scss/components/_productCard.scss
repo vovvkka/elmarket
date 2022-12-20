@@ -1,0 +1,82 @@
+@import '../variables';
+
+.catalog {
+  padding: 30px 0;
+  display: flex;
+}
+
+.product-card {
+  padding: 5px 20px;
+  margin: 0 15px;
+  width: 25%;
+  background: white;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  color: #383838;
+
+  &__star {
+    margin: 0 8px;
+  }
+
+  &__hits {
+    height: 50px;
+  }
+
+  &__image {
+    margin: 15px 0;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 400;
+    width: 70%;
+  }
+
+  &__price {
+    margin: 10px 0;
+    text-align: right;
+    font-weight: 500;
+    font-size: 23px;
+  }
+
+  &__in-stock {
+    display: inline-block;
+    margin: 10px 0;
+  }
+
+  &__cart {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    margin: 10px 0;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    border: 1px solid $orange;
+    padding: 15px 10px;
+    font-size: 28px;
+  }
+
+  &__add {
+    display: flex;
+    background: $orange;
+    color: #fff;
+    text-transform: uppercase;
+    border: none;
+    font-size: 20px;
+    padding: 13px 30px;
+    cursor: pointer;
+  }
+
+  &__button {
+      background: transparent;
+      border: none;
+      margin: 0 5px;
+      cursor: pointer;
+  }
+}

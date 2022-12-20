@@ -44,7 +44,7 @@ const HeaderDesktop = ({mainPage}) => {
                     <div className='header__space'></div>
                     <ul>
                         <li>Акции</li>
-                        <li>Каталог</li>
+                        <Link to='/catalog'><li>Каталог</li></Link>
                         <Link to='/about-us'><li>O компании</li></Link>
                         <Link to='/warranty'><li>Гарантия</li></Link>
                         <Link to='/contacts'><li>Контакты</li></Link>

@@ -82,6 +82,11 @@
   }
 }
 
+.clickable {
+  cursor: pointer;
+  color: inherit;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

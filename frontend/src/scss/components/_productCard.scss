@@ -81,6 +81,11 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     margin: 15px 0;
+
+    &--single {
+      display: flex;
+      margin: 25px 0;
+    }
   }
 
   &__buttons {
@@ -89,6 +94,10 @@
     align-items: center;
     border: 1px solid $orange;
     font-size: 28px;
+
+    &--single {
+      margin: 0 50px;
+    }
 
     @include media ("<=tablet") {
       font-size: 20px;

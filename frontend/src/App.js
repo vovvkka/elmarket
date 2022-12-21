@@ -11,6 +11,7 @@ import Profile from "./containers/Profile";
 import Contacts from "./containers/Contacts";
 import Catalog from "./containers/Catalog";
 import SingleProduct from "./containers/SingleProduct";
+import Feedback from "./containers/Feedback";
 
 const ProtectedRoute = ({isAllowed, redirectTo, ...props}) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/"/>;
@@ -28,6 +29,7 @@ const App = () => {
                 <Route path="/warranty" exact component={Warranty}/>
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/catalog" exact component={Catalog}/>
+                <Route path="/feedback" exact component={Feedback}/>
                 <Route path="/catalog/product-id" exact component={SingleProduct}/>
                 <Route component={NotFound}/>
             </Switch>

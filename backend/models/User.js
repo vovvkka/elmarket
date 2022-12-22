@@ -39,6 +39,10 @@ const UserSchema = new Schema({
         enum: ['user', 'admin'],
         default: "user"
     },
+    history: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+    }],
     createdAt: {
         type: Date,
         required: true,

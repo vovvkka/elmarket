@@ -37,12 +37,26 @@ const ProductSchema = new Schema({
     inStock: {
         type: Boolean,
         required: true,
+        default: this.amount > 0
     },
+
     image: [{type: String}],
 
-    isHit: Boolean,
-    isNew: Boolean,
-    discount: Number,
+    isHit: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    isNew: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    discount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
 });
 
 ProductSchema.plugin(idValidator, {message: 'Bad ID value for {PATH}'});

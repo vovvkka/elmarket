@@ -1,29 +1,38 @@
-import React from 'react';
-import image from '../assets/single-product-example.png';
+import React, {useEffect} from 'react';
 import star from '../assets/svg/star.svg';
 import fullStar from '../assets/svg/fullStar.svg';
 import Rating from "react-rating";
-import productCard from "../assets/svg/product-cart.svg";
+import productCart from "../assets/svg/product-cart.svg";
 import delivery from "../assets/svg/delivery.svg";
 import ProductCard from "../components/ProductCard/ProductCard";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchOne} from "../store/actions/productsActions";
+import {apiUrl} from "../config";
 
-const SingleProduct = () => {
-    return (
+const SingleProduct = ({match}) => {
+    const dispatch = useDispatch();
+    const product = useSelector(state => state.products.product);
+
+    useEffect(() => {
+        dispatch(fetchOne(match.params.id));
+    }, [dispatch, match.params.id])
+
+    return product && (
         <div className='container'>
             <div className='single-product'>
                 <div className='product'>
                     <div className='product__image'>
-                        <img src={image} alt="Product" className='product__main-image'/>
-                        <div className='product__other-images'>
-                            <img src={image} alt="Product"/>
-                            <img src={image} alt="Product"/>
-                        </div>
+                        <img src={apiUrl + '/' + product.image[0]} alt="Product" className='product__main-image'/>
+                        {/*<div className='product__other-images'>*/}
+                        {/*    <img src={image} alt="Product"/>*/}
+                        {/*    <img src={image} alt="Product"/>*/}
+                        {/*</div>*/}
                     </div>
                     <div className='product__info'>
-                        <span>Артикул 34456</span>
-                        <h2 className='product__title'>Legrand Etika Белый Розетка комп (RJ45) одинарная 5 категория UTP</h2>
+                        <span>Артикул {product.code}</span>
+                        <h2 className='product__title'>{product.title}</h2>
                         <div className='product__upper-block'>
-                            <span className='product__price'>293,06 ₽</span>
+                            <span className='product__price'>{product.price} сом</span>
                             <Rating
                                 className='rating'
                                 initialRating={1}
@@ -33,10 +42,10 @@ const SingleProduct = () => {
                             />
                             <span className='product__feedback'>+27 отзывов</span>
                         </div>
-                        <span>в наличии нет</span>
+                        <span>{product.inStock ? 'в наличии' : ' в наличии нет'}</span>
                         <div className='product-card__cart product-card__cart--single'>
                             <div>
-                                <button className='product-card__add'>В корзину <img src={productCard} alt=""/></button>
+                                <button className='product-card__add'>В корзину <img src={productCart} alt=""/></button>
                             </div>
                             <div className='product-card__buttons product-card__buttons--single'>
                                 <button className='product-card__button'>+</button>
@@ -46,7 +55,7 @@ const SingleProduct = () => {
                         </div>
                         <p className='product__subtitle'>Общая информация</p>
                         <div className='product__subinfo'>
-                            <p>Кратность товара: 1</p>
+                            <p>Кратность товара: {product.amount}</p>
                             <p>Единица измерения: 3шт</p>
                             <p>Объем (м3): 0.000502</p>
                         </div>
@@ -55,9 +64,7 @@ const SingleProduct = () => {
                             <span>Доставка курьером 27 марта или позже</span>
                         </div>
                         <p className='product__subtitle'>Описание</p>
-                        <p>Ищете Телефонные розетки недорого? Обратите внимание на товар «Legrand Etika Белый Розетка комп (RJ45) одинарная 5 категория UTP
-                            Розетки оснащены винтовыми и безвинтовыми зажимами для безопасного и быстрого монтажа. Доступны механизмы, оборудованные защитными шторками.
-                            Для выключателей с дизайном Allure предусмотрена контурная подсветка клавиши.</p>
+                        <p>{product.description}</p>
                     </div>
                 </div>
                 <h3 className='product__recent'>Вы недавно посмотрели</h3>

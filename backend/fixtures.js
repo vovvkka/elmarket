@@ -45,7 +45,7 @@ const run = async () => {
         code: "98821",
         price: 453,
         amount: 2,
-        image: ["fixtures/LegrandValena1"],
+        image: ["fixtures/LegrandValena1.png"],
 
         isHit: true,
         discount: 15,
@@ -55,7 +55,7 @@ const run = async () => {
         code: "98191",
         price: 93,
         amount: 0,
-        image: ["fixtures/LegrandValena2"],
+        image: ["fixtures/LegrandValena2.png"],
 
         isNew: true,
     }, {
@@ -64,7 +64,7 @@ const run = async () => {
         code: "92345",
         price: 293,
         amount: 11,
-        image: ["fixtures/LegrandValena3"],
+        image: ["fixtures/LegrandValena3.png"],
     });
 
     await mongoose.connection.close();

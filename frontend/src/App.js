@@ -30,7 +30,7 @@ const App = () => {
                 <Route path="/profile" exact component={Profile}/>
                 <Route path="/catalog" exact component={Catalog}/>
                 <Route path="/feedback" exact component={Feedback}/>
-                <Route path="/catalog/product-id" exact component={SingleProduct}/>
+                <Route path="/catalog/:id" exact component={SingleProduct}/>
                 <Route component={NotFound}/>
             </Switch>
         </Layout>

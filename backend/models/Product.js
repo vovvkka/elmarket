@@ -18,7 +18,6 @@ const ProductSchema = new Schema({
         validate: {
             validator: async value => {
                 const category = await Product.findOne({barcode: value});
-
                 if (category) return false;
             },
             message: 'Продукт с таким баркодом уже существует.',

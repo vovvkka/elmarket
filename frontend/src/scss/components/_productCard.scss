@@ -41,6 +41,13 @@
     }
   }
 
+  &__column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   &__hits {
     height: 50px;
   }
@@ -53,12 +60,13 @@
   &__title {
     font-size: 18px;
     font-weight: 400;
-    width: 70%;
+    width: 80%;
 
     @include media ("<=tablet") {
       font-size: 16px;
     }
   }
+
 
   &__price {
     margin: 10px 0;

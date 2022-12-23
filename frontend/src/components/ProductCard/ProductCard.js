@@ -11,6 +11,7 @@ import {addProduct} from "../../store/slices/cartSlice";
 const ProductCard = ({product}) => {
     const dispatch = useDispatch();
     const [amount, setAmount] = useState(0);
+    console.log(product);
 
     return product && (
         <div className='product-card'>

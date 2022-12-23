@@ -57,8 +57,10 @@ const HeaderDesktop = ({mainPage}) => {
                             <img src={heart} alt="Liked"/>
                         </div>
                         <div className='header__user-icon'>
-                            <img src={cart} alt="Cart"/>
-                            {products.length ? <div className='header__badge'>{products.length}</div> : null}
+                            <Link to='/cart' className="clickable">
+                                <img src={cart} alt="Cart"/>
+                                {products.length ? <div className='header__badge'>{products.length}</div> : null}
+                            </Link>
                         </div>
 
                     </div>

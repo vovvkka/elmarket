@@ -33,11 +33,6 @@ const ProductSchema = new Schema({
         required: true,
         min: 0
     },
-    inStock: {
-        type: Boolean,
-        required: true,
-        default: this.amount > 0
-    },
 
     image: [{type: String}],
 

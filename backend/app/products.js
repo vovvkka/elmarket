@@ -4,7 +4,7 @@ const Product = require("../models/Product");
 
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find({}, 'title price inStock image');
+        const products = await Product.find({}, 'title price inStock image discount');
         res.send(products);
     } catch (e) {
         res.status(500).send(e);

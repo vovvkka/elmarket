@@ -15,6 +15,7 @@ import {logoutUser} from "../../../store/actions/usersActions";
 const HeaderDesktop = ({mainPage}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
+    const products = useSelector(state => state.cart.products);
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     return (
@@ -52,8 +53,14 @@ const HeaderDesktop = ({mainPage}) => {
                         <Link to='/payment'><li>Оплата</li></Link>
                     </ul>
                     <div className='header__user-icons'>
-                        <img src={heart} alt="Liked"/>
-                        <img src={cart} alt="Cart"/>
+                        <div className='header__user-icon'>
+                            <img src={heart} alt="Liked"/>
+                        </div>
+                        <div className='header__user-icon'>
+                            <img src={cart} alt="Cart"/>
+                            {products.length ? <div className='header__badge'>{products.length}</div> : null}
+                        </div>
+
                     </div>
                 </div>
                 <div className='header__bottom'>

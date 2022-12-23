@@ -125,10 +125,24 @@
 
   &__user-icons {
     display: flex;
+  }
 
-    img {
-      margin: 0 10px;
-    }
+  &__user-icon {
+    position: relative;
+    padding: 0 10px 10px 0;
+  }
+
+  &__badge {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #F05A22;
+    border-radius: 50%;
+    bottom: 7px;
+    right: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
   }
 
   &__user-menu {

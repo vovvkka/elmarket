@@ -5,11 +5,13 @@ import axiosApi from "../axiosApi";
 import usersSlice from "./slices/usersSlice";
 import thunk from "redux-thunk";
 import productsSlice from "./slices/productsSlice";
+import cartSlice from "./slices/cartSlice";
 
 
 const rootReducer = combineReducers({
     users: usersSlice.reducer,
     products: productsSlice.reducer,
+    cart: cartSlice.reducer,
 });
 
 const persistedState = loadFromLocalStorage();

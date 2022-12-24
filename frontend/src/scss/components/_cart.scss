@@ -2,6 +2,7 @@
 
 .cart {
   padding: 30px 0;
+  min-height: 75vh;
 
   &__title {
     text-align: center;
@@ -41,6 +42,10 @@
     &-delete {
       display: flex;
       justify-content: center;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     &-amount,
@@ -115,6 +120,56 @@
 
       &-delete {
         width: 20px;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    &__product {
+      grid-template-columns: 0.3fr 1fr 0.4fr 0.4fr 0.2fr;
+      grid-column-gap: 20px;
+
+      &:first-child {
+        margin-bottom: -5px;
+      }
+
+      &-price,
+      &-discount {
+        display: none;
+      }
+
+      &-span {
+        padding: 2px;
+        font-size: 20px;
+      }
+    }
+  }
+
+  @include media("<phone") {
+    &__product {
+      grid-template-columns: 1fr 0.4fr 0.4fr 0.2fr;
+      grid-column-gap: 5px;
+
+      &-title {
+        font-size: 11px;
+      }
+
+      &-image {
+        display: none;
+      }
+
+      &-span {
+        padding: 0;
+        font-size: 15px;
+      }
+
+      &-amount,
+      &-total {
+        font-size: 10px;
+      }
+
+      &-delete {
+        width: 15px;
       }
     }
   }

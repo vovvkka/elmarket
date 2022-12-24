@@ -1,1 +1,1 @@
-export let apiUrl = 'http://localhost:8000';
+export let apiUrl = 'http://192.168.0.105:8000';

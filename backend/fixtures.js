@@ -44,20 +44,14 @@ const run = async () => {
         title: "Лампочки",
         parentCategory: c1._id,
     }, {
-        title: "Люстры",
-        parentCategory: c1._id,
-    }, {
         title: "Розетки",
         parentCategory: c2._id,
     }, {
         title: "Провода",
-        parentCategory: c2._id,
+        parentCategory: c3._id,
     }, {
         title: "Пылесосы",
-        parentCategory: c3._id,
-    }, {
-        title: "Микроволновки",
-        parentCategory: c3._id,
+        parentCategory: c1._id,
     });
 
 

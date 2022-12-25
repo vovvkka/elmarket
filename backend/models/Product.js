@@ -4,6 +4,15 @@ const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
+    category: {
+        ref: 'Category',
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    subCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SubCategory',
+    },
     title: {
         type: String,
         required: true
@@ -17,8 +26,8 @@ const ProductSchema = new Schema({
         unique: true,
         validate: {
             validator: async value => {
-                const category = await Product.findOne({barcode: value});
-                if (category) return false;
+                const product = await Product.findOne({barcode: value});
+                if (product) return false;
             },
             message: 'Продукт с таким баркодом уже существует.',
         }
@@ -33,9 +42,7 @@ const ProductSchema = new Schema({
         required: true,
         min: 0
     },
-
     image: [{type: String}],
-
     isHit: {
         type: Boolean,
         required: true,

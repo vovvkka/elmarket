@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {apiUrl} from "../config";
 import {addProduct, deleteProduct} from "../store/slices/cartSlice";
+import Modal from "../components/UI/Modal/Modal";
 
 const Cart = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.cart.products);
+    const [show, setShow] = useState(false);
+    const [order, setOrder] = useState(false);
 
     const cartProduct = products?.map(p => {
         const imageUrl = `${apiUrl}/${p.image[0]}`;
@@ -16,9 +19,13 @@ const Cart = () => {
                 <h5 className="cart__product-title">{p.title}</h5>
                 <div className="cart__product-amount">
                     <div className='product-card__buttons'>
-                        <button className='product-card__button' onClick={() => dispatch(addProduct({...p, amount: 1}))}>+</button>
+                        <button className='product-card__button'
+                                onClick={() => dispatch(addProduct({...p, amount: 1}))}>+
+                        </button>
                         <span className="cart__product-span">{p.amount}</span>
-                        <button className='product-card__button' onClick={() => dispatch(addProduct({...p, amount: -1}))}>-</button>
+                        <button className='product-card__button'
+                                onClick={() => dispatch(addProduct({...p, amount: -1}))}>-
+                        </button>
                     </div>
                 </div>
                 <p className="cart__product-discount">{p.discount}%</p>
@@ -46,30 +53,53 @@ const Cart = () => {
         )
     });
 
-    return (
-        <div className="cart">
-            <div className="container-sm">
-                <h2 className="cart__title">Корзина</h2>
-                <div className="cart__block">
-                    {
-                        products.length ?
-                            <>
-                                <div className="cart__product">
-                                    <div className="cart__product-image"/>
-                                    <h5 className="cart__product-title"/>
-                                    <p className="cart__product-amount"><b>Количество</b></p>
-                                    <p className="cart__product-discount"><b>Скидка</b></p>
-                                    <p className="cart__product-price"><b>Цена</b></p>
-                                    <p className="cart__product-total"><b>Общая стоимость</b></p>
-                                    <div className="cart__product-delete"></div>
-                                </div>
-                                {cartProduct}
-                            </> :  <p style={{textAlign: "center"}}>Ваша корзина пуста</p>
-                    }
+    const getTotalPrice = products?.reduce((acc, rec) => {
+        return acc + rec.price * rec.amount - rec.discount || rec.price;
+    }, 0);
 
+    return (
+        <>
+            <Modal
+                show={show}
+                order={order}
+                closed={() => {
+                    setShow(false);
+                    setOrder(false);
+                }}
+            />
+
+            <div className="cart">
+                <div className="container-sm">
+                    <h2 className="cart__title">Корзина</h2>
+                    {
+                        products?.length ?
+                            <>
+                                <div className="cart__block">
+                                    <div className="cart__product">
+                                        <div className="cart__product-image"/>
+                                        <h5 className="cart__product-title"/>
+                                        <p className="cart__product-amount"><b>Количество</b></p>
+                                        <p className="cart__product-discount"><b>Скидка</b></p>
+                                        <p className="cart__product-price"><b>Цена</b></p>
+                                        <p className="cart__product-total"><b>Общая стоимость</b></p>
+                                        <div className="cart__product-delete"></div>
+                                    </div>
+                                    {cartProduct}
+                                </div>
+                                <div className="cart__order">
+                                    <p className="cart__total">
+                                        Общая сумма: {getTotalPrice} сом
+                                    </p>
+                                    <button className="cart__btn" onClick={() => {
+                                        setShow(true);
+                                        setOrder(true);
+                                    }}>Оформить заказ</button>
+                                </div>
+                            </> : <p style={{textAlign: "center"}}>Ваша корзина пуста</p>
+                    }
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

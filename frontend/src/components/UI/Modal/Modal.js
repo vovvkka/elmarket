@@ -3,7 +3,7 @@ import Backdrop from "../Backdrop/Backdrop";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser, registerUser} from "../../../store/actions/usersActions";
 
-const Modal = ({show, closed, login, register, forgot}) => {
+const Modal = ({show, closed, login, register, forgot, order}) => {
     const dispatch = useDispatch();
     const LoginError = useSelector(state => state.users.loginError);
     const RegisterError = useSelector(state => state.users.registerError);
@@ -11,6 +11,11 @@ const Modal = ({show, closed, login, register, forgot}) => {
         username: "",
         password: "",
         email: "",
+    });
+
+    const [customer, setCustomer] = useState({
+        customer: "",
+        phone: ""
     });
 
     const onCloseModal = () => {
@@ -32,15 +37,19 @@ const Modal = ({show, closed, login, register, forgot}) => {
         }
     };
 
-    const inputChangeHandler = e => {
+    const inputUserChangeHandler = e => {
         const {name, value} = e.target;
         setUser(prev => ({...prev, [name]: value}));
+    };
+
+    const inputCustomerChangeHandler = e => {
+        const {name, value} = e.target;
+        setCustomer(prev => ({...prev, [name]: value}));
     };
 
     let children = null;
     let icon = null;
 
-    console.log(children)
 
     if (login) {
         icon = (
@@ -81,7 +90,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                         autoComplete="off"
                         className="modal__input"
                         value={user.email}
-                        onChange={inputChangeHandler}
+                        onChange={inputUserChangeHandler}
                     />
                 </div>
                 <div className="modal__input-block">
@@ -92,7 +101,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                         autoComplete="off"
                         className="modal__input"
                         value={user.password}
-                        onChange={inputChangeHandler}
+                        onChange={inputUserChangeHandler}
                     />
                 </div>
                 <div className="modal__links">
@@ -134,7 +143,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                         autoComplete="off"
                         className="modal__input"
                         value={user?.username}
-                        onChange={inputChangeHandler}
+                        onChange={inputUserChangeHandler}
                     />
                 </div>
 
@@ -146,7 +155,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                         autoComplete="off"
                         className="modal__input"
                         value={user?.email}
-                        onChange={inputChangeHandler}
+                        onChange={inputUserChangeHandler}
                     />
                 </div>
 
@@ -158,11 +167,54 @@ const Modal = ({show, closed, login, register, forgot}) => {
                         autoComplete="off"
                         className="modal__input"
                         value={user?.password}
-                        onChange={inputChangeHandler}
+                        onChange={inputUserChangeHandler}
                     />
                 </div>
             </div>
         );
+    }
+
+    if (order) {
+        icon = (
+            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M15.359 0.640237C15.0258 0.228959 14.5071 0 13.9294 0H3.44544C2.88034 0 2.35319 0.228959 2.01581 0.640237C1.60675 1.0388 1.38745 1.56031 1.38745 2.13271V3.74815H0.354244C0.181339 3.74391 0 3.91774 0 4.08734C0 4.32902 0.181339 4.49862 0.354244 4.49862H1.38745V7.66165H0.354244C0.181339 7.66165 0 7.83125 0 8.01781C0 8.24253 0.181339 8.41213 0.354244 8.41213H1.38745V11.5752H0.354244C0.181339 11.5794 0 11.7575 0 11.9271C0 12.156 0.181339 12.3256 0.354244 12.3256H1.38745V15.5014H0.354244C0.181339 15.5056 0 15.6752 0 15.8448C0 16.0738 0.181339 16.2434 0.354244 16.2434H1.38745V17.8588C1.38745 18.4397 1.60675 18.9485 2.01581 19.3598C2.35319 19.7583 2.88034 20 3.44122 20H13.9251C14.5029 20 15.0258 19.7583 15.359 19.3598C15.7596 18.9485 15.9958 18.4354 15.9958 17.8588V2.13271C16 1.56031 15.7596 1.0388 15.359 0.640237ZM15.3126 17.8588C15.3126 18.2701 15.1439 18.6093 14.9162 18.8382C14.621 19.135 14.2836 19.3089 13.9294 19.3089H3.44544C3.10385 19.3089 2.75382 19.1393 2.47127 18.8382C2.24354 18.6093 2.07486 18.2658 2.07486 17.8588V16.2434H2.47127C2.69478 16.2434 2.80865 16.0738 2.80865 15.8448C2.80865 15.6752 2.69478 15.5014 2.47127 15.5014H2.07486V12.3256H2.47127C2.69478 12.3256 2.80865 12.1518 2.80865 11.9271C2.80865 11.7575 2.69478 11.5752 2.47127 11.5752H2.07486V8.41213H2.47127C2.69478 8.41213 2.80865 8.24253 2.80865 8.01781C2.80865 7.83125 2.69478 7.66165 2.47127 7.66165H2.07486V4.49862H2.47127C2.69478 4.49862 2.80865 4.32902 2.80865 4.08734C2.80865 3.91774 2.69478 3.74815 2.47127 3.74815H2.07486V2.13271C2.07486 1.73415 2.24354 1.37799 2.47127 1.15328C2.7496 0.873437 3.09963 0.699597 3.44544 0.699597H13.9294C14.2794 0.699597 14.621 0.873437 14.9162 1.15328C15.1481 1.38223 15.3126 1.73415 15.3126 2.13271V17.8588Z" fill="#423F40"/>
+                <path fillRule="evenodd" clipRule="evenodd" d="M13.3642 2.82369C13.2503 2.65409 13.0817 2.59473 12.8413 2.59473H4.53342C4.30569 2.59473 4.13279 2.65409 4.02736 2.82369C3.85445 2.93817 3.79541 3.10776 3.79541 3.3452V7.71239C3.79541 7.95831 3.85445 8.1279 4.02736 8.24238C4.137 8.41198 4.30569 8.47134 4.53342 8.47134H12.8413C13.0817 8.47134 13.2503 8.41198 13.3642 8.24238C13.4739 8.1279 13.5877 7.95831 13.5877 7.71239V3.3452C13.5877 3.10776 13.4696 2.93817 13.3642 2.82369ZM12.8919 8.00918C12.8919 8.00918 12.8919 8.00919 12.8413 8.07279H4.53342C4.53342 8.07279 4.53342 8.07279 4.47438 8.07279C4.47438 8.00919 4.47438 8.00918 4.47438 8.00918V3.34944V3.29432C4.53342 3.29432 4.53342 3.29432 4.53342 3.29432H12.8413C12.8919 3.29432 12.8919 3.35368 12.8919 3.35368V8.00918Z" fill="#F05A22"/>
+            </svg>
+        );
+
+        children = (
+            <div className="modal__body">
+                {RegisterError && (
+                    <div className="alert alert--error">
+                        Error! {RegisterError.error}
+                    </div>
+                )}
+
+                <div className="modal__input-block">
+                    <label>ФИО</label>
+                    <input
+                        type="text"
+                        name="customer"
+                        autoComplete="off"
+                        className="modal__input"
+                        value={customer?.customer}
+                        onChange={inputCustomerChangeHandler}
+                    />
+                </div>
+
+                <div className="modal__input-block">
+                    <label>Телефон</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        autoComplete="off"
+                        className="modal__input"
+                        value={customer?.phone}
+                        onChange={inputCustomerChangeHandler}
+                    />
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -184,6 +236,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                             {login && "Авторизация"}
                             {register && "Регистрация"}
                             {forgot && "Восстановление пароля"}
+                            {order && "Оформление заказа"}
                         </h2>
                     </div>
 
@@ -194,6 +247,7 @@ const Modal = ({show, closed, login, register, forgot}) => {
                             {login && "Войти"}
                             {register && "Зарегестрироваться"}
                             {forgot && "Восстановление пароля"}
+                            {order && "Заказать"}
                         </button>
                     </div>
 

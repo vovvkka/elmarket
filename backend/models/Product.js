@@ -48,7 +48,7 @@ const ProductSchema = new Schema({
         required: true,
         default: false
     },
-    isNew: {
+    isNovelty: {
         type: Boolean,
         required: true,
         default: false

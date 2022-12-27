@@ -61,8 +61,6 @@ router.post("/", async (req, res) => {
             return {...i, price: item.price};
         }));
 
-        console.log(orderWithPrice)
-
         const orderData = {
             customer,
             phone,

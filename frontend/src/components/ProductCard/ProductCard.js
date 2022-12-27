@@ -10,8 +10,7 @@ import {addProduct} from "../../store/slices/cartSlice";
 
 const ProductCard = ({product}) => {
     const dispatch = useDispatch();
-    const [amount, setAmount] = useState(0);
-    console.log(product);
+    const [amount, setAmount] = useState(1);
 
     return product && (
         <div className='product-card'>

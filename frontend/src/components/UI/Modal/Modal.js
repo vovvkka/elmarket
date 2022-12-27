@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import Backdrop from "../Backdrop/Backdrop";
 import {useDispatch, useSelector} from "react-redux";
 import {loginUser, registerUser} from "../../../store/actions/usersActions";
+import {addOrder} from "../../../store/actions/ordersActions";
 
 const Modal = ({show, closed, login, register, forgot, order}) => {
     const dispatch = useDispatch();
     const LoginError = useSelector(state => state.users.loginError);
     const RegisterError = useSelector(state => state.users.registerError);
+    const products = useSelector(state => state.cart.products);
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -34,6 +36,10 @@ const Modal = ({show, closed, login, register, forgot, order}) => {
         if (register) {
             await dispatch(registerUser({...user}));
             onCloseModal();
+        }
+
+        if (order) {
+            await dispatch(addOrder({customer, products}));
         }
     };
 

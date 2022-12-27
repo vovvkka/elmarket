@@ -1,0 +1,27 @@
+import axiosApi from "../../axiosApi";
+import { historyPush } from "./historyActions";
+import {
+    addOrderFailure,
+    addOrderRequest,
+    addOrderSuccess,
+} from "../slices/ordersSlice";
+
+export const addOrder = orderData => {
+    return async (dispatch) => {
+        try {
+            console.log(orderData)
+            dispatch(addOrderRequest());
+            await axiosApi.post("/orders", orderData);
+            dispatch(addOrderSuccess());
+
+            dispatch(historyPush("/order-place/success"));
+
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(addOrderFailure(e.response.data));
+            } else {
+                dispatch(addOrderFailure({ global: "No internet" }));
+            }
+        }
+    };
+};

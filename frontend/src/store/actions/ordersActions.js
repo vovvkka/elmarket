@@ -9,12 +9,11 @@ import {
 export const addOrder = orderData => {
     return async (dispatch) => {
         try {
-            console.log(orderData)
             dispatch(addOrderRequest());
             await axiosApi.post("/orders", orderData);
             dispatch(addOrderSuccess());
 
-            dispatch(historyPush("/order-place/success"));
+            dispatch(historyPush("/"));
 
         } catch (e) {
             if (e.response && e.response.data) {

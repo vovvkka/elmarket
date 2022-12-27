@@ -39,7 +39,13 @@ const Modal = ({show, closed, login, register, forgot, order}) => {
         }
 
         if (order) {
-            await dispatch(addOrder({customer, products}));
+            const order = products.map(p => ({
+                product: p._id,
+                amount: p.amount,
+            }));
+            const orderObj = { ...customer, order };
+
+            await dispatch(addOrder(orderObj));
         }
     };
 

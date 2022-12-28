@@ -13,6 +13,16 @@ router.get('/:id',auth,permit('admin'), async (req, res) => {
     }
 });
 
+router.get('/', auth, async (req, res) => {
+    try {
+        const user = await User.findOne(req.user);
+        const {username, email, phone, additionalPhone, city, street, house, flat} = user;
+        res.send({username, email, phone, additionalPhone, city, street, house, flat});
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
 router.post('/', async (req, res) => {
     const {password, email, username} = req.body;
 
@@ -24,6 +34,18 @@ router.post('/', async (req, res) => {
         await user.save();
 
         res.send(user);
+    } catch (e) {
+        res.status(400).send({error: e.errors});
+    }
+});
+
+router.put('/', auth, async (req, res) => {
+    const {username, email, phone, additionalPhone, city, street, house, flat} = req.body;
+
+    try {
+        const userData = {username, email, phone, additionalPhone, city, street, house, flat};
+        const updated = await User.updateOne(req.user, userData);
+        res.send(updated);
     } catch (e) {
         res.status(400).send({error: e.errors});
     }

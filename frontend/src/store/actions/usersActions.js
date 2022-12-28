@@ -1,4 +1,4 @@
-import axiosApi from "../../axiosApi";
+import axiosApi from '../../axiosApi';
 import {
     loginFailure,
     loginRequest,
@@ -6,11 +6,16 @@ import {
     logoutRequest,
     logoutSuccess,
     logoutFailure,
-    registerRequest, registerSuccess, registerFailure
-} from "../slices/usersSlice";
+    registerRequest,
+    registerSuccess,
+    registerFailure,
+    editProfileFailure,
+    editProfileSuccess,
+    editProfileRequest, getProfileRequest, getProfileSuccess, getProfileFailure,
+} from '../slices/usersSlice';
 
-export const registerUser = userData => {
-    return async dispatch => {
+export const registerUser = (userData) => {
+    return async (dispatch) => {
         try {
             dispatch(registerRequest());
 
@@ -21,14 +26,14 @@ export const registerUser = userData => {
             if (e.response && e.response.data) {
                 dispatch(registerFailure(e.response.data));
             } else {
-                dispatch(registerFailure({global: 'No internet'}));
+                dispatch(registerFailure({ global: 'No internet' }));
             }
         }
     };
 };
 
-export const loginUser = userData => {
-    return async dispatch => {
+export const loginUser = (userData) => {
+    return async (dispatch) => {
         try {
             dispatch(loginRequest());
 
@@ -40,15 +45,49 @@ export const loginUser = userData => {
                 dispatch(loginFailure(e.response.data));
                 throw e;
             } else {
-                dispatch(loginFailure({global: 'No internet'}));
+                dispatch(loginFailure({ global: 'No internet' }));
                 throw e;
             }
         }
     };
 };
 
+export const editProfile = (userData) => {
+    return async (dispatch) => {
+        try {
+            dispatch(editProfileRequest());
+
+            await axiosApi.put('/users', userData);
+
+            dispatch(editProfileSuccess());
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(editProfileFailure(e.response.data));
+                throw e;
+            } else {
+                dispatch(editProfileFailure({ global: 'No internet' }));
+                throw e;
+            }
+        }
+    };
+};
+
+export const getProfile = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(getProfileRequest());
+
+            const response = await axiosApi('/users');
+
+            dispatch(getProfileSuccess(response.data));
+        } catch (e) {
+            dispatch(getProfileFailure(e));
+        }
+    };
+};
+
 export const logoutUser = () => {
-    return async dispatch => {
+    return async (dispatch) => {
         try {
             dispatch(logoutRequest());
 

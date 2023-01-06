@@ -58,8 +58,9 @@
     li {
       color: $white;
       line-height: 18px;
-      margin-bottom: 8px;
-      word-break: break-all;
+      margin-bottom: 10px;
+      word-break: break-word;
+      max-width: 280px;
 
       &:hover {
         cursor: pointer;

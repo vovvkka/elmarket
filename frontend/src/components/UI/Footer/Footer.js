@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import logo from "../../../assets/logo.png";
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getPopularCategories} from "../../../store/actions/categoriesActions";
 
 const Footer = () => {
+    const dispatch = useDispatch();
+    const popularCategories = useSelector(state => state.categories.popularCategories);
+
+    useEffect(() => {
+        dispatch(getPopularCategories());
+    }, [dispatch]);
+
+    const categoriesList = popularCategories.map(c => (
+        <li>{c.title}</li>
+    ));
+
     return (
         <div className="footer">
             <div className="footer__container">
@@ -42,14 +55,7 @@ const Footer = () => {
                 <div className="footer__bottom">
                     <ul className="footer__nav">
                         <li className="footer__nav-first">Популярные разделы</li>
-
-                        <li>Розетки и выключатели</li>
-                        <li>Звонки и домофоны</li>
-                        <li>Автоматические выключатели</li>
-                        <li>УЗО Дифференциальные автоматы</li>
-                        <li>Кросс-модули</li>
-                        <li>Кабель провод</li>
-                        <li>Светильники корпуса шкафов</li>
+                        {categoriesList}
                     </ul>
                     <ul className="footer__nav">
                         <li className="footer__nav-first">Покупателям</li>
@@ -102,7 +108,7 @@ const Footer = () => {
                         </li>
                     </ul>
                     <ul className="footer__nav">
-                        <li>Контакты и реквизиты</li>
+                        <li className="footer__nav-first">Контакты и реквизиты</li>
                         <li>+(996) 777-77-11-07</li>
                         <li>+(996)709-40-39-55</li>
                         <li>Electromarket.kg@gmail.com</li>

@@ -7,13 +7,15 @@ import thunk from "redux-thunk";
 import productsSlice from "./slices/productsSlice";
 import cartSlice from "./slices/cartSlice";
 import ordersSlice from "./slices/ordersSlice";
+import categoriesSlice from "./slices/categoriesSlice";
 
 
 const rootReducer = combineReducers({
     users: usersSlice.reducer,
     products: productsSlice.reducer,
     cart: cartSlice.reducer,
-    orders: ordersSlice.reducer
+    orders: ordersSlice.reducer,
+    categories: categoriesSlice.reducer,
 });
 
 const persistedState = loadFromLocalStorage();

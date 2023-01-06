@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 router.get('/popular', async (req, res) => {
     try {
-        const categories = await Category.find({isPopular: true}).limit(6);
+        const categories = await Category.find({isPopular: true}).limit(8);
         res.send(categories);
     } catch (e) {
         res.status(500).send(e);

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo-mobile.png';
 import search from '../../../assets/svg/search.svg';
 import cart from '../../../assets/svg/cart.svg';
-import burger from '../../../assets/svg/burger.svg';
+import AppDrawer from "../AppDrawer/AppDrawer";
 
 const HeaderMobile = ({ mainPage }) => {
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
@@ -35,11 +35,7 @@ const HeaderMobile = ({ mainPage }) => {
                                 alt=""
                             />
                         </Link>
-                        <img
-                            className="header__user-icon"
-                            src={burger}
-                            alt=""
-                        />
+                        <AppDrawer/>
                     </div>
                 </div>
             </div>

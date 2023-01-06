@@ -1,21 +1,35 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Anonymous from '../Anonymous/Anonymous';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '../../../store/actions/usersActions';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {logoutUser} from '../../../store/actions/usersActions';
 import logo from '../../../assets/logo.png';
 import cabinet from '../../../assets/svg/cabinet.svg';
 import logout from '../../../assets/svg/logout.svg';
 import phone from '../../../assets/svg/phone.svg';
 import arrow from '../../../assets/svg/arrow.svg';
 import cart from '../../../assets/svg/cart.svg';
-import search from '../../../assets/svg/search.svg';
+import searchIcon from '../../../assets/svg/search.svg';
+import {historyPush} from "../../../store/actions/historyActions";
 
 const HeaderDesktop = ({ mainPage }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
     const products = useSelector((state) => state.cart.products);
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
+
+    const [search, setSearch] = useState('');
+
+    const searchHandler = (e) => {
+        e.preventDefault();
+
+        if (search) {
+            setSearch('');
+            dispatch(historyPush('/catalog?search=' + search));
+        } else {
+            dispatch(historyPush('/catalog'));
+        }
+    };
 
     return (
         <div className={classes.join(' ')}>
@@ -102,16 +116,20 @@ const HeaderDesktop = ({ mainPage }) => {
                             draggable={false}
                         />
                     </Link>
-                    <div className="search">
+                    <form className="search" onSubmit={searchHandler}>
                         <input
                             className="search__input"
                             placeholder="поиск по каталогу"
                             type="text"
+                            onChange={(e) => setSearch(e.target.value)}
                         />
-                        <div className="search__button">
-                            <img src={search} alt="Search" />
-                        </div>
-                    </div>
+                        <button className="search__button" type='submit'>
+                            <img
+                                src={searchIcon}
+                                alt="Search"
+                            />
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

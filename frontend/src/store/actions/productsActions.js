@@ -7,12 +7,12 @@ import {
     fetchProductsSuccess
 } from "../slices/productsSlice";
 
-export const fetchProducts = () => {
+export const fetchProducts = (query) => {
     return async dispatch => {
         try {
             dispatch(fetchProductsRequest());
 
-            const response = await axiosApi('/products');
+            const response = await axiosApi(`/products/${query ? query : ''}`);
 
             dispatch(fetchProductsSuccess(response.data));
         } catch (e) {

@@ -4,7 +4,20 @@ const Product = require("../models/Product");
 
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find({}, 'title price inStock image discount');
+        const query = {};
+        let products;
+
+        if (req.query.search) {
+            query.title = {
+                $regex: req.query.search,
+                $options: 'i'
+            };
+
+            products = await Product.find(query, 'title price inStock image discount');
+        } else {
+            products = await Product.find({}, 'title price inStock image discount');
+        }
+
         res.send(products);
     } catch (e) {
         res.status(500).send(e);

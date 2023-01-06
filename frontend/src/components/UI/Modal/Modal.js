@@ -9,6 +9,7 @@ const Modal = ({show, closed, login, register, forgot, order}) => {
     const LoginError = useSelector(state => state.users.loginError);
     const RegisterError = useSelector(state => state.users.registerError);
     const products = useSelector(state => state.cart.products);
+    const userData = useSelector(state => state.users.user);
     const [user, setUser] = useState({
         username: "",
         password: "",
@@ -43,7 +44,10 @@ const Modal = ({show, closed, login, register, forgot, order}) => {
                 product: p._id,
                 amount: p.amount,
             }));
+
             const orderObj = { ...customer, order };
+
+            if (userData) orderObj.userId = userData._id;
 
             await dispatch(addOrder(orderObj));
         }

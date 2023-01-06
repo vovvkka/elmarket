@@ -49,7 +49,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
     try {
-        const {customer, phone, order} = req.body;
+        const {userId, customer, phone, order} = req.body;
 
         if (!customer || !phone || !order) {
             return res.status(400).send({error: "Data not valid"});
@@ -62,10 +62,12 @@ router.post("/", async (req, res) => {
         }));
 
         const orderData = {
+            userId,
             customer,
             phone,
             order: orderWithPrice,
         };
+
 
         const newOrder = new Order(orderData);
         await newOrder.save();

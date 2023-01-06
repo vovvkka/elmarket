@@ -20,6 +20,10 @@ const ProductsSchema = new Schema({
 });
 
 const OrderSchema  = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
     customer: {
         type: String,
         required: true,

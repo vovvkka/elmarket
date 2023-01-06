@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo-mobile.png';
 import search from '../../../assets/svg/search.svg';
-import heart from '../../../assets/svg/heart.svg';
 import cart from '../../../assets/svg/cart.svg';
 import burger from '../../../assets/svg/burger.svg';
 
@@ -29,7 +28,6 @@ const HeaderMobile = ({ mainPage }) => {
                             src={search}
                             alt=""
                         />
-                        <img className="header__user-icon" src={heart} alt="" />
                         <Link to="/cart" className="clickable">
                             <img
                                 className="header__user-icon"

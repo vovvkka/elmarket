@@ -8,7 +8,6 @@ import cabinet from '../../../assets/svg/cabinet.svg';
 import logout from '../../../assets/svg/logout.svg';
 import phone from '../../../assets/svg/phone.svg';
 import arrow from '../../../assets/svg/arrow.svg';
-import heart from '../../../assets/svg/heart.svg';
 import cart from '../../../assets/svg/cart.svg';
 import search from '../../../assets/svg/search.svg';
 
@@ -82,9 +81,6 @@ const HeaderDesktop = ({ mainPage }) => {
                         </Link>
                     </ul>
                     <div className="header__user-icons">
-                        <div className="header__user-icon">
-                            <img src={heart} alt="Liked" />
-                        </div>
                         <div className="header__user-icon">
                             <Link to="/cart" className="clickable">
                                 <img src={cart} alt="Cart" />

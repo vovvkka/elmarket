@@ -34,8 +34,10 @@ const run = async () => {
 
     const [c1, c2, c3, c4, c5, c6, c7, c8, c9] = await Category.create({
         title: "Кабель, провод",
+        isPopular: true,
     }, {
         title: "Светодиодные светильники LED, Лампы",
+        isPopular: true,
     }, {
         title: "Силовые разъемы, вилки, колодки электрические",
     }, {
@@ -46,8 +48,10 @@ const run = async () => {
         title: "Обогрев труб и кровли, терморегуляторы",
     }, {
         title: "Розетки и выключатели",
+        isPopular: true,
     } , {
         title: "Инстуремнты и прочее",
+        isPopular: true,
     }, {
         title: "Кабельные лотки, металлические крепежи",
     }, );

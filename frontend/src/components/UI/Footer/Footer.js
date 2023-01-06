@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from "../../../assets/logo.png";
+import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -40,7 +41,8 @@ const Footer = () => {
                 </div>
                 <div className="footer__bottom">
                     <ul className="footer__nav">
-                        <li>Популярные разделы</li>
+                        <li className="footer__nav-first">Популярные разделы</li>
+
                         <li>Розетки и выключатели</li>
                         <li>Звонки и домофоны</li>
                         <li>Автоматические выключатели</li>
@@ -50,12 +52,24 @@ const Footer = () => {
                         <li>Светильники корпуса шкафов</li>
                     </ul>
                     <ul className="footer__nav">
-                        <li>Покупателям</li>
-                        <li>Оплата</li>
-                        <li>Условия доставки</li>
-                        <li>Гарантия и возврат</li>
-                        <li>Акции</li>
-                        <li>Контакты</li>
+                        <li className="footer__nav-first">Покупателям</li>
+
+                        <Link to="/payment">
+                            <li>Оплата</li>
+                        </Link>
+                        <Link to="/delivery">
+                            <li>Условия доставки</li>
+                        </Link>
+                        <Link to="/warranty">
+                            <li>Гарантия и возврат</li>
+                        </Link>
+                        <Link to="/payment">
+                            <li>Акции</li>
+                        </Link>
+                        <Link to="/payment">
+                            <li>Контакты</li>
+                        </Link>
+
                         <li className="footer__contacts-mobile">
                             <h2 className="footer__contacts-title">Мы в соц сетях</h2>
                             <div className="footer__icons">

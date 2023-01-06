@@ -6,6 +6,11 @@ const CategorySchema = new Schema({
         type: String,
         required: true
     },
+    isPopular: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
     image: String,
 });
 

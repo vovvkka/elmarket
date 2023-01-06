@@ -13,7 +13,7 @@ const Footer = () => {
     }, [dispatch]);
 
     const categoriesList = popularCategories.map(c => (
-        <li>{c.title}</li>
+        <li key={c._id}>{c.title}</li>
     ));
 
     return (

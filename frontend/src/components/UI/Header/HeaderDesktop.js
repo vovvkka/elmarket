@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Anonymous from '../Anonymous/Anonymous';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import {logoutUser} from '../../../store/actions/usersActions';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../../store/actions/usersActions';
 import logo from '../../../assets/logo.png';
 import cabinet from '../../../assets/svg/cabinet.svg';
 import logout from '../../../assets/svg/logout.svg';
@@ -10,7 +10,8 @@ import phone from '../../../assets/svg/phone.svg';
 import arrow from '../../../assets/svg/arrow.svg';
 import cart from '../../../assets/svg/cart.svg';
 import searchIcon from '../../../assets/svg/search.svg';
-import {historyPush} from "../../../store/actions/historyActions";
+import admin from '../../../assets/svg/admin.svg';
+import { historyPush } from '../../../store/actions/historyActions';
 
 const HeaderDesktop = ({ mainPage }) => {
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const HeaderDesktop = ({ mainPage }) => {
                                 className="header__phone-icon"
                                 src={phone}
                                 alt="Phone"
+                                width={20}
                             />
                             <div className="header__numbers">
                                 <p className="header__number">
@@ -58,9 +60,26 @@ const HeaderDesktop = ({ mainPage }) => {
                     </div>
                     {user ? (
                         <div className="header__user-menu">
-                            <Link to="/profile">
-                                <img src={cabinet} alt="Profile" />
-                            </Link>
+                            {user?.role === 'admin' ? (
+                                <>
+                                    <p>Вы вошли как <Link to='/admin/products'>администратор</Link></p>
+                                    <Link to='/admin/products'>
+                                        <img
+                                            src={admin}
+                                            alt="Electromarket.kg"
+                                            className="logo"
+                                            draggable={false}
+                                            width={35}
+                                        />
+                                    </Link>
+                                </>
+                            ) : null}
+                            {user?.role !== 'admin' && (
+                                <Link to="/profile">
+                                    <img src={cabinet} alt="Profile" />
+                                </Link>
+                            )}
+
                             <img
                                 src={logout}
                                 alt="Logout"
@@ -96,14 +115,16 @@ const HeaderDesktop = ({ mainPage }) => {
                     </ul>
                     <div className="header__user-icons">
                         <div className="header__user-icon">
-                            <Link to="/cart" className="clickable">
-                                <img src={cart} alt="Cart" />
-                                {products.length ? (
-                                    <div className="header__badge">
-                                        {products.length}
-                                    </div>
-                                ) : null}
-                            </Link>
+                            {user?.role !== 'admin' && (
+                                <Link to="/cart" className="clickable">
+                                    <img src={cart} alt="Cart" />
+                                    {products.length ? (
+                                        <div className="header__badge">
+                                            {products.length}
+                                        </div>
+                                    ) : null}
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -123,11 +144,8 @@ const HeaderDesktop = ({ mainPage }) => {
                             type="text"
                             onChange={(e) => setSearch(e.target.value)}
                         />
-                        <button className="search__button" type='submit'>
-                            <img
-                                src={searchIcon}
-                                alt="Search"
-                            />
+                        <button className="search__button" type="submit">
+                            <img src={searchIcon} alt="Search" />
                         </button>
                     </form>
                 </div>

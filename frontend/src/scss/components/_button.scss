@@ -1,0 +1,16 @@
+@import '../variables';
+
+.button {
+    background: $orange;
+    border: none;
+    color: $white;
+    font-weight: 600;
+    padding: 15px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+        background: $dark-orange;
+    }
+}

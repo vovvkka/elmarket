@@ -1,0 +1,64 @@
+@import '../variables';
+@import '../libs/breakpoints';
+
+.admin {
+  padding: 15px 0;
+
+  &__page {
+    display: flex;
+
+    @include media ("<phone") {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  &__menu {
+    ul {
+      width: 200px;
+    }
+
+    li {
+      width: 100%;
+
+      a {
+        width: 100%;
+        padding: 15px 10px;
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        cursor: pointer;
+        background-color: #d2d2d2;
+        border-radius: 5px;
+        font-weight: 600;
+        color: #212121;
+        transition: background-color 0.1s ease-in-out;
+
+        img {
+          margin-right: 15px;
+          filter: invert(100%);
+        }
+
+        &:hover {
+          background-color: #ababab;
+        }
+      }
+    }
+
+    .active {
+      background-color: $orange;
+      color: $white;
+      -webkit-transition: all 0.2s linear;
+      -ms-transition: all 0.2s linear;
+      transition: all 0.2s linear;
+
+      img {
+        filter: none;
+      }
+
+      &:hover {
+        background-color: $orange;
+      }
+    }
+  }
+}

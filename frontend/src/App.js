@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {Redirect, Route, Switch} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 import Layout from './components/UI/Layout/Layout';
 import MainPage from './containers/MainPage';
 import NotFound from './containers/NotFound';
@@ -15,7 +15,6 @@ import SingleProduct from './containers/SingleProduct';
 import Feedback from './containers/Feedback';
 import Cart from './containers/Cart';
 import Admin from './containers/Admin';
-import AddProduct from "./containers/AddProduct";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -50,12 +49,6 @@ const App = () => {
                     isAllowed={user?.role === 'admin'}
                     redirectTo="/"
                 />
-                {/*<ProtectedRoute*/}
-                {/*    path="/add-product"*/}
-                {/*    component={AddProduct}*/}
-                {/*    isAllowed={user?.role === 'admin'}*/}
-                {/*    redirectTo="/"*/}
-                {/*/>*/}
                 <Route component={NotFound} />
             </Switch>
         </Layout>

@@ -13,6 +13,18 @@ const categoriesSlice = createSlice({
     name,
     initialState,
     reducers: {
+        fetchCategoriesRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        fetchCategoriesSuccess(state, {payload: categories}) {
+            state.loading = false;
+            state.categories = categories;
+        },
+        fetchCategoriesFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
         fetchCategoriesPopularRequest(state) {
             state.loading = true;
             state.error = null;
@@ -29,6 +41,9 @@ const categoriesSlice = createSlice({
 });
 
 export const {
+    fetchCategoriesRequest,
+    fetchCategoriesSuccess,
+    fetchCategoriesFailure,
     fetchCategoriesPopularRequest,
     fetchCategoriesPopularSuccess,
     fetchCategoriesPopularFailure

@@ -6,12 +6,18 @@ import {
     fetchCategoriesPopularSuccess, fetchCategoriesRequest, fetchCategoriesSuccess
 } from "../slices/categoriesSlice";
 
-export const fetchCategories = () => {
+export const fetchCategories = query => {
     return async dispatch => {
         try {
             dispatch(fetchCategoriesRequest());
 
-            const response = await axiosApi.get('/categories');
+            let response;
+
+            if (query) {
+                response = await axiosApi.get('/categories' + query);
+            } else {
+                response = await axiosApi.get('/categories');
+            }
 
             dispatch(fetchCategoriesSuccess(response.data));
         } catch (e) {

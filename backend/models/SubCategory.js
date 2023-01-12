@@ -10,7 +10,11 @@ const SubCategorySchema = new Schema({
         type: String,
         required: true
     },
-    image: String,
+    isPopular: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 const SubCategory = mongoose.model('SubCategory', SubCategorySchema);

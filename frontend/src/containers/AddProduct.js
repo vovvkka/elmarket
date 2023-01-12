@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCategories} from "../store/actions/categoriesActions";
 
 const AddProduct = () => {
+    const dispatch = useDispatch();
+    // const categories = useSelector(state => state.categories.categories);
     const [product, setProduct] = useState({
+        category: '',
         title: '',
         code: '',
         description: '',
@@ -12,8 +17,13 @@ const AddProduct = () => {
         discount: '',
     });
 
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
 
         setProduct((prev) => ({
             ...prev,
@@ -26,6 +36,9 @@ const AddProduct = () => {
             <div className="product-form">
                 <h2 className="product-form__title">Добавить товар</h2>
                 <form>
+                    <div className="product-form__row">
+                        <label>Категория</label>
+                    </div>
                     <div className="product-form__row product-form__row--sm">
                         <label>Артикул</label>
                         <input

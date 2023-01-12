@@ -1,3 +1,4 @@
+require('./SubCategory.js');
 const mongoose = require("mongoose");
 const SubCategory = require('./SubCategory.js');
 const Schema = mongoose.Schema;
@@ -12,7 +13,10 @@ const CategorySchema = new Schema({
         required: true,
         default: false,
     },
-    image: String,
+    image: {
+        type: String,
+        default: null
+    },
 });
 
 CategorySchema.virtual('subCategories', {

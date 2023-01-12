@@ -6,6 +6,8 @@ import categories from '../assets/svg/category.svg';
 import orders from '../assets/svg/orders.svg';
 import contacts from '../assets/svg/contactsBook.svg';
 import AddProduct from './AddProduct';
+import AdminCategories from "./AdminCategories";
+import AddCategory from "./AddCategory";
 
 const listItems = [
     {
@@ -14,7 +16,7 @@ const listItems = [
         label: 'Товары',
     },
     {
-        path: ['/admin/categories'],
+        path: ['/admin/categories', '/admin/add-category'],
         icon: categories,
         label: 'Категории',
     },
@@ -44,8 +46,8 @@ const Admin = () => {
                 <div className="admin__page">
                     <div className="admin__menu">
                         <ul>
-                            {listItems.map((item) => (
-                                <li>
+                            {listItems.map((item, idx) => (
+                                <li key={item.label + idx}>
                                     <Link
                                         to={item.path[0]}
                                         className={`admin__link ${
@@ -67,6 +69,8 @@ const Admin = () => {
                     </div>
                     <Route path="/admin/products" component={AdminProducts} />
                     <Route path="/admin/add-product" component={AddProduct} />
+                    <Route path="/admin/categories" component={AdminCategories} />
+                    <Route path="/admin/add-category" component={AddCategory} />
                 </div>
             </div>
         </div>

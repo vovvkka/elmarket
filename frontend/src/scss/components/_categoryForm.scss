@@ -26,6 +26,16 @@
     }
   }
 
+  &__check {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+
+    label {
+      width: 170px;
+    }
+  }
+
   &__input-xl {
     width: 600px;
   }
@@ -38,4 +48,15 @@
       border: 1px solid #969696 !important;
     }
   }
+}
+
+.custom-file-input {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid $dark-gray;
+  cursor: pointer;
+  padding: 6px 0;
+  text-align: center;
 }

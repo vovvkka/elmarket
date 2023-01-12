@@ -1,10 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const Category = require("../models/Category");
+const permit = require("../middlewares/permit");
+const auth = require("../middlewares/auth");
+const path = require("path");
+const multer = require("multer");
+const {nanoid} = require("nanoid");
+const config = require("nodemon/lib/config");
+const SubCategory = require("../models/SubCategory");
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, config.uploadPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, nanoid() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
-
         if (req.query.toOptions) {
             const categories = await Category.find();
 
@@ -31,6 +48,36 @@ router.get('/popular', async (req, res) => {
     }
 });
 
+router.post('/', auth, permit('admin'), upload.single('image'), async (req, res) => {
+    try {
+        const {title, category, isPopular} = req.body;
+
+        const categoryData = {
+            title,
+            parentCategory: category,
+            isPopular,
+            image: null,
+        };
+
+        if (req.file) {
+            categoryData.image = 'uploads/' + req.file.filename;
+        }
+
+        if (category) {
+            const newCategory = new SubCategory(categoryData);
+            await newCategory.save();
+
+            res.send(category);
+        } else {
+            const newCategory = new Category(categoryData);
+            await newCategory.save();
+
+            res.send(category);
+        }
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
 
 
 module.exports = router;

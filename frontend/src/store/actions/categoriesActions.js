@@ -1,10 +1,13 @@
 import axiosApi from "../../axiosApi";
 import {
+    createCategoryFailure,
+    createCategoryRequest, createCategorySuccess,
     fetchCategoriesFailure,
     fetchCategoriesPopularFailure,
     fetchCategoriesPopularRequest,
     fetchCategoriesPopularSuccess, fetchCategoriesRequest, fetchCategoriesSuccess
 } from "../slices/categoriesSlice";
+import {historyPush} from "./historyActions";
 
 export const fetchCategories = query => {
     return async dispatch => {
@@ -21,11 +24,7 @@ export const fetchCategories = query => {
 
             dispatch(fetchCategoriesSuccess(response.data));
         } catch (e) {
-            if (e.response && e.response.data) {
-                dispatch(fetchCategoriesFailure(e.response.data));
-            } else {
-                dispatch(fetchCategoriesFailure({global: 'No internet'}));
-            }
+            dispatch(fetchCategoriesFailure(e));
         }
     };
 };
@@ -41,3 +40,22 @@ export const getPopularCategories = () => {
         }
     };
 };
+
+export const createCategory = categoryData => {
+    return async dispatch => {
+        try {
+            dispatch(createCategoryRequest());
+
+            await axiosApi.post("/categories", categoryData);
+
+            dispatch(createCategorySuccess());
+            dispatch(historyPush("/admin/categories"));
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(createCategoryFailure(e.response.data));
+            } else {
+                dispatch(createCategoryFailure({global: 'No internet'}));
+            }
+        }
+    }
+}

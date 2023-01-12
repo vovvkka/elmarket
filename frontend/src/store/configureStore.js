@@ -8,6 +8,7 @@ import productsSlice from "./slices/productsSlice";
 import cartSlice from "./slices/cartSlice";
 import ordersSlice from "./slices/ordersSlice";
 import categoriesSlice from "./slices/categoriesSlice";
+import watchListSlice from "./slices/watchListSlice";
 
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     cart: cartSlice.reducer,
     orders: ordersSlice.reducer,
     categories: categoriesSlice.reducer,
+    watchList: watchListSlice.reducer,
 });
 
 const persistedState = loadFromLocalStorage();

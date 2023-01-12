@@ -15,7 +15,6 @@ const SubCategorySchema = new Schema({
         required: true,
         default: false,
     },
-    image: String,
 });
 
 const SubCategory = mongoose.model('SubCategory', SubCategorySchema);

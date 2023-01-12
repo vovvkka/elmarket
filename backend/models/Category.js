@@ -12,7 +12,10 @@ const CategorySchema = new Schema({
         required: true,
         default: false,
     },
-    image: String,
+    image: {
+        type: String,
+        default: null
+    },
 });
 
 CategorySchema.virtual('subCategories', {

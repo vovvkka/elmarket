@@ -6,7 +6,7 @@ const auth = require("../middlewares/auth");
 const path = require("path");
 const multer = require("multer");
 const {nanoid} = require("nanoid");
-const config = require("nodemon/lib/config");
+const config = require("../config");
 const SubCategory = require("../models/SubCategory");
 
 const storage = multer.diskStorage({
@@ -54,21 +54,21 @@ router.post('/', auth, permit('admin'), upload.single('image'), async (req, res)
 
         const categoryData = {
             title,
-            parentCategory: category,
             isPopular,
-            image: null,
         };
 
-        if (req.file) {
-            categoryData.image = 'uploads/' + req.file.filename;
-        }
+        if (category && category !== "Без категории") {
+            categoryData.parentCategory = category;
 
-        if (category) {
             const newCategory = new SubCategory(categoryData);
             await newCategory.save();
 
-            res.send(category);
+            return res.send(category);
         } else {
+            if (req.file) {
+                categoryData.image = 'uploads/' + req.file.filename;
+            }
+
             const newCategory = new Category(categoryData);
             await newCategory.save();
 

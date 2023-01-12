@@ -12,10 +12,19 @@ const AddCategory = () => {
         image: '',
         isPopular: false,
     });
+    const [options, setOptions] = useState([]);
 
     useEffect(() => {
         dispatch(fetchCategories("?toOptions=true"));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (categories) {
+            setOptions(() => {
+                return [{label: "Без категории", value: "Без категории"}, ...categories];
+            });
+        }
+    }, [categories]);
 
     const submitFormHandler = e => {
         e.preventDefault();
@@ -62,7 +71,7 @@ const AddCategory = () => {
                         <Select
                             value={categoryData.category}
                             onChange={onChangeCategory}
-                            options={categories}
+                            options={options}
                             className="category-form__select"
                         />
                     </div>
@@ -76,19 +85,23 @@ const AddCategory = () => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className="category-form__row">
-                        <label>Фото</label>
+                    {
+                        (categoryData.category === "Без категории" || !categoryData.category) && (
+                            <div className="category-form__row">
+                                <label>Фото</label>
 
-                        <label className="custom-file-upload">
-                            <input
-                                type="file"
-                                name="image"
-                                className="custom-file-input"
-                                onChange={fileChangeHandler}
-                            />
-                            {categoryData.image? "Файл выбран" : "Выберите файл"}
-                        </label>
-                    </div>
+                                <label className="custom-file-upload">
+                                    <input
+                                        type="file"
+                                        name="image"
+                                        className="custom-file-input"
+                                        onChange={fileChangeHandler}
+                                    />
+                                    {categoryData.image ? "Файл выбран" : "Выберите файл"}
+                                </label>
+                            </div>
+                        )
+                    }
                     <div className="category-form__check">
                         <label>Популярный раздел</label>
                         <input

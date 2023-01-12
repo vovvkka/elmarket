@@ -15,7 +15,7 @@ const ProductCard = ({product}) => {
     return product && (
         <div className='product-card'>
                 <div className='product-card__column'>
-                    <Link to={`catalog/${product._id}`} className="clickable">
+                    <Link to={`/catalog/${product._id}`} className="clickable">
                     <div className='product-card__top'>
                         <div className='product-card__hits'></div>
                         <Rating

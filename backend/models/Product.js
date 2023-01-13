@@ -3,6 +3,23 @@ const idValidator = require('mongoose-id-validator');
 const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
+const RatingSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true,
+    },
+    text: String,
+}, {
+    timestamps: true,
+});
+
 const ProductSchema = new Schema({
     category: {
         ref: 'Category',
@@ -58,6 +75,7 @@ const ProductSchema = new Schema({
         required: true,
         default: 0
     },
+    rating: [RatingSchema],
 });
 
 ProductSchema.plugin(idValidator, {message: 'Bad ID value for {PATH}'});

@@ -1,0 +1,64 @@
+@import '../variables';
+@import '../libs/breakpoints';
+
+.reviews {
+    padding: 45px 0;
+
+    &__upper {
+        display: flex;
+        justify-content: space-between;
+
+        @include media('<=tablet') {
+            flex-direction: column;
+        }
+    }
+
+    &__empty {
+        width: 33%;
+
+        @include media('<=tablet') {
+            display: none;
+        }
+    }
+
+    &__title {
+        text-align: center;
+        width: 33%;
+        text-transform: uppercase;
+        color: $dark-gray;
+
+        @include media('<=tablet') {
+            width: 100%;
+        }
+    }
+
+    &__card {
+        padding: 15px 20px;
+        border: 1px solid #223c5033;
+        margin: 20px 0;
+        box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
+        word-break: break-word;
+    }
+
+    &__rating {
+        margin: 15px;
+    }
+
+    &__button {
+        width: 33%;
+        text-align: right;
+
+        @include media('<=tablet') {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+    }
+
+    &__date {
+        display: block;
+        margin-top: 10px;
+        font-size: 13px;
+        color: $light-grey;
+    }
+}

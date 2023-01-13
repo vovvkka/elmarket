@@ -16,7 +16,7 @@ const run = async () => {
         await mongoose.connection.db.dropCollection(coll.name);
     }
 
-    await User.create({
+    const [admin, user] = await User.create({
         username: 'admin',
         displayName: 'Айбек',
         password: 'admin',
@@ -84,7 +84,7 @@ const run = async () => {
         price: 293,
         amount: 13,
         image: ["fixtures/LegrandEtika1.png", "fixtures/LegrandEtika2.png", "fixtures/LegrandEtika3.png"],
-
+        rating: [{user: admin._id, rating: 5}, {user: user._id, rating: 1}],
         isHit: true,
     }, {
         category: c7._id,
@@ -95,7 +95,7 @@ const run = async () => {
         price: 453,
         amount: 2,
         image: ["fixtures/LegrandValena1.png"],
-
+        rating: [],
         isHit: true,
         discount: 15,
     }, {
@@ -107,7 +107,7 @@ const run = async () => {
         price: 93,
         amount: 0,
         image: ["fixtures/LegrandValena2.png"],
-
+        rating: [],
         isNovelty: true,
     }, {
         category: c9._id,
@@ -117,6 +117,7 @@ const run = async () => {
         code: "92345",
         price: 293,
         amount: 11,
+        rating: [],
         image: ["fixtures/LegrandValena3.png"],
     }, {
         category: c8._id,
@@ -125,6 +126,7 @@ const run = async () => {
         code: "92349",
         price: 190,
         amount: 8,
+        rating: [],
         image: ["fixtures/LegrandValena3.png"],
     });
 

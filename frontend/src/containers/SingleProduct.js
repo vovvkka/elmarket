@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOne } from '../store/actions/productsActions';
 import { apiUrl } from '../config';
 import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
+import { Link } from 'react-router-dom';
 
 const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
@@ -44,28 +45,42 @@ const SingleProduct = ({ match }) => {
                                 <span className="product__price">
                                     {product.price} сом
                                 </span>
-                                <Rating
-                                    className="rating"
-                                    initialRating={1}
-                                    emptySymbol={
-                                        <img
-                                            src={star}
-                                            className="product-card__star"
-                                            alt="empty-star"
+                                {product.rating ? (
+                                    <>
+                                        <Rating
+                                            className="rating"
+                                            initialRating={product.rating}
+                                            emptySymbol={
+                                                <img
+                                                    src={star}
+                                                    className="product-card__star"
+                                                    alt="empty-star"
+                                                />
+                                            }
+                                            fullSymbol={
+                                                <img
+                                                    src={fullStar}
+                                                    className="product-card__star"
+                                                    alt="full-star"
+                                                />
+                                            }
+                                            readonly
                                         />
-                                    }
-                                    fullSymbol={
-                                        <img
-                                            src={fullStar}
-                                            className="product-card__star"
-                                            alt="full-star"
-                                        />
-                                    }
-                                    readonly
-                                />
-                                <span className="product__feedback">
-                                    +27 отзывов
-                                </span>
+                                        <Link
+                                            to={`/reviews/${product._id}`}
+                                            className="product__feedback"
+                                        >
+                                            +{product.ratingCount} отзывов
+                                        </Link>
+                                    </>
+                                ) : user ? (
+                                    <div className="product__no-feedback">
+                                        <p>Пока нет отзывов.</p>
+                                        <Link to={`/feedback/${product._id}`}>
+                                            Добавить отзыв
+                                        </Link>
+                                    </div>
+                                ) : null}
                             </div>
                             <span>
                                 {product.inStock
@@ -107,12 +122,21 @@ const SingleProduct = ({ match }) => {
                             <p>{product.description}</p>
                         </div>
                     </div>
-                    <h3 className="product__recent">Вы недавно посмотрели</h3>
-                    <div className="catalog">
-                        {history.map((product) => (
-                            <ProductCard key={product._id} product={product} />
-                        ))}
-                    </div>
+                    {user && (
+                        <>
+                            <h3 className="product__recent">
+                                Вы недавно посмотрели
+                            </h3>
+                            <div className="catalog">
+                                {history.map((product) => (
+                                    <ProductCard
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         )

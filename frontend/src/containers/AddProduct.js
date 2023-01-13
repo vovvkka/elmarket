@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {createCategory, fetchCategories} from "../store/actions/categoriesActions";
+import {fetchCategories} from "../store/actions/categoriesActions";
 import {TreeSelect} from "antd";
+import {createProduct} from "../store/actions/productsActions";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const AddProduct = () => {
             }
         });
 
-        // dispatch(createCategory(formData));
+        dispatch(createProduct(formData));
     };
 
     const handleChange = (e) => {

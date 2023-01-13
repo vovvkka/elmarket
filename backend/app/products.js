@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Product = require("../models/Product");
-const mongoose = require("mongoose");
-const auth = require("../middlewares/auth");
-const SubCategory = require("../models/SubCategory");
-const Category = require("../models/Category");
 
 router.get('/', async (req, res) => {
     try {
@@ -56,26 +52,31 @@ router.get('/:id', async (req, res) => {
         if (!product[0]) res.status(404).send('Product not found!');
         res.send(product[0]);
     } catch (e) {
-        console.log(e)
         res.status(500).send(e);
     }
 });
 
-router.post('/feedback/:id', auth, async (req, res) => {
+router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
     try {
-        const {rating, text} = req.body;
+        const {category, title, description, code, price, amount, isHit, isNovelty, discount} = req.body;
 
-        const feedbackData = {
-            rating,
-            user: req.user._id,
-            text: text ? text : null,
+        const productData = {
+            category,
+            title,
+            description: description || null,
+            code,
+            price,
+            amount,
+            isHit,
+            isNovelty,
+            discount,
+            image: null
         };
 
-        if (req.params.id) {
-            await Product.findByIdAndUpdate(req.params.id, { $push: { rating: feedbackData } });
+        if (req.files) {
+            productData.image = req.files.map(i => 'uploads/' + i.filename);
         }
 
-        res.send('Success');
     } catch (e) {
         res.status(400).send(e);
     }

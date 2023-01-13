@@ -5,7 +5,9 @@ const name = 'products';
 export const initialState = {
     products: [],
     product: null,
+    createLoading: false,
     loading: false,
+    createError: null,
     error: null,
 };
 
@@ -37,6 +39,17 @@ const productsSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        createProductRequest(state) {
+            state.createLoading = true;
+            state.createError = null;
+        },
+        createProductSuccess(state) {
+            state.createLoading = false;
+        },
+        createProductFailure(state, action) {
+            state.createLoading = false;
+            state.createError = action.payload;
+        },
     }
 });
 
@@ -46,7 +59,10 @@ export const {
     fetchProductsFailure,
     fetchOneRequest,
     fetchOneSuccess,
-    fetchOneFailure
+    fetchOneFailure,
+    createProductRequest,
+    createProductSuccess,
+    createProductFailure
 } = productsSlice.actions;
 
 export default productsSlice;

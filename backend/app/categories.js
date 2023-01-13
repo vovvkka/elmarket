@@ -32,6 +32,20 @@ router.get('/', async (req, res) => {
             return res.send(categoryOptions);
         }
 
+        if (req.query.toTree) {
+            const categories = await Category.find().populate('subCategories', 'title');
+
+            const categoryOptions = categories.map(c => {
+                return {
+                    _id: c._id, title: c.title, value: c._id,
+                     children: c.subCategories?.map(sub => ({_id: sub._id, title: sub.title, value: sub._id}))
+
+                }
+            })
+
+            return res.send(categoryOptions);
+        }
+
         const categories = await Category.find().populate('subCategories', 'title');
         res.send(categories);
     } catch (e) {

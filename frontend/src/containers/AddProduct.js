@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchCategories} from "../store/actions/categoriesActions";
+import {createCategory, fetchCategories} from "../store/actions/categoriesActions";
+import {TreeSelect} from "antd";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    // const categories = useSelector(state => state.categories.categories);
+    const categories = useSelector(state => state.categories.categories);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -15,12 +16,30 @@ const AddProduct = () => {
         isHit: false,
         isNovelty: false,
         discount: '',
+        image: [],
     });
 
 
     useEffect(() => {
-        dispatch(fetchCategories());
+        dispatch(fetchCategories("?toTree=true"));
     }, [dispatch]);
+
+    const submitFormHandler = e => {
+        e.preventDefault();
+        const formData = new FormData();
+
+        Object.keys(product).forEach(key => {
+            if (key === 'image') {
+                product[key].forEach(item => {
+                    formData.append(`image`, item);
+                });
+            } else {
+                formData.append(key, product[key]);
+            }
+        });
+
+        // dispatch(createCategory(formData));
+    };
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -31,13 +50,38 @@ const AddProduct = () => {
         }));
     };
 
+    const onChangeCategory = c => setProduct(prev => ({...prev, category: c}));
+
+    const onChangeChecked = e => {
+        const {name} = e.target;
+
+        setProduct(p => ({...p, [name]: !product[name]}));
+    };
+
+    const fileChangeHandler = e => {
+        const name = e.target.name;
+        const files = e.target.files;
+
+        const toArr = Object.keys(files).map(key => files[key]);
+
+        setProduct(prev => ({...prev, [name]: [...product.image, ...toArr]}));
+    };
+
     return (
         <div className="container-sm">
             <div className="product-form">
                 <h2 className="product-form__title">Добавить товар</h2>
-                <form>
+                <form onSubmit={submitFormHandler}>
                     <div className="product-form__row">
                         <label>Категория</label>
+                        <TreeSelect
+                            value={product.category}
+                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            treeData={categories}
+                            placeholder="Please select"
+                            className="product-form__select"
+                            onChange={onChangeCategory}
+                        />
                     </div>
                     <div className="product-form__row product-form__row--sm">
                         <label>Артикул</label>
@@ -66,6 +110,20 @@ const AddProduct = () => {
                             value={product.description}
                             onChange={(e) => handleChange(e)}
                         />
+                    </div>
+                    <div className="category-form__row">
+                        <label>Фото</label>
+
+                        <label className="custom-file-upload">
+                            <input
+                                type="file"
+                                name="image"
+                                className="custom-file-input"
+                                onChange={fileChangeHandler}
+                                multiple
+                            />
+                            {product.image.length ? `Выбрано файлов - ${product.image.length}` : "Выберите файл"}
+                        </label>
                     </div>
                     <div className='product-form__double'>
                         <div className="product-form__double-row">
@@ -97,7 +155,7 @@ const AddProduct = () => {
                             type="checkbox"
                             name="isHit"
                             checked={product.isHit}
-                            onChange={(e) => handleChange(e)}
+                            onChange={onChangeChecked}
                         />
                     </div>
                     <div className="product-form__check">
@@ -106,7 +164,7 @@ const AddProduct = () => {
                             type="checkbox"
                             name="isNovelty"
                             checked={product.isNovelty}
-                            onChange={(e) => handleChange(e)}
+                            onChange={onChangeChecked}
                         />
                     </div>
                     <div className="product-form__row">

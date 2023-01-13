@@ -57,5 +57,5 @@ export const createCategory = categoryData => {
                 dispatch(createCategoryFailure({global: 'No internet'}));
             }
         }
-    }
-}
+    };
+};

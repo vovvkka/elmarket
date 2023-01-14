@@ -1,9 +1,15 @@
 import axiosApi from "../../axiosApi";
 import {
     createProductFailure,
-    createProductRequest, createProductSuccess, editProductFailure, editProductRequest, editProductSuccess,
+    createProductRequest,
+    createProductSuccess, deleteProductFailure,
+    deleteProductRequest, deleteProductSuccess,
+    editProductFailure,
+    editProductRequest,
+    editProductSuccess,
     fetchOneFailure,
-    fetchOneRequest, fetchOneSuccess,
+    fetchOneRequest,
+    fetchOneSuccess,
     fetchProductsFailure,
     fetchProductsRequest,
     fetchProductsSuccess
@@ -78,6 +84,20 @@ export const editProduct = (id, productData) => {
             } else {
                 dispatch(editProductFailure({global: 'No internet'}));
             }
+        }
+    };
+};
+
+export const deleteProduct = id => {
+    return async dispatch => {
+        try {
+            dispatch(deleteProductRequest());
+
+            await axiosApi.delete("/products/" + id);
+
+            dispatch(deleteProductSuccess(id));
+        } catch (e) {
+            dispatch(deleteProductFailure(e));
         }
     };
 };

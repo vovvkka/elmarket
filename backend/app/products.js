@@ -206,4 +206,19 @@ router.put('/:id', auth, permit('admin'), upload.array('image', 5), async (req, 
     }
 );
 
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).send({message: 'Product not found!'});
+        }
+
+        await Product.deleteOne(product);
+        res.send({message: "Продукт успешно удален!"});
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
 module.exports = router;

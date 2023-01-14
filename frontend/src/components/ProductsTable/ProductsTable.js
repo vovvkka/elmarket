@@ -2,8 +2,12 @@ import React from 'react';
 import deleteIcon from '../../assets/svg/delete.svg';
 import edit from '../../assets/svg/edit.svg';
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {deleteProduct} from "../../store/actions/productsActions";
 
 const ProductsTable = ({ products }) => {
+    const dispatch = useDispatch();
+
     return (
         <div className='table'>
             <table>
@@ -43,6 +47,7 @@ const ProductsTable = ({ products }) => {
                                         src={deleteIcon}
                                         alt="Удалить"
                                         width={30}
+                                        onClick={() => dispatch(deleteProduct(product._id))}
                                     />
                                 </div>
                             </td>

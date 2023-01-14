@@ -76,6 +76,8 @@ const ProductSchema = new Schema({
         default: 0
     },
     rating: [RatingSchema],
+}, {
+    timestamps: true,
 });
 
 ProductSchema.plugin(idValidator, {message: 'Bad ID value for {PATH}'});

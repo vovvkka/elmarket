@@ -7,7 +7,7 @@
   &__page {
     display: flex;
 
-    @include media ("<phone") {
+    @include media ("<desktop") {
       flex-direction: column;
       gap: 20px;
     }

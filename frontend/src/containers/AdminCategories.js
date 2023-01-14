@@ -6,7 +6,7 @@ const AdminCategories = () => {
         <div className='admin-categories'>
             <div className='admin-categories__upper'>
                 <h2 className='admin-categories__title'>Категории</h2>
-                <Link className="button" to='/admin/add-category'>Добавить категория</Link>
+                <Link className="button" to='/admin/add-category'>Добавить категорию</Link>
             </div>
         </div>
     );

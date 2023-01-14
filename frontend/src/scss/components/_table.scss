@@ -1,0 +1,27 @@
+@import '../libs/breakpoints';
+
+.table {
+  overflow: auto;
+  margin-top: 15px;
+
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-around;
+
+    @include media('<desktop') {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}

@@ -73,14 +73,18 @@ const SingleProduct = ({ match }) => {
                                             +{product.ratingCount} отзывов
                                         </Link>
                                     </>
-                                ) : user ? (
+                                ) : (
                                     <div className="product__no-feedback">
                                         <p>Пока нет отзывов.</p>
-                                        <Link to={`/feedback/${product._id}`}>
-                                            Добавить отзыв
-                                        </Link>
+                                        {user && (
+                                            <Link
+                                                to={`/feedback/${product._id}`}
+                                            >
+                                                Добавить отзыв
+                                            </Link>
+                                        )}
                                     </div>
-                                ) : null}
+                                )}
                             </div>
                             <span>
                                 {product.inStock

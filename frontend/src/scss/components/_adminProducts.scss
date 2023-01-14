@@ -4,7 +4,7 @@
     margin: 10px 40px;
     width: 100%;
 
-    @include media('<phone') {
+    @include media('<desktop') {
         flex-direction: column;
         margin: 0;
     }

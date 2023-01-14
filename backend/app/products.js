@@ -7,7 +7,7 @@ const permit = require('../middlewares/permit');
 const path = require('path');
 const multer = require('multer');
 const config = require('../config');
-const { nanoid } = require('nanoid');
+const {nanoid} = require('nanoid');
 const Category = require('../models/Category');
 const SubCategory = require('../models/SubCategory');
 
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage });
+const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
@@ -34,21 +34,21 @@ router.get('/', async (req, res) => {
             };
 
             products = await Product.aggregate([
-                { $match: query },
+                {$match: query},
                 {
                     $addFields: {
-                        rating: { $avg: '$rating.rating' },
-                        ratingCount: { $size: '$rating' },
+                        rating: {$avg: '$rating.rating'},
+                        ratingCount: {$size: '$rating'},
                     },
                 },
             ]);
         } else {
             (products = await Product.aggregate([
-                { $match: query },
+                {$match: query},
                 {
                     $addFields: {
-                        rating: { $avg: '$rating.rating' },
-                        ratingCount: { $size: '$rating' },
+                        rating: {$avg: '$rating.rating'},
+                        ratingCount: {$size: '$rating'},
                     },
                 },
             ]));
@@ -78,11 +78,11 @@ router.get('/feedback/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const product = await Product.aggregate([
-            { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
+            {$match: {_id: mongoose.Types.ObjectId(req.params.id)}},
             {
                 $addFields: {
-                    rating: { $avg: '$rating.rating' },
-                    ratingCount: { $size: '$rating' },
+                    rating: {$avg: '$rating.rating'},
+                    ratingCount: {$size: '$rating'},
                 },
             },
         ]);
@@ -90,29 +90,33 @@ router.get('/:id', async (req, res) => {
         if (!product[0]) res.status(404).send('Product not found!');
         res.send(product[0]);
     } catch (e) {
-        console.log(e)
         res.status(500).send(e);
     }
 });
 
-router.post(
-    '/',
-    auth,
-    permit('admin'),
-    upload.array('image', 5),
-    async (req, res) => {
+router.get('/admin/:id', async (req, res) => {
+    try {
+        const product = await Product
+            .findById({_id: req.params.id})
+            .select("_id category subCategory title description code price amount image isHit isNovelty discount")
+
+        if (product.subCategory) {
+            product.category = product.subCategory;
+        }
+
+        product.subCategory = null;
+
+
+        if (!product) res.status(404).send('Product not found!');
+        res.send(product);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
         try {
-            const {
-                category,
-                title,
-                description,
-                code,
-                price,
-                amount,
-                isHit,
-                isNovelty,
-                discount,
-            } = req.body;
+            const {category, title, description, code, price, amount, isHit, isNovelty, discount} = req.body;
 
             const productData = {
                 category: '',
@@ -147,12 +151,55 @@ router.post(
                 );
             }
 
-            console.log(productData);
-
             const newProduct = new Product(productData);
             await newProduct.save();
 
             res.send(newProduct);
+        } catch (e) {
+            res.status(400).send(e);
+        }
+    }
+);
+
+router.put('/:id', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
+        try {
+            const {category, title, description, code, price, amount, isHit, isNovelty, discount} = req.body;
+
+            const productData = {
+                category: '',
+                subCategory: '',
+                title,
+                description: description || null,
+                code,
+                price,
+                amount,
+                isHit,
+                isNovelty,
+                discount,
+                image: null,
+            };
+
+            const isLeafCategory = await Category.findById(category);
+
+            if (isLeafCategory) {
+                productData.category = isLeafCategory._id;
+            } else {
+                const subCategory = await SubCategory.findById(category);
+
+                if (subCategory) {
+                    productData.category = subCategory.parentCategory;
+                    productData.subCategory = subCategory._id;
+                }
+            }
+
+            if (req.files) {
+                productData.image = req.files.map(
+                    (i) => 'uploads/' + i.filename
+                );
+            }
+
+            const updateProduct = await Product.findByIdAndUpdate(req.params.id, productData);
+            res.send(updateProduct);
         } catch (e) {
             res.status(400).send(e);
         }

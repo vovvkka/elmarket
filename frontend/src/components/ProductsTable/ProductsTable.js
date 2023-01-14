@@ -1,6 +1,7 @@
 import React from 'react';
 import deleteIcon from '../../assets/svg/delete.svg';
 import edit from '../../assets/svg/edit.svg';
+import {Link} from "react-router-dom";
 
 const ProductsTable = ({ products }) => {
     return (
@@ -30,11 +31,14 @@ const ProductsTable = ({ products }) => {
                             <td>{product.price}</td>
                             <td>
                                 <div className="table__actions">
-                                    <img
-                                        src={edit}
-                                        alt="Редактировать"
-                                        width={35}
-                                    />
+                                    <Link to={"/admin/edit-product/" + product._id}>
+                                        <img
+                                            src={edit}
+                                            alt="Редактировать"
+                                            width={35}
+                                        />
+                                    </Link>
+
                                     <img
                                         src={deleteIcon}
                                         alt="Удалить"

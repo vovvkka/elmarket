@@ -50,6 +50,17 @@ const productsSlice = createSlice({
             state.createLoading = false;
             state.createError = action.payload;
         },
+        editProductRequest(state) {
+            state.createLoading = true;
+            state.createError = null;
+        },
+        editProductSuccess(state) {
+            state.createLoading = false;
+        },
+        editProductFailure(state, action) {
+            state.createLoading = false;
+            state.createError = action.payload;
+        },
     }
 });
 
@@ -62,7 +73,10 @@ export const {
     fetchOneFailure,
     createProductRequest,
     createProductSuccess,
-    createProductFailure
+    createProductFailure,
+    editProductRequest,
+    editProductSuccess,
+    editProductFailure,
 } = productsSlice.actions;
 
 export default productsSlice;

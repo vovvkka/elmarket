@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories} from "../store/actions/categoriesActions";
 import {TreeSelect} from "antd";
-import {createProduct} from "../store/actions/productsActions";
+import {createProduct, editProduct, fetchOne} from "../store/actions/productsActions";
 
-const AddProduct = () => {
+const AddProduct = ({match}) => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.categories.categories);
+    const oneProduct = useSelector(state => state.products.product);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -25,6 +26,18 @@ const AddProduct = () => {
         dispatch(fetchCategories("?toTree=true"));
     }, [dispatch]);
 
+    useEffect(() => {
+        if (!!match.params.id) {
+            dispatch(fetchOne(match.params.id, "admin"));
+        }
+    }, [match.params.id]);
+
+    useEffect(() => {
+        if (oneProduct) {
+            setProduct(oneProduct);
+        }
+    }, [oneProduct]);
+
     const submitFormHandler = e => {
         e.preventDefault();
         const formData = new FormData();
@@ -39,7 +52,11 @@ const AddProduct = () => {
             }
         });
 
-        dispatch(createProduct(formData));
+        if (!!match.params.id) {
+            dispatch(editProduct(match.params.id, formData))
+        } else {
+            dispatch(createProduct(formData));
+        }
     };
 
     const handleChange = (e) => {
@@ -65,13 +82,13 @@ const AddProduct = () => {
 
         const toArr = Object.keys(files).map(key => files[key]);
 
-        setProduct(prev => ({...prev, [name]: [...product.image, ...toArr]}));
+        setProduct(prev => ({...prev, [name]: toArr}));
     };
 
     return (
         <div className="container-sm">
             <div className="product-form">
-                <h2 className="product-form__title">Добавить товар</h2>
+                <h2 className="product-form__title">{match.params.id? "Редактировать" : "Добавить"} товар</h2>
                 <form onSubmit={submitFormHandler}>
                     <div className="product-form__row">
                         <label>Категория</label>
@@ -80,6 +97,7 @@ const AddProduct = () => {
                             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                             treeData={categories}
                             placeholder="Please select"
+                            treeDefaultExpandAll={!!match.params.id}
                             className="product-form__select"
                             onChange={onChangeCategory}
                         />
@@ -123,7 +141,7 @@ const AddProduct = () => {
                                 onChange={fileChangeHandler}
                                 multiple
                             />
-                            {product.image.length ? `Выбрано файлов - ${product.image.length}` : "Выберите файл"}
+                            {product.image?.length ? `Выбрано файлов - ${product.image.length}` : "Выберите файл"}
                         </label>
                     </div>
                     <div className='product-form__double'>
@@ -178,7 +196,7 @@ const AddProduct = () => {
                             className="product-form__input-xs"
                         />
                     </div>
-                    <button className='button'>Добавить</button>
+                    <button className='button'>{match.params.id? "Сохранить" : "Добавить товар"}</button>
                 </form>
             </div>
         </div>

@@ -1,14 +1,13 @@
 import axiosApi from "../../axiosApi";
 import {
     createProductFailure,
-    createProductRequest, createProductSuccess,
+    createProductRequest, createProductSuccess, editProductFailure, editProductRequest, editProductSuccess,
     fetchOneFailure,
     fetchOneRequest, fetchOneSuccess,
     fetchProductsFailure,
     fetchProductsRequest,
     fetchProductsSuccess
 } from "../slices/productsSlice";
-import {createCategoryFailure, createCategoryRequest, createCategorySuccess} from "../slices/categoriesSlice";
 import {historyPush} from "./historyActions";
 
 export const fetchProducts = (query) => {
@@ -25,12 +24,18 @@ export const fetchProducts = (query) => {
     };
 };
 
-export const fetchOne = (id) => {
+export const fetchOne = (id, query) => {
     return async dispatch => {
         try {
             dispatch(fetchOneRequest());
 
-            const response = await axiosApi('/products/' + id);
+            let response;
+
+            if (query) {
+                response = await axiosApi('/products/admin/' + id);
+            } else {
+                response = await axiosApi('/products/' + id);
+            }
 
             dispatch(fetchOneSuccess(response.data));
         } catch (e) {
@@ -53,6 +58,25 @@ export const createProduct = productData => {
                 dispatch(createProductFailure(e.response.data));
             } else {
                 dispatch(createProductFailure({global: 'No internet'}));
+            }
+        }
+    };
+};
+
+export const editProduct = (id, productData) => {
+    return async dispatch => {
+        try {
+            dispatch(editProductRequest());
+
+            await axiosApi.put("/products/" + id, productData);
+
+            dispatch(editProductSuccess());
+            dispatch(historyPush("/admin/products"));
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(editProductFailure(e.response.data));
+            } else {
+                dispatch(editProductFailure({global: 'No internet'}));
             }
         }
     };

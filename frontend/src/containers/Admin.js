@@ -11,7 +11,7 @@ import AddCategory from "./AddCategory";
 
 const listItems = [
     {
-        path: ['/admin/products', '/admin/add-product'],
+        path: ['/admin/products', '/admin/add-product', '/admin/edit-product'],
         icon: products,
         label: 'Товары',
     },
@@ -69,6 +69,7 @@ const Admin = () => {
                     </div>
                     <Route path="/admin/products" component={AdminProducts} />
                     <Route path="/admin/add-product" component={AddProduct} />
+                    <Route path="/admin/edit-product/:id" component={AddProduct} />
                     <Route path="/admin/categories" component={AdminCategories} />
                     <Route path="/admin/add-category" component={AddCategory} />
                 </div>

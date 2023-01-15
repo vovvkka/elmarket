@@ -46,6 +46,13 @@ router.get('/', async (req, res) => {
             return res.send(categoryOptions);
         }
 
+        if (req.query.toTable) {
+            const categories = await Category.find();
+            const subCategories = await SubCategory.find().populate('parentCategory', 'title');
+
+            return res.send([...categories, ...subCategories]);
+        }
+
         const categories = await Category.find().populate('subCategories', 'title');
         res.send(categories);
     } catch (e) {

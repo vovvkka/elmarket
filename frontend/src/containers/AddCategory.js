@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {createCategory, fetchCategories} from "../store/actions/categoriesActions";
+import {createCategory, editCategory, fetchCategories, fetchCategory} from "../store/actions/categoriesActions";
 import {Select} from "antd";
 
-const AddCategory = () => {
+const AddCategory = ({ match }) => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.categories.categories);
+    const category = useSelector(state => state.categories.category);
     const [categoryData, setCategoryData] = useState({
-        category: '',
+        parentCategory: '',
         title: '',
         image: '',
         isPopular: false,
@@ -17,6 +18,18 @@ const AddCategory = () => {
     useEffect(() => {
         dispatch(fetchCategories("?toOptions=true"));
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!!match.params.id) {
+            dispatch(fetchCategory(match.params.id));
+        }
+    }, [match.params.id]);
+
+    useEffect(() => {
+        if (category) {
+            setCategoryData(category);
+        }
+    }, [category]);
 
     useEffect(() => {
         if (categories) {
@@ -34,7 +47,11 @@ const AddCategory = () => {
             formData.append(key, categoryData[key]);
         });
 
-        dispatch(createCategory(formData));
+        if (!!match.params.id) {
+            dispatch(editCategory(match.params.id, formData));
+        } else {
+            dispatch(createCategory(formData));
+        }
     };
 
     const handleChange = (e) => {
@@ -46,7 +63,7 @@ const AddCategory = () => {
         }));
     };
 
-    const onChangeCategory = c => setCategoryData(prev => ({...prev, category: c}));
+    const onChangeCategory = c => setCategoryData(prev => ({...prev, parentCategory: c}));
 
     const onChangeChecked = e => {
         const {name} = e.target;
@@ -64,12 +81,12 @@ const AddCategory = () => {
     return (
         <div className="container-sm">
             <div className="category-form">
-                <h2 className="category-form__title">Добавить категорию</h2>
+                <h2 className="category-form__title">{match.params.id ? "Редактировать" : "Добавить"} категорию</h2>
                 <form onSubmit={submitFormHandler}>
                     <div className="category-form__row">
                         <label>Категория</label>
                         <Select
-                            value={categoryData.category}
+                            value={categoryData.parentCategory}
                             onChange={onChangeCategory}
                             options={options}
                             className="category-form__select"
@@ -86,7 +103,7 @@ const AddCategory = () => {
                         />
                     </div>
                     {
-                        (categoryData.category === "Без категории" || !categoryData.category) && (
+                        (categoryData.parentCategory === "Без категории" || !categoryData.parentCategory) && (
                             <div className="category-form__row">
                                 <label>Фото</label>
 
@@ -111,7 +128,7 @@ const AddCategory = () => {
                             onChange={onChangeChecked}
                         />
                     </div>
-                    <button className='button'>Добавить</button>
+                    <button className='button'>{match.params.id? "Сохранить" : "Добавить"}</button>
                 </form>
             </div>
         </div>

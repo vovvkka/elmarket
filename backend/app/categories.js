@@ -69,22 +69,38 @@ router.get('/popular', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const category = await Category.findById(req.params.id);
+
+        if (!category) {
+            const subCategory = await SubCategory.findById(req.params.id);
+
+            return res.send(subCategory);
+        }
+
+        res.send(category);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
 router.post('/', auth, permit('admin'), upload.single('image'), async (req, res) => {
     try {
-        const {title, category, isPopular} = req.body;
+        const {title, parentCategory, isPopular} = req.body;
 
         const categoryData = {
             title,
             isPopular,
         };
 
-        if (category && category !== "Без категории") {
-            categoryData.parentCategory = category;
+        if (parentCategory && parentCategory !== "Без категории") {
+            categoryData.parentCategory = parentCategory;
 
             const newCategory = new SubCategory(categoryData);
             await newCategory.save();
 
-            return res.send(category);
+            return res.send(categoryData);
         } else {
             if (req.file) {
                 categoryData.image = 'uploads/' + req.file.filename;
@@ -92,6 +108,35 @@ router.post('/', auth, permit('admin'), upload.single('image'), async (req, res)
 
             const newCategory = new Category(categoryData);
             await newCategory.save();
+
+            res.send(categoryData);
+        }
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
+router.put('/:id', auth, permit('admin'), upload.single('image'), async (req, res) => {
+    try {
+        const {title, parentCategory, isPopular} = req.body;
+
+        const categoryData = {
+            title,
+            isPopular,
+        };
+
+        if (parentCategory && parentCategory !== "Без категории") {
+            categoryData.parentCategory = parentCategory;
+
+            const category = await SubCategory.findByIdAndUpdate(req.params.id, categoryData);
+
+            return res.send(category);
+        } else {
+            if (req.file) {
+                categoryData.image = 'uploads/' + req.file.filename;
+            }
+
+            const category = await Category.findByIdAndUpdate(req.params.id, categoryData);
 
             res.send(category);
         }

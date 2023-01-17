@@ -72,6 +72,7 @@ const Admin = () => {
                     <Route path="/admin/edit-product/:id" component={AddProduct} />
                     <Route path="/admin/categories" component={AdminCategories} />
                     <Route path="/admin/add-category" component={AddCategory} />
+                    <Route path="/admin/edit-category/:id" component={AddCategory} />
                 </div>
             </div>
         </div>

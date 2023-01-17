@@ -1,6 +1,7 @@
 import React from 'react';
 import edit from "../../assets/svg/edit.svg";
 import deleteIcon from "../../assets/svg/delete.svg";
+import {Link} from "react-router-dom";
 
 const CategoriesTable = ({categories}) => {
     return (
@@ -15,18 +16,20 @@ const CategoriesTable = ({categories}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {categories.map(c => (
-                    <tr key={c._id}>
-                        <td>{c.parentCategory? c.parentCategory.title : "Нет"}</td>
-                        <td>{c.title}</td>
-                        <td>{c.isPopular? "Да" : "Нет"}</td>
+                {categories.map(category => (
+                    <tr key={category._id}>
+                        <td>{category.parentCategory ? category.parentCategory.title : "Нет"}</td>
+                        <td>{category.title}</td>
+                        <td>{category.isPopular ? "Да" : "Нет"}</td>
                         <td>
                             <div className="table__actions">
-                                <img
-                                    src={edit}
-                                    alt="Редактировать"
-                                    width={35}
-                                />
+                                <Link to={"/admin/edit-category/" + category._id}>
+                                    <img
+                                        src={edit}
+                                        alt="Редактировать"
+                                        width={35}
+                                    />
+                                </Link>
 
                                 <img
                                     src={deleteIcon}

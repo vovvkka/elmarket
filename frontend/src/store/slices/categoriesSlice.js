@@ -5,6 +5,7 @@ const name = 'categories';
 export const initialState = {
     categories: [],
     popularCategories: [],
+    category: null,
     createLoading: false,
     loading: false,
     createError: null,
@@ -39,6 +40,29 @@ const categoriesSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        fetchCategoryRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        fetchCategorySuccess(state, {payload: category}) {
+            state.loading = false;
+            state.category = category;
+        },
+        fetchCategoryFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        editCategoryRequest(state) {
+            state.createLoading = true;
+            state.createError = null;
+        },
+        editCategorySuccess(state) {
+            state.createLoading = false;
+        },
+        editCategoryFailure(state, action) {
+            state.createLoading = false;
+            state.createError = action.payload;
+        },
         createCategoryRequest(state) {
             state.createLoading = true;
             state.createError = null;
@@ -60,6 +84,12 @@ export const {
     fetchCategoriesPopularRequest,
     fetchCategoriesPopularSuccess,
     fetchCategoriesPopularFailure,
+    fetchCategoryRequest,
+    fetchCategorySuccess,
+    fetchCategoryFailure,
+    editCategoryRequest,
+    editCategorySuccess,
+    editCategoryFailure,
     createCategoryRequest,
     createCategorySuccess,
     createCategoryFailure

@@ -8,6 +8,7 @@ const multer = require("multer");
 const {nanoid} = require("nanoid");
 const config = require("../config");
 const SubCategory = require("../models/SubCategory");
+const Product = require("../models/Product");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -147,6 +148,9 @@ router.put('/:id', auth, permit('admin'), upload.single('image'), async (req, re
 
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {
+        await Product.deleteMany({category: req.params.id});
+        await Product.deleteMany({subCategory: req.params.id});
+
         const category = await Category.findById(req.params.id);
 
         if (category) {

@@ -2,13 +2,19 @@ import axiosApi from "../../axiosApi";
 import {
     createCategoryFailure,
     createCategoryRequest,
-    createCategorySuccess, editCategoryFailure, editCategoryRequest, editCategorySuccess,
+    createCategorySuccess,
+    deleteCategoryFailure,
+    deleteCategoryRequest, deleteCategorySuccess,
+    editCategoryFailure,
+    editCategoryRequest,
+    editCategorySuccess,
     fetchCategoriesFailure,
     fetchCategoriesPopularFailure,
     fetchCategoriesPopularRequest,
     fetchCategoriesPopularSuccess,
     fetchCategoriesRequest,
-    fetchCategoriesSuccess, fetchCategoryFailure,
+    fetchCategoriesSuccess,
+    fetchCategoryFailure,
     fetchCategoryRequest,
     fetchCategorySuccess
 } from "../slices/categoriesSlice";
@@ -93,6 +99,20 @@ export const editCategory = (id, categoryData) => {
             } else {
                 dispatch(editCategoryFailure({global: 'No internet'}));
             }
+        }
+    };
+};
+
+export const deleteCategory = id => {
+    return async dispatch => {
+        try {
+            dispatch(deleteCategoryRequest());
+
+            await axiosApi.delete('/categories/' + id);
+
+            dispatch(deleteCategorySuccess(id));
+        } catch (e) {
+            dispatch(deleteCategoryFailure(e));
         }
     };
 };

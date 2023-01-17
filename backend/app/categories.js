@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
             const categoryOptions = categories.map(c => {
                 return {
                     _id: c._id, title: c.title, value: c._id,
-                     children: c.subCategories?.map(sub => ({_id: sub._id, title: sub.title, value: sub._id}))
+                    children: c.subCategories?.map(sub => ({_id: sub._id, title: sub.title, value: sub._id}))
 
                 }
             })
@@ -140,6 +140,24 @@ router.put('/:id', auth, permit('admin'), upload.single('image'), async (req, re
 
             res.send(category);
         }
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    try {
+        const category = await Category.findById(req.params.id);
+
+        if (category) {
+            await Category.deleteOne({_id: req.params.id});
+            return res.send({message: "Категория успешно удалена!"});
+        }
+
+        const subCategory = await SubCategory.findById(req.params.id);
+
+        await subCategory.deleteOne(subCategory);
+        res.send({message: "Подкатегория успешно удалена!"});
     } catch (e) {
         res.status(400).send(e);
     }

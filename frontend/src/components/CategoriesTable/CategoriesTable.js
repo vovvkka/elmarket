@@ -2,8 +2,12 @@ import React from 'react';
 import edit from "../../assets/svg/edit.svg";
 import deleteIcon from "../../assets/svg/delete.svg";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {deleteCategory} from "../../store/actions/categoriesActions";
 
 const CategoriesTable = ({categories}) => {
+    const dispatch = useDispatch();
+
     return (
         <div className='table'>
             <table>
@@ -35,6 +39,7 @@ const CategoriesTable = ({categories}) => {
                                     src={deleteIcon}
                                     alt="Удалить"
                                     width={30}
+                                    onClick={() => dispatch(deleteCategory(category._id))}
                                 />
                             </div>
                         </td>

@@ -74,6 +74,18 @@ const categoriesSlice = createSlice({
             state.createLoading = false;
             state.createError = action.payload;
         },
+        deleteCategoryRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        deleteCategorySuccess(state, action) {
+            state.loading = false;
+            state.categories = [...state.categories.filter(c => c._id !== action.payload)];
+        },
+        deleteCategoryFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
     }
 });
 
@@ -92,7 +104,10 @@ export const {
     editCategoryFailure,
     createCategoryRequest,
     createCategorySuccess,
-    createCategoryFailure
+    createCategoryFailure,
+    deleteCategoryRequest,
+    deleteCategorySuccess,
+    deleteCategoryFailure
 } = categoriesSlice.actions;
 
 export default categoriesSlice;

@@ -24,15 +24,36 @@ const upload = multer({storage});
 
 router.get('/', async (req, res) => {
     try {
+        const {page, limit} = req.query;
         const query = {};
-        let products;
 
         if (req.query.search) {
             query.title = {
                 $regex: req.query.search,
                 $options: 'i',
             };
+        }
 
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+        const totalDocuments = await Product.countDocuments(query);
+        const totalPages = Math.ceil(totalDocuments / limit);
+        let products;
+
+        if (page && limit) {
+            products = await Product.aggregate([
+                {$match: query},
+                {
+                    $addFields: {
+                        rating: {$avg: '$rating.rating'},
+                        ratingCount: {$size: '$rating'},
+                    },
+                },
+                {$skip: skip},
+                {$limit: parseInt(limit)},
+            ]);
+            await Product.populate(products, {path: "category subCategory"});
+            return  res.send({ products, totalPages });
+        } else {
             products = await Product.aggregate([
                 {$match: query},
                 {
@@ -42,21 +63,15 @@ router.get('/', async (req, res) => {
                     },
                 },
             ]);
-        } else {
-            (products = await Product.aggregate([
-                {$match: query},
-                {
-                    $addFields: {
-                        rating: {$avg: '$rating.rating'},
-                        ratingCount: {$size: '$rating'},
-                    },
-                },
-            ]));
-
             await Product.populate(products, {path: "category subCategory"});
+
+            return  res.send({products, totalPages: 0});
+
         }
 
-        res.send(products);
+
+
+
     } catch (e) {
         console.log(e);
         res.status(500).send(e);
@@ -156,6 +171,7 @@ router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, re
 
             res.send(newProduct);
         } catch (e) {
+            console.log(e)
             res.status(400).send(e);
         }
     }

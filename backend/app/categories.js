@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Category = require("../models/Category");
-const permit = require("../middlewares/permit");
-const auth = require("../middlewares/auth");
-const path = require("path");
-const multer = require("multer");
-const {nanoid} = require("nanoid");
-const config = require("../config");
-const SubCategory = require("../models/SubCategory");
-const Product = require("../models/Product");
+const Category = require('../models/Category');
+const permit = require('../middlewares/permit');
+const auth = require('../middlewares/auth');
+const path = require('path');
+const multer = require('multer');
+const { nanoid } = require('nanoid');
+const config = require('../config');
+const SubCategory = require('../models/SubCategory');
+const Product = require('../models/Product');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -19,42 +19,73 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage });
 
 router.get('/', async (req, res) => {
     try {
         if (req.query.toOptions) {
             const categories = await Category.find();
 
-            const categoryOptions = categories.map(c => {
-                return {_id: c._id, label: c.title, value: c._id}
+            const categoryOptions = categories.map((c) => {
+                return { _id: c._id, label: c.title, value: c._id };
             });
 
             return res.send(categoryOptions);
         }
 
         if (req.query.toTree) {
-            const categories = await Category.find().populate('subCategories', 'title');
+            const categories = await Category.find().populate(
+                'subCategories',
+                'title'
+            );
 
-            const categoryOptions = categories.map(c => {
+            const categoryOptions = categories.map((c) => {
                 return {
-                    _id: c._id, title: c.title, value: c._id,
-                    children: c.subCategories?.map(sub => ({_id: sub._id, title: sub.title, value: sub._id}))
-
-                }
-            })
+                    _id: c._id,
+                    title: c.title,
+                    value: c._id,
+                    children: c.subCategories?.map((sub) => ({
+                        _id: sub._id,
+                        title: sub.title,
+                        value: sub._id,
+                    })),
+                };
+            });
 
             return res.send(categoryOptions);
         }
 
         if (req.query.toTable) {
             const categories = await Category.find();
-            const subCategories = await SubCategory.find().populate('parentCategory', 'title');
+            const subCategories = await SubCategory.find().populate(
+                'parentCategory',
+                'title'
+            );
+            const data = [...categories, ...subCategories];
+            const { page, limit } = req.query;
+            console.log(req.query)
 
-            return res.send([...categories, ...subCategories]);
+            if (page && limit) {
+                console.log('here')
+                const skip = (parseInt(page) - 1) * parseInt(limit);
+                const totalCategories = await Category.countDocuments();
+                const totalSub = await SubCategory.countDocuments();
+                const totalPages = Math.ceil(
+                    (totalCategories + totalSub) / limit
+                );
+
+                const paginatedData = data.slice(skip, skip + parseInt(limit));
+                console.log(paginatedData)
+                return res.send({categories: paginatedData, totalPages});
+            } else {
+                return res.send(data);
+            }
         }
 
-        const categories = await Category.find().populate('subCategories', 'title');
+        const categories = await Category.find().populate(
+            'subCategories',
+            'title'
+        );
         res.send(categories);
     } catch (e) {
         res.status(500).send(e);
@@ -63,7 +94,7 @@ router.get('/', async (req, res) => {
 
 router.get('/popular', async (req, res) => {
     try {
-        const categories = await Category.find({isPopular: true}).limit(8);
+        const categories = await Category.find({ isPopular: true }).limit(8);
         res.send(categories);
     } catch (e) {
         res.status(500).send(e);
@@ -86,86 +117,103 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', auth, permit('admin'), upload.single('image'), async (req, res) => {
-    try {
-        const {title, parentCategory, isPopular} = req.body;
+router.post(
+    '/',
+    auth,
+    permit('admin'),
+    upload.single('image'),
+    async (req, res) => {
+        try {
+            const { title, parentCategory, isPopular } = req.body;
 
-        const categoryData = {
-            title,
-            isPopular,
-        };
+            const categoryData = {
+                title,
+                isPopular,
+            };
 
-        if (parentCategory && parentCategory !== "Без категории") {
-            categoryData.parentCategory = parentCategory;
+            if (parentCategory && parentCategory !== 'Без категории') {
+                categoryData.parentCategory = parentCategory;
 
-            const newCategory = new SubCategory(categoryData);
-            await newCategory.save();
+                const newCategory = new SubCategory(categoryData);
+                await newCategory.save();
 
-            return res.send(categoryData);
-        } else {
-            if (req.file) {
-                categoryData.image = 'uploads/' + req.file.filename;
+                return res.send(categoryData);
+            } else {
+                if (req.file) {
+                    categoryData.image = 'uploads/' + req.file.filename;
+                }
+
+                const newCategory = new Category(categoryData);
+                await newCategory.save();
+
+                res.send(categoryData);
             }
-
-            const newCategory = new Category(categoryData);
-            await newCategory.save();
-
-            res.send(categoryData);
+        } catch (e) {
+            res.status(400).send(e);
         }
-    } catch (e) {
-        res.status(400).send(e);
     }
-});
+);
 
-router.put('/:id', auth, permit('admin'), upload.single('image'), async (req, res) => {
-    try {
-        const {title, parentCategory, isPopular} = req.body;
+router.put(
+    '/:id',
+    auth,
+    permit('admin'),
+    upload.single('image'),
+    async (req, res) => {
+        try {
+            const { title, parentCategory, isPopular } = req.body;
 
-        const categoryData = {
-            title,
-            isPopular,
-        };
+            const categoryData = {
+                title,
+                isPopular,
+            };
 
-        if (parentCategory && parentCategory !== "Без категории") {
-            categoryData.parentCategory = parentCategory;
+            if (parentCategory && parentCategory !== 'Без категории') {
+                categoryData.parentCategory = parentCategory;
 
-            const category = await SubCategory.findByIdAndUpdate(req.params.id, categoryData);
+                const category = await SubCategory.findByIdAndUpdate(
+                    req.params.id,
+                    categoryData
+                );
 
-            return res.send(category);
-        } else {
-            if (req.file) {
-                categoryData.image = 'uploads/' + req.file.filename;
+                return res.send(category);
+            } else {
+                if (req.file) {
+                    categoryData.image = 'uploads/' + req.file.filename;
+                }
+
+                const category = await Category.findByIdAndUpdate(
+                    req.params.id,
+                    categoryData
+                );
+
+                res.send(category);
             }
-
-            const category = await Category.findByIdAndUpdate(req.params.id, categoryData);
-
-            res.send(category);
+        } catch (e) {
+            res.status(400).send(e);
         }
-    } catch (e) {
-        res.status(400).send(e);
     }
-});
+);
 
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {
-        await Product.deleteMany({category: req.params.id});
-        await Product.deleteMany({subCategory: req.params.id});
+        await Product.deleteMany({ category: req.params.id });
+        await Product.deleteMany({ subCategory: req.params.id });
 
         const category = await Category.findById(req.params.id);
 
         if (category) {
-            await Category.deleteOne({_id: req.params.id});
-            return res.send({message: "Категория успешно удалена!"});
+            await Category.deleteOne({ _id: req.params.id });
+            return res.send({ message: 'Категория успешно удалена!' });
         }
 
         const subCategory = await SubCategory.findById(req.params.id);
 
         await subCategory.deleteOne(subCategory);
-        res.send({message: "Подкатегория успешно удалена!"});
+        res.send({ message: 'Подкатегория успешно удалена!' });
     } catch (e) {
         res.status(400).send(e);
     }
 });
-
 
 module.exports = router;

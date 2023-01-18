@@ -1,49 +1,56 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {createCategory, editCategory, fetchCategories, fetchCategory} from "../store/actions/categoriesActions";
-import {Select} from "antd";
+import {useDispatch, useSelector} from 'react-redux';
+import {createCategory, editCategory, fetchCategories, fetchCategory,} from '../store/actions/categoriesActions';
+import {Select} from 'antd';
+import {useLocation} from 'react-router-dom';
 
 const AddCategory = ({ match }) => {
     const dispatch = useDispatch();
-    const categories = useSelector(state => state.categories.categories);
-    const category = useSelector(state => state.categories.category);
+    const location = useLocation();
+    const categories = useSelector((state) => state.categories.categories);
+    const category = useSelector((state) => state.categories.category);
+
     const [categoryData, setCategoryData] = useState({
         parentCategory: '',
         title: '',
         image: '',
         isPopular: false,
     });
+
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
-        dispatch(fetchCategories("?toOptions=true"));
+        dispatch(fetchCategories('?toOptions=true'));
     }, [dispatch]);
 
     useEffect(() => {
-        if (!!match.params.id) {
+        if (!!match.params.id && location.pathname !== '/admin/add-category') {
             dispatch(fetchCategory(match.params.id));
         }
-    }, [match.params.id]);
+    }, [dispatch, match.params.id]);
 
     useEffect(() => {
-        if (category) {
+        if (category && location.pathname !== '/admin/add-category') {
             setCategoryData(category);
         }
-    }, [category]);
+    }, [location, category]);
 
     useEffect(() => {
         if (categories) {
             setOptions(() => {
-                return [{label: "Без категории", value: "Без категории"}, ...categories];
+                return [
+                    { label: 'Без категории', value: 'Без категории' },
+                    ...categories,
+                ];
             });
         }
     }, [categories]);
 
-    const submitFormHandler = e => {
+    const submitFormHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
 
-        Object.keys(categoryData).forEach(key => {
+        Object.keys(categoryData).forEach((key) => {
             formData.append(key, categoryData[key]);
         });
 
@@ -55,7 +62,7 @@ const AddCategory = ({ match }) => {
     };
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setCategoryData((prev) => ({
             ...prev,
@@ -63,25 +70,28 @@ const AddCategory = ({ match }) => {
         }));
     };
 
-    const onChangeCategory = c => setCategoryData(prev => ({...prev, parentCategory: c}));
+    const onChangeCategory = (c) =>
+        setCategoryData((prev) => ({ ...prev, parentCategory: c }));
 
-    const onChangeChecked = e => {
-        const {name} = e.target;
+    const onChangeChecked = (e) => {
+        const { name } = e.target;
 
-        setCategoryData(p => ({...p, [name]: !categoryData[name]}));
+        setCategoryData((p) => ({ ...p, [name]: !categoryData[name] }));
     };
 
-    const fileChangeHandler = e => {
+    const fileChangeHandler = (e) => {
         const name = e.target.name;
         const file = e.target.files[0];
 
-        setCategoryData(prevState => ({...prevState, [name]: file}));
+        setCategoryData((prevState) => ({ ...prevState, [name]: file }));
     };
 
     return (
         <div className="container-sm">
             <div className="category-form">
-                <h2 className="category-form__title">{match.params.id ? "Редактировать" : "Добавить"} категорию</h2>
+                <h2 className="category-form__title">
+                    {match.params.id ? 'Редактировать' : 'Добавить'} категорию
+                </h2>
                 <form onSubmit={submitFormHandler}>
                     <div className="category-form__row">
                         <label>Категория</label>
@@ -102,23 +112,24 @@ const AddCategory = ({ match }) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    {
-                        (categoryData.parentCategory === "Без категории" || !categoryData.parentCategory) && (
-                            <div className="category-form__row">
-                                <label>Фото</label>
+                    {(categoryData.parentCategory === 'Без категории' ||
+                        !categoryData.parentCategory) && (
+                        <div className="category-form__row">
+                            <label>Фото</label>
 
-                                <label className="custom-file-upload">
-                                    <input
-                                        type="file"
-                                        name="image"
-                                        className="custom-file-input"
-                                        onChange={fileChangeHandler}
-                                    />
-                                    {categoryData.image ? "Файл выбран" : "Выберите файл"}
-                                </label>
-                            </div>
-                        )
-                    }
+                            <label className="custom-file-upload">
+                                <input
+                                    type="file"
+                                    name="image"
+                                    className="custom-file-input"
+                                    onChange={fileChangeHandler}
+                                />
+                                {categoryData.image
+                                    ? 'Файл выбран'
+                                    : 'Выберите файл'}
+                            </label>
+                        </div>
+                    )}
                     <div className="category-form__check">
                         <label>Популярный раздел</label>
                         <input
@@ -128,7 +139,9 @@ const AddCategory = ({ match }) => {
                             onChange={onChangeChecked}
                         />
                     </div>
-                    <button className='button'>{match.params.id? "Сохранить" : "Добавить"}</button>
+                    <button className="button">
+                        {match.params.id ? 'Сохранить' : 'Добавить'}
+                    </button>
                 </form>
             </div>
         </div>

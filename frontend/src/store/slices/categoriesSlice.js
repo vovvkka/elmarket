@@ -5,6 +5,7 @@ const name = 'categories';
 export const initialState = {
     categories: [],
     popularCategories: [],
+    pages: null,
     category: null,
     createLoading: false,
     loading: false,
@@ -20,9 +21,10 @@ const categoriesSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchCategoriesSuccess(state, {payload: categories}) {
+        fetchCategoriesSuccess(state, {payload}) {
             state.loading = false;
-            state.categories = categories;
+            state.categories = payload.categories;
+            state.pages = payload.totalPages;
         },
         fetchCategoriesFailure(state, action) {
             state.loading = false;

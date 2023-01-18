@@ -5,6 +5,7 @@ const name = 'products';
 export const initialState = {
     products: [],
     product: null,
+    pages: null,
     createLoading: false,
     loading: false,
     createError: null,
@@ -20,7 +21,8 @@ const productsSlice = createSlice({
             state.error = null;
         },
         fetchProductsSuccess(state, {payload: products}) {
-            state.products = products;
+            state.products = products.products;
+            state.pages = products.totalPages;
             state.loading = false;
         },
         fetchProductsFailure(state, action) {

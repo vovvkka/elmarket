@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
 import ProductsTable from '../components/ProductsTable/ProductsTable';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/actions/productsActions';
+import {useSelector} from 'react-redux';
+import Paginate from "../components/UI/Paginate/Paginate";
 
 const AdminProducts = () => {
-    const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
-
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
 
     return (
         <div className="admin-products">
@@ -20,7 +15,12 @@ const AdminProducts = () => {
                     Добавить товар
                 </Link>
             </div>
-            <ProductsTable products={products} />
+            <div>
+                <ProductsTable products={products} />
+                <div className="admin-products__paginate">
+                    <Paginate isProducts limit={4}/>
+                </div>
+            </div>
         </div>
     );
 };

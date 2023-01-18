@@ -16,7 +16,7 @@ const listItems = [
         label: 'Товары',
     },
     {
-        path: ['/admin/categories', '/admin/add-category'],
+        path: ['/admin/categories', '/admin/add-category', '/admin/edit-category'],
         icon: categories,
         label: 'Категории',
     },

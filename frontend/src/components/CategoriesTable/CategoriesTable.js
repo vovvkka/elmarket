@@ -20,7 +20,7 @@ const CategoriesTable = ({categories}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {categories.map(category => (
+                {categories?.map(category => (
                     <tr key={category._id}>
                         <td>{category.parentCategory ? category.parentCategory.title : "Нет"}</td>
                         <td>{category.title}</td>

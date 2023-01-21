@@ -8,6 +8,7 @@ import contacts from '../assets/svg/contactsBook.svg';
 import AddProduct from './AddProduct';
 import AdminCategories from "./AdminCategories";
 import AddCategory from "./AddCategory";
+import AdminOrders from "./AdminOrders";
 
 const listItems = [
     {
@@ -73,6 +74,7 @@ const Admin = () => {
                     <Route path="/admin/categories" component={AdminCategories} />
                     <Route path="/admin/add-category" component={AddCategory} />
                     <Route path="/admin/edit-category/:id" component={AddCategory} />
+                    <Route path="/admin/orders" component={AdminOrders} />
                 </div>
             </div>
         </div>

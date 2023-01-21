@@ -3,9 +3,22 @@ import { historyPush } from "./historyActions";
 import {
     addOrderFailure,
     addOrderRequest,
-    addOrderSuccess,
+    addOrderSuccess, fetchOrdersFailure, fetchOrdersRequest, fetchOrdersSuccess,
 } from "../slices/ordersSlice";
 
+export const fetchOrders = () => {
+    return async dispatch => {
+        try {
+            dispatch(fetchOrdersRequest());
+
+            const response = await axiosApi.get('/orders');
+
+            dispatch(fetchOrdersSuccess(response.data));
+        } catch (e) {
+            dispatch(fetchOrdersFailure(e));
+        }
+    }
+}
 export const addOrder = orderData => {
     return async (dispatch) => {
         try {

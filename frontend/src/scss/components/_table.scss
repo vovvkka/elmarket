@@ -28,4 +28,18 @@
       cursor: pointer;
     }
   }
+
+  &__subFields {
+    font-size: 12px;
+    border-bottom: 1px solid black;
+    padding: 5px 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    span {
+      font-size: 15px;
+    }
+  }
 }

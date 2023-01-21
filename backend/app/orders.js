@@ -1,34 +1,27 @@
 const express = require("express");
-// const auth = require("../middlewares/auth");
-// const permit = require("../middlewares/permit");
+const auth = require("../middlewares/auth");
+const permit = require("../middlewares/permit");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const router = express.Router();
 
-// router.get("/", auth, permit("admin"), async (req, res) => {
-//     try {
-//         const { page, perPage } = req.query;
-//         const query = {};
-//         const options = {
-//             populate: { path: "order.product", select: "title" },
-//             sort: { orderNumber: -1 },
-//             page: parseInt(page) || 1,
-//             limit: parseInt(perPage) || 10,
-//         };
-//
-//         if (req.query.status === "active") {
-//             query.status = { $ne: "Закрыт" };
-//         } else if (req.query.status === "closed") {
-//             query.status = "Закрыт";
-//         }
-//
-//         const orders = await Order.paginate(query, options);
-//
-//         res.send(orders);
-//     } catch (e) {
-//         res.status(500).send(e);
-//     }
-// });
+router.get("/", auth, permit("admin"), async (req, res) => {
+    try {
+        const query = {};
+
+        if (req.query.status === "active") {
+            query.status = { $ne: "Закрыт" };
+        } else if (req.query.status === "closed") {
+            query.status = "Закрыт";
+        }
+
+        const orders = await Order.find(query).populate("order.product");
+
+        res.send(orders);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
 //
 // router.get("/:id", auth, permit("admin"), async (req, res) => {
 //     try {

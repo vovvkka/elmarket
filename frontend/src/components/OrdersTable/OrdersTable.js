@@ -1,8 +1,12 @@
 import React from 'react';
 import deleteIcon from '../../assets/svg/delete.svg';
 import archive from '../../assets/archiveIcon.png';
+import {useDispatch} from "react-redux";
+import {changeOrderStatus, deleteOrder} from "../../store/actions/ordersActions";
 
 const OrdersTable = ({orders, isArchive}) => {
+    const dispatch = useDispatch();
+
     const total = orders?.reduce((acc, rec) => {
         rec?.order.forEach(o => {
             acc += o.amount * o.price;
@@ -53,6 +57,7 @@ const OrdersTable = ({orders, isArchive}) => {
                                             src={archive}
                                             alt="Архивировать"
                                             width={35}
+                                            onClick={() => dispatch(changeOrderStatus(order._id))}
                                         />
                                     }
 
@@ -60,7 +65,7 @@ const OrdersTable = ({orders, isArchive}) => {
                                         src={deleteIcon}
                                         alt="Удалить"
                                         width={30}
-                                        // onClick={() => dispatch(deleteProduct(product._id))}
+                                        onClick={() => dispatch(deleteOrder(order._id))}
                                     />
                                 </div>
                             </td>

@@ -36,6 +36,30 @@ const ordersSlice = createSlice({
             state.loading = false;
             state.createError = action.payload;
         },
+        changeStatusRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        changeStatusSuccess(state, action) {
+            state.loading = false;
+            state.orders = [...state.orders.filter(order => order._id !== action.payload)];
+        },
+        changeStatusFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        deleteOrderRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        deleteOrderSuccess(state, action) {
+            state.loading = false;
+            state.orders = [...state.orders.filter(order => order._id !== action.payload)];
+        },
+        deleteOrderFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
     }
 });
 
@@ -45,7 +69,13 @@ export const {
     fetchOrdersFailure,
     addOrderRequest,
     addOrderSuccess,
-    addOrderFailure
+    addOrderFailure,
+    changeStatusRequest,
+    changeStatusSuccess,
+    changeStatusFailure,
+    deleteOrderRequest,
+    deleteOrderSuccess,
+    deleteOrderFailure
 } = ordersSlice.actions;
 
 export default ordersSlice;

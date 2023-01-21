@@ -3,7 +3,12 @@ import { historyPush } from "./historyActions";
 import {
     addOrderFailure,
     addOrderRequest,
-    addOrderSuccess, fetchOrdersFailure, fetchOrdersRequest, fetchOrdersSuccess,
+    addOrderSuccess, changeStatusFailure,
+    changeStatusRequest,
+    changeStatusSuccess, deleteOrderFailure, deleteOrderRequest, deleteOrderSuccess,
+    fetchOrdersFailure,
+    fetchOrdersRequest,
+    fetchOrdersSuccess,
 } from "../slices/ordersSlice";
 
 export const fetchOrders = query => {
@@ -33,13 +38,36 @@ export const addOrder = orderData => {
             dispatch(addOrderSuccess());
 
             dispatch(historyPush("/"));
-
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(addOrderFailure(e.response.data));
             } else {
                 dispatch(addOrderFailure({ global: "No internet" }));
             }
+        }
+    };
+};
+
+export const changeOrderStatus = id => {
+    return async (dispatch) => {
+        try {
+            dispatch(changeStatusRequest());
+            await axiosApi.put(`/orders/${id}/changeStatus`);
+            dispatch(changeStatusSuccess(id));
+        } catch (e) {
+            dispatch(changeStatusFailure(e));
+        }
+    };
+};
+
+export const deleteOrder = id => {
+    return async (dispatch) => {
+        try {
+            dispatch(deleteOrderRequest());
+            await axiosApi.delete(`/orders/${id}`);
+            dispatch(deleteOrderSuccess(id));
+        } catch (e) {
+            dispatch(deleteOrderFailure(e));
         }
     };
 };

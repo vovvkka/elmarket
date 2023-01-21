@@ -6,12 +6,18 @@ import {
     addOrderSuccess, fetchOrdersFailure, fetchOrdersRequest, fetchOrdersSuccess,
 } from "../slices/ordersSlice";
 
-export const fetchOrders = () => {
+export const fetchOrders = query => {
     return async dispatch => {
         try {
             dispatch(fetchOrdersRequest());
 
-            const response = await axiosApi.get('/orders');
+            let response;
+
+            if (query) {
+                response = await axiosApi.get('/orders' + query);
+            } else {
+                response = await axiosApi.get('/orders');
+            }
 
             dispatch(fetchOrdersSuccess(response.data));
         } catch (e) {

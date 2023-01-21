@@ -17,6 +17,9 @@ router.get("/", auth, permit("admin"), async (req, res) => {
 
         const orders = await Order.find(query).populate("order.product");
 
+        console.log(req.query);
+        console.log(orders);
+
         res.send(orders);
     } catch (e) {
         res.status(500).send(e);

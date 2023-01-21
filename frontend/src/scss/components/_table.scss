@@ -4,6 +4,10 @@
   overflow: auto;
   margin-top: 15px;
 
+  &__orders {
+    text-align: center;
+  }
+
   table {
     width: 100%;
   }
@@ -40,6 +44,35 @@
 
     span {
       font-size: 15px;
+      color: #dc0893;
     }
+  }
+
+  &__sm {
+    max-width: 220px;
+    word-break: break-word;
+  }
+
+  &__xs {
+    width: 20px;
+    word-break: break-all;
+  }
+
+  &__s {
+    width: 180px;
+    font-size: 15px;
+    word-break: break-all;
+  }
+
+  &__date {
+    font-size: 14px;
+  }
+
+  &__green {
+    background: #bceac5;
+  }
+
+  &__red {
+    background: #e3bebe;
   }
 }

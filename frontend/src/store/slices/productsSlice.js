@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const name = 'products';
 
@@ -20,9 +20,11 @@ const productsSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchProductsSuccess(state, {payload: products}) {
-            state.products = products.products;
-            state.pages = products.totalPages;
+        fetchProductsSuccess(state, { payload }) {
+            console.log(payload)
+            state.products = payload.products;
+            state.totalPages = payload.totalPages;
+
             state.loading = false;
         },
         fetchProductsFailure(state, action) {
@@ -33,7 +35,7 @@ const productsSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchOneSuccess(state, {payload: product}) {
+        fetchOneSuccess(state, { payload: product }) {
             state.product = product;
             state.loading = false;
         },
@@ -68,14 +70,16 @@ const productsSlice = createSlice({
             state.error = null;
         },
         deleteProductSuccess(state, action) {
-            state.products = [...state.products.filter(p => p._id !== action.payload)];
+            state.products = [
+                ...state.products.filter((p) => p._id !== action.payload),
+            ];
             state.loading = false;
         },
         deleteProductFailure(state, action) {
             state.loading = false;
             state.error = action.payload;
         },
-    }
+    },
 });
 
 export const {
@@ -93,7 +97,7 @@ export const {
     editProductFailure,
     deleteProductRequest,
     deleteProductSuccess,
-    deleteProductFailure
+    deleteProductFailure,
 } = productsSlice.actions;
 
 export default productsSlice;

@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard/ProductCard";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProducts} from "../store/actions/productsActions";
 import {useLocation} from "react-router-dom";
+import Categories from "../components/UI/Categories/Categories";
 
 const Catalog = () => {
     const dispatch = useDispatch();
@@ -20,8 +21,12 @@ const Catalog = () => {
 
     return (
         <div className='container-sm'>
+            <div className='categories'>
+
+                <Categories/>
+            </div>
             <div className='catalog'>
-                {products.map(product => (
+                {products?.map(product => (
                     <ProductCard key={product._id} product={product}/>
                 ))}
                 {!products.length && <p>Продукты не найдены!</p>}

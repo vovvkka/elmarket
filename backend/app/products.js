@@ -34,6 +34,14 @@ router.get('/', async (req, res) => {
             };
         }
 
+        if (req.query.category) {
+            if (req.query.parent) {
+                query.subCategory = mongoose.Types.ObjectId(req.query.category);
+            } else {
+                query.category = mongoose.Types.ObjectId(req.query.category);
+            }
+        }
+
         const skip = (parseInt(page) - 1) * parseInt(limit);
         const totalDocuments = await Product.countDocuments(query);
         const totalPages = Math.ceil(totalDocuments / limit);

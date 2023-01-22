@@ -23,8 +23,12 @@ const categoriesSlice = createSlice({
         },
         fetchCategoriesSuccess(state, {payload}) {
             state.loading = false;
-            state.categories = payload.categories;
-            state.pages = payload.totalPages;
+            if (payload.totalPages) {
+                state.categories = payload.categories;
+                state.pages = payload.totalPages;
+            } else {
+                state.categories = payload;
+            }
         },
         fetchCategoriesFailure(state, action) {
             state.loading = false;

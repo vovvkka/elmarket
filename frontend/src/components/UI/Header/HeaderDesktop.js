@@ -7,7 +7,6 @@ import logo from '../../../assets/logo.png';
 import cabinet from '../../../assets/svg/cabinet.svg';
 import logout from '../../../assets/svg/logout.svg';
 import phone from '../../../assets/svg/phone.svg';
-import arrow from '../../../assets/svg/arrow.svg';
 import cart from '../../../assets/svg/cart.svg';
 import searchIcon from '../../../assets/svg/search.svg';
 import admin from '../../../assets/svg/admin.svg';
@@ -17,6 +16,7 @@ const HeaderDesktop = ({ mainPage }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
     const products = useSelector((state) => state.cart.products);
+    const contacts = useSelector(state => state.contacts.contacts);
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     const [search, setSearch] = useState('');
@@ -45,17 +45,8 @@ const HeaderDesktop = ({ mainPage }) => {
                                 width={20}
                             />
                             <div className="header__numbers">
-                                <p className="header__number">
-                                    (996) 777-77-11-07
-                                </p>
-                                <p className="header__number">
-                                    (996) 709-40-39-55
-                                </p>
+                                {contacts?.phone?.map(ph => <p className="header__number" key={ph}>{ph}</p>)}
                             </div>
-                        </div>
-                        <p className="header__callback">Обратный звонок</p>
-                        <div className="header__circle">
-                            <img src={arrow} alt="<" />
                         </div>
                     </div>
                     {user ? (

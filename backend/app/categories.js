@@ -63,10 +63,8 @@ router.get('/', async (req, res) => {
             );
             const data = [...categories, ...subCategories];
             const { page, limit } = req.query;
-            console.log(req.query)
 
             if (page && limit) {
-                console.log('here')
                 const skip = (parseInt(page) - 1) * parseInt(limit);
                 const totalCategories = await Category.countDocuments();
                 const totalSub = await SubCategory.countDocuments();
@@ -75,7 +73,6 @@ router.get('/', async (req, res) => {
                 );
 
                 const paginatedData = data.slice(skip, skip + parseInt(limit));
-                console.log(paginatedData)
                 return res.send({categories: paginatedData, totalPages});
             } else {
                 return res.send(data);

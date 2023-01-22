@@ -1,0 +1,80 @@
+@import '../libs/breakpoints';
+@import '../variables';
+
+.admin-contacts {
+    margin: 10px 40px;
+    width: 100%;
+
+    &__upper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media('<tablet') {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    &__edit {
+        padding: 10px 40px;
+        width: 100%;
+
+        @include media('<tablet') {
+            padding: 10px;
+        }
+    }
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 8fr;
+        align-items: flex-start;
+        margin: 30px 0;
+
+        label {
+            width: 150px;
+
+            @include media('<tablet') {
+                width: 100px;
+            }
+        }
+
+        input {
+            background: none;
+            border: 1px solid $dark-gray;
+            padding: 8px 10px;
+            width: 230px;
+            margin-bottom: 5px;
+
+            @include media('<tablet') {
+                width: 130px;
+            }
+        }
+    }
+
+    &__input-field {
+        display: flex;
+    }
+
+    &__delete {
+        border: none;
+        background: none;
+        cursor: pointer;
+        margin: 0 10px;
+    }
+
+    &__button {
+        padding: 5px 15px !important;
+        font-size: 14px !important;
+    }
+
+    &__block {
+        display: flex;
+        margin: 15px 0;
+    }
+
+    &__label {
+        width: 150px;
+        font-weight: 600;
+    }
+}

@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import burger from '../../../assets/svg/burger.svg';
 import logo from '../../../assets/logo.png';
 import Backdrop from '../Backdrop/Backdrop';
+import { useSelector } from 'react-redux';
 
 const AppDrawer = () => {
+    const user = useSelector((state) => state.users.user);
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
@@ -22,13 +24,26 @@ const AppDrawer = () => {
                     />
                 </Link>
             </div>
-            <nav className={sidebar ? 'navbar__nav-menu navbar__nav-menu--active' : 'navbar__nav-menu'}>
+            <nav
+                className={
+                    sidebar
+                        ? 'navbar__nav-menu navbar__nav-menu--active'
+                        : 'navbar__nav-menu'
+                }
+            >
                 <div className="navbar__menu-items" onClick={showSidebar}>
-                    <p className="navbar__close-btn" onClick={showSidebar}>&times;</p>
-                    <div className='navbar__logo'>
+                    <p className="navbar__close-btn" onClick={showSidebar}>
+                        &times;
+                    </p>
+                    <div className="navbar__logo">
                         <img src={logo} alt="" width={200} />
                     </div>
-                    <ul className='navbar__list'>
+                    <ul className="navbar__list">
+                        {user && (
+                            <Link to={user.role === 'admin' ? '/admin/products' : '/profile'}>
+                                <li>Личный кабинет</li>
+                            </Link>
+                        )}
                         <Link to="/sales">
                             <li>Акции</li>
                         </Link>
@@ -48,7 +63,7 @@ const AppDrawer = () => {
                             <li>Доставка</li>
                         </Link>
                         <Link to="/payment">
-                            <li className='navbar__last'>Оплата</li>
+                            <li className="navbar__last">Оплата</li>
                         </Link>
                     </ul>
                 </div>

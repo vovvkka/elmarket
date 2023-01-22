@@ -6,6 +6,7 @@ const User = require('./models/User');
 const Product = require("./models/Product");
 const Category = require("./models/Category");
 const SubCategory = require("./models/SubCategory");
+const Contacts = require("./models/Contacts");
 
 const run = async () => {
     await mongoose.connect(config.mongo.db);
@@ -31,6 +32,13 @@ const run = async () => {
         token: nanoid(),
         role: 'user',
     });
+
+    await Contacts.create({
+        phone: ['+(996) 777-77-11-07', '+(996)709-40-39-55'],
+        email: ['electromarket.kg@gmail.com'],
+        instagramLink: 'https://www.instagram.com/electromarket.kg/'
+    });
+
 
     const [c1, c2, c3, c4, c5, c6, c7, c8, c9] = await Category.create({
         title: "Кабель, провод",

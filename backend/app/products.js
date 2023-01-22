@@ -81,7 +81,6 @@ router.get('/', async (req, res) => {
 
 
     } catch (e) {
-        console.log(e);
         res.status(500).send(e);
     }
 });
@@ -136,6 +135,27 @@ router.get('/admin/:id', async (req, res) => {
         res.status(500).send(e);
     }
 });
+
+router.post('/feedback/:id', auth, async (req, res) => {
+    try {
+        const {rating, text} = req.body;
+
+        const feedbackData = {
+            rating,
+            user: req.user._id,
+            text: text ? text : null,
+        };
+
+        if (req.params.id) {
+            await Product.findByIdAndUpdate(req.params.id, { $push: { rating: feedbackData } });
+        }
+
+        res.send('Success');
+    } catch (e) {
+        res.status(400).send(e);
+    }
+});
+
 
 router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
         try {

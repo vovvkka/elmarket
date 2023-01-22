@@ -43,6 +43,7 @@ const Categories = () => {
                 className="categories__modal"
                 style={{
                     opacity: catalogActive ? '1' : '0',
+                    transform: catalogActive ? 'translateX(0)' : 'translateX(-100vw)',
                 }}
             >
                 <div className="categories__list">

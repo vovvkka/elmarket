@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Layout from './components/UI/Layout/Layout';
 import MainPage from './containers/MainPage';
 import NotFound from './containers/NotFound';
@@ -16,13 +16,19 @@ import Feedback from './containers/Feedback';
 import Cart from './containers/Cart';
 import Admin from './containers/Admin';
 import Reviews from "./containers/Reviews";
+import {fetchContacts} from "./store/actions/contactsActions";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
 };
 
 const App = () => {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
+
+    useEffect(() => {
+        dispatch(fetchContacts());
+    }, [dispatch]);
 
     return (
         <Layout>

@@ -1,51 +1,51 @@
 @import '../variables';
 
 .category-form {
-  margin-left: 50px;
+    margin-left: 50px;
 
-  &__title {
-    margin: 20px 0;
-  }
-
-  form {
-    label {
-      width: 170px;
+    &__title {
+        margin: 20px 0;
     }
-  }
 
-  &__row {
-    display: grid;
-    grid-template-columns: 1fr 8fr;
-    align-items: center;
-    margin: 15px 0;
-
-    input {
-      background: none;
-      border: 1px solid $dark-gray;
-      padding: 8px 10px;
+    form {
+        label {
+            width: 170px;
+        }
     }
-  }
 
-  &__check {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 8fr;
+        align-items: center;
+        margin: 15px 0;
 
-    label {
-      width: 170px;
+        input {
+            background: none;
+            border: 1px solid $dark-gray;
+            padding: 8px 10px;
+        }
     }
-  }
 
-  &__input-xl {
-    width: 600px;
-  }
+    &__check {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
 
-  &__select {
-    width: 600px;
-
-    div {
-      background: transparent !important;
-      border: 1px solid #969696 !important;
+        label {
+            width: 170px;
+        }
     }
-  }
+
+    &__input-xl {
+        width: 600px;
+    }
+
+    &__select {
+        width: 600px;
+
+        div {
+            background: transparent !important;
+            border: 1px solid #969696 !important;
+        }
+    }
 }

@@ -33,6 +33,9 @@ const Categories = () => {
             <button
                 className="button categories__button"
                 onClick={() => setCatalogActive(!catalogActive)}
+                style={{
+                    zIndex: catalogActive ? '500' : '1',
+                }}
             >
                 Категории
             </button>
@@ -48,21 +51,21 @@ const Categories = () => {
                     <h2 className="categories__title">Категории</h2>
                     <div className='categories__catalog'>
                         <ul className='categories__main'>
-                            {categories.map((category) => (
+                            {categories?.map((category) => (
                                 <li
                                     key={category._id}
                                     onMouseOver={() => setSubActive(category.subCategories)}
                                     onClick={() => handleChoice(category._id, category.parentCategory)}
                                 >
                                     <span>{category.title}</span>
-                                    {category.subCategories.length ? (
+                                    {category.subCategories?.length ? (
                                         <span>></span>
                                     ) : null}
                                 </li>
                             ))}
                         </ul>
                         <ul className='categories__sub'>
-                            {subActive.length ? subActive.map(sub => (
+                            {subActive?.length ? subActive.map(sub => (
                                 <li    onClick={() => handleChoice(sub._id, sub.parentCategory)}>{sub.title}</li>
                             )) : null}
                         </ul>

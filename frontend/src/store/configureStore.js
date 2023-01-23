@@ -39,6 +39,9 @@ store.subscribe(() => {
         users: {
             user: store.getState().users.user,
         },
+        cart: {
+            products: store.getState().cart.products,
+        },
     });
 });
 

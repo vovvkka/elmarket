@@ -21,9 +21,14 @@
     border-bottom: 2px solid $color-text;
   }
 
-  &__logo svg {
+  &__logo img {
     width: 30px;
     height: 30px;
+  }
+
+  &__forgot {
+    width: 15px !important;
+    height: 30px !important;
   }
 
   &__title {

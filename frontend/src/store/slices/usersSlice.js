@@ -78,6 +78,17 @@ const usersSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        forgotPasswordRequest(state) {
+            state.loginLoading = true;
+            state.loginError = null;
+        },
+        forgotPasswordSuccess(state) {
+            state.loginLoading = false;
+        },
+        forgotPasswordFailure(state, action) {
+            state.loginLoading = false;
+            state.loginError = action.payload;
+        },
     },
 });
 
@@ -97,6 +108,9 @@ export const {
     getProfileRequest,
     getProfileSuccess,
     getProfileFailure,
+    forgotPasswordRequest,
+    forgotPasswordSuccess,
+    forgotPasswordFailure
 } = usersSlice.actions;
 
 export default usersSlice;

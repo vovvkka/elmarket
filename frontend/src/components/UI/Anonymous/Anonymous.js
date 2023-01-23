@@ -5,6 +5,12 @@ const Anonymous = () => {
     const [show, setShow] = useState(false);
     const [login, setLogin] = useState(false);
     const [register, setRegister] = useState(false);
+    const [forgot, setForgot] = useState(false);
+
+    const changeModalHandler = () => {
+        setForgot(true);
+        setLogin(false);
+    };
 
     return (
         <>
@@ -12,10 +18,13 @@ const Anonymous = () => {
                 show={show}
                 login={login}
                 register={register}
+                forgot={forgot}
+                changeModal={changeModalHandler}
                 closed={() => {
                     setShow(false);
                     setRegister(false);
                     setLogin(false);
+                    setForgot(false);
                 }}
             />
 

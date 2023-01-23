@@ -11,7 +11,12 @@ import {
     registerFailure,
     editProfileFailure,
     editProfileSuccess,
-    editProfileRequest, getProfileRequest, getProfileSuccess, getProfileFailure,
+    editProfileRequest,
+    getProfileRequest,
+    getProfileSuccess,
+    getProfileFailure,
+    forgotPasswordRequest,
+    forgotPasswordSuccess, forgotPasswordFailure,
 } from '../slices/usersSlice';
 
 export const registerUser = (userData) => {
@@ -97,6 +102,20 @@ export const logoutUser = () => {
             dispatch(logoutSuccess());
         } catch (e) {
             dispatch(logoutFailure(e));
+        }
+    };
+};
+
+export const forgotPassword = email => {
+    return async dispatch => {
+        try {
+            dispatch(forgotPasswordRequest());
+
+            await axiosApi.post('/users/forgot-password', {email});
+
+            dispatch(forgotPasswordSuccess());
+        } catch (e) {
+            dispatch(forgotPasswordFailure(e.response.data));
         }
     };
 };

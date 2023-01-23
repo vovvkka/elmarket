@@ -79,6 +79,9 @@ const productsSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        clearProductError(state) {
+            state.createError = null;
+        }
     },
 });
 
@@ -98,6 +101,7 @@ export const {
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFailure,
+    clearProductError
 } = productsSlice.actions;
 
 export default productsSlice;

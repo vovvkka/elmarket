@@ -3,11 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories} from "../store/actions/categoriesActions";
 import {TreeSelect} from "antd";
 import {createProduct, editProduct, fetchOne} from "../store/actions/productsActions";
+import {clearProductError} from "../store/slices/productsSlice";
 
 const AddProduct = ({match}) => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.categories.categories);
     const oneProduct = useSelector(state => state.products.product);
+    const error = useSelector(state => state.products.createError);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -21,9 +23,12 @@ const AddProduct = ({match}) => {
         image: [],
     });
 
-
     useEffect(() => {
         dispatch(fetchCategories("?toTree=true"));
+
+        return () => {
+            dispatch(clearProductError());
+        };
     }, [dispatch]);
 
     useEffect(() => {
@@ -88,13 +93,14 @@ const AddProduct = ({match}) => {
     return (
         <div className="container-sm">
             <div className="product-form">
-                <h2 className="product-form__title">{match.params.id? "Редактировать" : "Добавить"} товар</h2>
+                <h2 className="product-form__title">{match.params.id ? "Редактировать" : "Добавить"} товар</h2>
+                <p className="fieldError">{error && "* Заполните все поля"}</p>
                 <form onSubmit={submitFormHandler}>
                     <div className="product-form__row">
-                        <label>Категория</label>
+                        <label>* Категория</label>
                         <TreeSelect
                             value={product.category}
-                            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                            dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                             treeData={categories}
                             placeholder="Please select"
                             treeDefaultExpandAll={!!match.params.id}
@@ -103,7 +109,7 @@ const AddProduct = ({match}) => {
                         />
                     </div>
                     <div className="product-form__row product-form__row--sm">
-                        <label>Артикул</label>
+                        <label>* Артикул</label>
                         <input
                             type="text"
                             name="code"
@@ -113,7 +119,7 @@ const AddProduct = ({match}) => {
                         />
                     </div>
                     <div className="product-form__row">
-                        <label>Название</label>
+                        <label>* Название</label>
                         <input
                             type="text"
                             name="title"
@@ -146,7 +152,7 @@ const AddProduct = ({match}) => {
                     </div>
                     <div className='product-form__double'>
                         <div className="product-form__double-row">
-                            <label>Цена</label>
+                            <label>* Цена</label>
                             <input
                                 type="number"
                                 name="price"
@@ -157,7 +163,7 @@ const AddProduct = ({match}) => {
                             />
                         </div>
                         <div className="product-form__double-row">
-                            <label>Количество</label>
+                            <label>*Количество</label>
                             <input
                                 type="number"
                                 name="amount"
@@ -196,7 +202,7 @@ const AddProduct = ({match}) => {
                             className="product-form__input-xs"
                         />
                     </div>
-                    <button className='button'>{match.params.id? "Сохранить" : "Добавить товар"}</button>
+                    <button className='button'>{match.params.id ? "Сохранить" : "Добавить товар"}</button>
                 </form>
             </div>
         </div>

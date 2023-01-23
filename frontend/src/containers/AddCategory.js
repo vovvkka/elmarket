@@ -3,12 +3,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {createCategory, editCategory, fetchCategories, fetchCategory,} from '../store/actions/categoriesActions';
 import {Select} from 'antd';
 import {useLocation} from 'react-router-dom';
+import {clearCategoryError} from "../store/slices/categoriesSlice";
 
 const AddCategory = ({ match }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const categories = useSelector((state) => state.categories.categories);
     const category = useSelector((state) => state.categories.category);
+    const error = useSelector(state => state.categories.createError);
 
     const [categoryData, setCategoryData] = useState({
         parentCategory: '',
@@ -21,6 +23,10 @@ const AddCategory = ({ match }) => {
 
     useEffect(() => {
         dispatch(fetchCategories('?toOptions=true'));
+
+        return () => {
+            dispatch(clearCategoryError());
+        };
     }, [dispatch]);
 
     useEffect(() => {
@@ -92,6 +98,7 @@ const AddCategory = ({ match }) => {
                 <h2 className="category-form__title">
                     {match.params.id ? 'Редактировать' : 'Добавить'} категорию
                 </h2>
+                <p className="fieldError">{error && "* Заполните все поля"}</p>
                 <form onSubmit={submitFormHandler}>
                     <div className="category-form__row">
                         <label>Категория</label>
@@ -103,7 +110,7 @@ const AddCategory = ({ match }) => {
                         />
                     </div>
                     <div className="category-form__row">
-                        <label>Название</label>
+                        <label>* Название</label>
                         <input
                             type="text"
                             name="title"

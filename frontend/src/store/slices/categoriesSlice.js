@@ -92,6 +92,9 @@ const categoriesSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        clearCategoryError(state) {
+            state.createError = null;
+        }
     }
 });
 
@@ -113,7 +116,8 @@ export const {
     createCategoryFailure,
     deleteCategoryRequest,
     deleteCategorySuccess,
-    deleteCategoryFailure
+    deleteCategoryFailure,
+    clearCategoryError
 } = categoriesSlice.actions;
 
 export default categoriesSlice;

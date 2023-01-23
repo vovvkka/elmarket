@@ -2,7 +2,9 @@
 @import "../libs/breakpoints";
 
 .footer {
+  position: absolute;
   bottom: 0;
+  width: 100%;
   background: $dark-gray;
   padding: 38px;
   color: $orange;

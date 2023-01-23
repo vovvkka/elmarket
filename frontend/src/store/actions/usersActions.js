@@ -16,8 +16,9 @@ import {
     getProfileSuccess,
     getProfileFailure,
     forgotPasswordRequest,
-    forgotPasswordSuccess, forgotPasswordFailure,
+    forgotPasswordSuccess, forgotPasswordFailure, resetPasswordRequest, resetPasswordSuccess, resetPasswordFailure,
 } from '../slices/usersSlice';
+import {historyPush} from "./historyActions";
 
 export const registerUser = (userData) => {
     return async (dispatch) => {
@@ -116,6 +117,21 @@ export const forgotPassword = email => {
             dispatch(forgotPasswordSuccess());
         } catch (e) {
             dispatch(forgotPasswordFailure(e.response.data));
+        }
+    };
+};
+
+export const resetPassword = (id, token, userData) => {
+    return async dispatch => {
+        try {
+            dispatch(resetPasswordRequest());
+
+            await axiosApi.post(`/users/reset-password/${id}/${token}`, userData);
+
+            dispatch(resetPasswordSuccess());
+            dispatch(historyPush('/'));
+        } catch (e) {
+            dispatch(resetPasswordFailure(e.response.data));
         }
     };
 };

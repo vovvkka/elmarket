@@ -21,7 +21,7 @@ const run = async () => {
         username: 'admin',
         displayName: 'Айбек',
         password: 'admin',
-        email: 'aibek@gmail.com',
+        email: 'vovvkka0587@gmail.com',
         token: nanoid(),
         role: 'admin',
     }, {

@@ -24,6 +24,8 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         phone: ""
     });
 
+    const [email, setEmail] = useState('');
+
     const onCloseModal = () => {
         setUser({username: "", password: "", email: ""});
         closed();
@@ -48,7 +50,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                 amount: p.amount,
             }));
 
-            const orderObj = { ...customer, order };
+            const orderObj = {...customer, order};
 
             if (userData) orderObj.userId = userData._id;
 
@@ -109,8 +111,18 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                     />
                 </div>
                 <div className="modal__links">
-                    <p onClick={changeModal}>Забыли пароль?</p>
-                    <p>Регистрация</p>
+                    <p
+                        className="modal__link"
+                        onClick={() => changeModal("forgot")}
+                    >
+                        Забыли пароль?
+                    </p>
+                    <p
+                        className="modal__link"
+                        onClick={() => changeModal("register")}
+                    >
+                        Регистрация
+                    </p>
                 </div>
             </div>
         );
@@ -130,7 +142,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                 <div className="modal__input-block">
                     <label>ФИО</label>
                     <input
-                        type="text"
+
                         name="username"
                         autoComplete="off"
                         className="modal__input"
@@ -219,11 +231,10 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                     <label>E-mail</label>
                     <input
                         type="email"
-                        name="email"
                         autoComplete="off"
                         className="modal__input"
-                        value={customer?.email}
-                        onChange={inputUserChangeHandler}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
             </div>
@@ -243,7 +254,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                 <form autoComplete="off" onSubmit={submitFormHandler}>
                     <div className="modal__header">
                         <div className="modal__logo">
-                            <img src={icon} alt="Icon" className={forgot && "modal__forgot"}/>
+                            <img src={icon} alt="Icon" className={forgot ? "modal__forgot" : ""}/>
                         </div>
                         <h2 className="modal__title">
                             {login && "Авторизация"}

@@ -11,7 +11,7 @@ const Layout = ({children}) => {
     const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
     return (
-        <>
+        <div className="wrapper">
             {location.pathname === '/' ?
                 <div className='background-wrapper'>
                     {!isMobile ? <HeaderDesktop mainPage/> : <HeaderMobile mainPage/>}
@@ -25,7 +25,7 @@ const Layout = ({children}) => {
                     {children}
             </div>
             <Footer/>
-        </>
+        </div>
     );
 };
 

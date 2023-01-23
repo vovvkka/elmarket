@@ -7,9 +7,14 @@ const Anonymous = () => {
     const [register, setRegister] = useState(false);
     const [forgot, setForgot] = useState(false);
 
-    const changeModalHandler = () => {
-        setForgot(true);
-        setLogin(false);
+    const changeModalHandler = type => {
+        if (type === "forgot") {
+            setForgot(true);
+            setLogin(false);
+        } else {
+            setLogin(false);
+            setRegister(true);
+        }
     };
 
     return (

@@ -58,7 +58,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         }
 
         if (forgot) {
-            await dispatch(forgotPassword(user.email));
+            await dispatch(forgotPassword(email));
             onCloseModal();
         }
     };

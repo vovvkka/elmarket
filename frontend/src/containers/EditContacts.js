@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editContacts } from '../store/actions/contactsActions';
 import deleteIcon from '../assets/svg/delete.svg';
+import {clearContactsError} from "../store/slices/contactsSlice";
 
 const EditContacts = () => {
     const dispatch = useDispatch();
     const contacts = useSelector((state) => state.contacts.contacts);
+    const error = useSelector(state => state.contacts.error);
 
     const [state, setState] = useState({
         email: [],
@@ -21,6 +23,10 @@ const EditContacts = () => {
                 phone: contacts.phone,
                 instagramLink: contacts.instagramLink,
             }));
+        }
+
+        return () => {
+            dispatch(clearContactsError());
         }
     }, [contacts]);
 
@@ -70,8 +76,9 @@ const EditContacts = () => {
     return (
         <form className="admin-contacts__edit" onSubmit={onSubmitHandler}>
             <h2>Редактировать контакты</h2>
+            <p className="fieldError">{error && "* Заполните все поля"}</p>
             <div className="admin-contacts__row">
-                <label>Телефон</label>
+                <label>* Телефон</label>
                 <div>
                     {state.phone?.map((ph, index) => (
                         <div className="admin-contacts__input-field">
@@ -112,7 +119,7 @@ const EditContacts = () => {
                 </div>
             </div>
             <div className="admin-contacts__row">
-                <label>Почта</label>
+                <label>* Почта</label>
                 <div>
                     {state.email?.map((ph, index) => (
                         <div className="admin-contacts__input-field">

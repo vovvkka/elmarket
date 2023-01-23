@@ -116,6 +116,7 @@ const AddProduct = ({match}) => {
                             value={product.code}
                             onChange={(e) => handleChange(e)}
                             className="product-form__input-sm"
+                            required
                         />
                     </div>
                     <div className="product-form__row">
@@ -125,6 +126,7 @@ const AddProduct = ({match}) => {
                             name="title"
                             value={product.title}
                             onChange={(e) => handleChange(e)}
+                            required
                         />
                     </div>
                     <div className="product-form__row">
@@ -160,10 +162,11 @@ const AddProduct = ({match}) => {
                                 value={product.price}
                                 onChange={(e) => handleChange(e)}
                                 className="product-form__input-xs"
+                                required
                             />
                         </div>
                         <div className="product-form__double-row">
-                            <label>*Количество</label>
+                            <label>* Количество</label>
                             <input
                                 type="number"
                                 name="amount"
@@ -171,6 +174,7 @@ const AddProduct = ({match}) => {
                                 value={product.amount}
                                 onChange={(e) => handleChange(e)}
                                 className="product-form__input-xs"
+                                required
                             />
                         </div>
                     </div>

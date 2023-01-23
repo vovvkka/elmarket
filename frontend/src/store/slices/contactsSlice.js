@@ -35,6 +35,9 @@ const contactsSlice = createSlice({
         editContactsFailure(state, {payload}) {
             state.loading = false;
             state.error = payload;
+        },
+        clearContactsError(state) {
+            state.error = null;
         }
     }
 });
@@ -45,7 +48,8 @@ export const {
     fetchContactsFailure,
     editContactsRequest,
     editContactsSuccess,
-    editContactsFailure
+    editContactsFailure,
+    clearContactsError
 } = contactsSlice.actions;
 
 export default contactsSlice;

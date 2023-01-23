@@ -117,6 +117,7 @@ const AddCategory = ({ match }) => {
                             className="category-form__input-xl"
                             value={categoryData.title}
                             onChange={(e) => handleChange(e)}
+                            required
                         />
                     </div>
                     {(categoryData.parentCategory === 'Без категории' ||

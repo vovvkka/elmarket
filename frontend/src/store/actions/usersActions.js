@@ -16,7 +16,12 @@ import {
     getProfileSuccess,
     getProfileFailure,
     forgotPasswordRequest,
-    forgotPasswordSuccess, forgotPasswordFailure, resetPasswordRequest, resetPasswordSuccess, resetPasswordFailure,
+    forgotPasswordSuccess,
+    forgotPasswordFailure,
+    resetPasswordRequest,
+    resetPasswordSuccess,
+    resetPasswordFailure,
+    changePasswordRequest, changePasswordSuccess, changePasswordFailure,
 } from '../slices/usersSlice';
 import {historyPush} from "./historyActions";
 
@@ -132,6 +137,20 @@ export const resetPassword = (id, token, userData) => {
             dispatch(historyPush('/'));
         } catch (e) {
             dispatch(resetPasswordFailure(e.response.data));
+        }
+    };
+};
+
+export const changePassword = (data) => {
+    return async dispatch => {
+        try {
+            dispatch(changePasswordRequest());
+
+            await axiosApi.put(`/users/change-password`, data);
+
+            dispatch(changePasswordSuccess());
+        } catch (e) {
+            dispatch(changePasswordFailure(e.response.data));
         }
     };
 };

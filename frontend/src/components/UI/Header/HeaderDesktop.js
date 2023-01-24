@@ -84,7 +84,9 @@ const HeaderDesktop = ({ mainPage }) => {
                 <div className="header__middle">
                     <div className="header__space"></div>
                     <ul>
-                        <li>Акции</li>
+                        <Link to="/sales">
+                            <li>Акции</li>
+                        </Link>
                         <Link to="/catalog">
                             <li>Каталог</li>
                         </Link>
@@ -111,7 +113,7 @@ const HeaderDesktop = ({ mainPage }) => {
                                     <img src={cart} alt="Cart" />
                                     {products.length ? (
                                         <div className="header__badge">
-                                            {products.length}
+                                            {products.reduce((acc, obj) => acc + obj.amount, 0)}
                                         </div>
                                     ) : null}
                                 </Link>

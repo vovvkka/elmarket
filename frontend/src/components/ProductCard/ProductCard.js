@@ -18,7 +18,21 @@ const ProductCard = ({ product }) => {
                 <div className="product-card__column">
                     <Link to={`/catalog/${product._id}`} className="clickable">
                         <div className="product-card__top">
-                            <div className="product-card__hits"></div>
+                            <div className="product-card__hits">
+                                {product.isNovelty ? (
+                                    <p className="product-card__novelty">
+                                        Новинка
+                                    </p>
+                                ) : null}
+                                {product.isHit ? (
+                                    <p className="product-card__hit">Хит</p>
+                                ) : null}
+                                {product.discount ? (
+                                    <p className="product-card__discount">
+                                        -{product.discount}%
+                                    </p>
+                                ) : null}
+                            </div>
                             {product.rating && (
                                 <Rating
                                     initialRating={product.rating}
@@ -55,13 +69,37 @@ const ProductCard = ({ product }) => {
                             className="clickable"
                         >
                             <h5 className="product-card__title">
-                                {product.title}{' '}
+                                {product.title}
                             </h5>
-                            <p className="product-card__price">
-                                {product.price} сом
-                            </p>
-                            <span className="product-card__in-stock">
-                                {product.inStock
+                            {product.discount ? (
+                                <div className="product-card__price-discount">
+                                    <p className='product-card__old-price'>{product.price} сом </p>
+                                    <p className='product-card__price'>{Math.round(product.price - (product.price / 100 * product.discount))} сом</p>
+                                </div>
+                            ) : (
+                                <p className="product-card__price">
+                                    {product.price} сом
+                                </p>
+                            )}
+                            {/*<p className="product-card__price">*/}
+                            {/*    {product.discount ? (*/}
+                            {/*        <div className="product-card__price-discount">*/}
+                            {/*            <span>*/}
+                            {/*                {Math.round(*/}
+                            {/*                    product.price -*/}
+                            {/*                        (product.price / 100) **/}
+                            {/*                            product.discount*/}
+                            {/*                )}*/}
+                            {/*            </span>*/}
+                            {/*            <span>{product.price} сом</span>*/}
+                            {/*        </div>*/}
+                            {/*    ) : (*/}
+                            {/*        product.price*/}
+                            {/*    )}{' '}*/}
+                            {/*    сом*/}
+                            {/*</p>*/}
+                            <span className={`product-card__in-stock ${product.amount === 0 ? 'product-card__in-stock--not' : ''}`}>
+                                {product.amount > 0
                                     ? 'в наличии'
                                     : 'нет в наличии'}
                             </span>

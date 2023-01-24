@@ -21,7 +21,6 @@ const productsSlice = createSlice({
             state.error = null;
         },
         fetchProductsSuccess(state, { payload }) {
-            console.log(payload)
             state.products = payload.products;
             state.totalPages = payload.totalPages;
 
@@ -30,6 +29,19 @@ const productsSlice = createSlice({
         fetchProductsFailure(state, action) {
             state.loading = false;
             state.error = action.payload;
+        },
+        fetchSalesRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        fetchSalesSuccess(state, {payload}) {
+            state.products = payload.products;
+            state.totalPages = payload.totalPages;
+            state.loading = false;
+        },
+        fetchSalesFailure(state, {payload}) {
+            state.loading = false;
+            state.error = payload;
         },
         fetchOneRequest(state) {
             state.loading = true;
@@ -81,6 +93,10 @@ const productsSlice = createSlice({
         },
         clearProductError(state) {
             state.createError = null;
+        },
+        clearProducts(state) {
+            state.product = null;
+            state.products = [];
         }
     },
 });
@@ -89,6 +105,9 @@ export const {
     fetchProductsRequest,
     fetchProductsSuccess,
     fetchProductsFailure,
+    fetchSalesRequest,
+    fetchSalesSuccess,
+    fetchSalesFailure,
     fetchOneRequest,
     fetchOneSuccess,
     fetchOneFailure,
@@ -101,7 +120,8 @@ export const {
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFailure,
-    clearProductError
+    clearProductError,
+    clearProducts
 } = productsSlice.actions;
 
 export default productsSlice;

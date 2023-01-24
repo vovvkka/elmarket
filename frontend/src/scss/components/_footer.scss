@@ -37,6 +37,9 @@
   &__contacts {
     margin-right: 50px;
 
+    &-mobile {
+      display: none;
+    }
 
     &-title {
       text-transform: uppercase;
@@ -86,29 +89,42 @@
       &:hover {
         cursor: pointer;
       }
-  }
-}
-
-@include media("<=tablet") {
-  &__bottom {
-    margin-top: 20px;
-  }
-
-  &__contacts {
-    display: none;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 767px) {
-  &__contacts {
-    display: none;
-
-    &-mobile {
-      margin-top: 20px;
-      color: $orange !important;
-      display: block;
     }
   }
-}
 
+  @include media("<=tablet") {
+    &__bottom {
+      margin-top: 20px;
+    }
+
+    &__contacts {
+      display: none;
+    }
+  }
+
+  @media (min-width: 600px) and (max-width: 767px) {
+    &__contacts {
+      display: none;
+
+      &-mobile {
+        margin-top: 20px;
+        color: $orange !important;
+        display: block;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    &__contacts-mobile {
+      margin-top: 20px;
+      color: $orange !important;
+      display: block !important;
+    }
+  }
+
+  @media (max-width: 550px) {
+    &__contacts-mobile {
+      display: none !important;
+    }
+  }
 }

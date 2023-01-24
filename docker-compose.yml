@@ -1,0 +1,35 @@
+version: '3'
+services:
+  elmarket-backend:
+    build: ./backend
+    image: movlera/elmarket:backend
+    depends_on:
+      - mongodb
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - public_images:/src/app/public
+    environment:
+      DB_HOST: mongodb
+
+  elmarket-frontend:
+    build:
+      context: ./frontend
+      args:
+        api_url: "http://localhost:8000"
+    image: movlera/elmarket:frontend
+    depends_on:
+      - elmarket-backend
+    restart: always
+    ports:
+      - "80:80"
+
+  mongodb:
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  public_images:
+  mongo_data:

@@ -12,7 +12,7 @@ import {
     fetchOneSuccess,
     fetchProductsFailure,
     fetchProductsRequest,
-    fetchProductsSuccess
+    fetchProductsSuccess, fetchSalesFailure, fetchSalesRequest, fetchSalesSuccess
 } from "../slices/productsSlice";
 import {historyPush} from "./historyActions";
 
@@ -26,6 +26,20 @@ export const fetchProducts = (query) => {
             dispatch(fetchProductsSuccess(response.data));
         } catch (e) {
             dispatch(fetchProductsFailure(e));
+        }
+    };
+};
+
+export const fetchSales = () => {
+    return async dispatch => {
+        try {
+            dispatch(fetchSalesRequest());
+
+            const response = await axiosApi(`/products/sales`);
+
+            dispatch(fetchSalesSuccess(response.data));
+        } catch (e) {
+            dispatch(fetchSalesFailure(e));
         }
     };
 };

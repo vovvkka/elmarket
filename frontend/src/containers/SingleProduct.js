@@ -10,6 +10,7 @@ import { fetchOne } from '../store/actions/productsActions';
 import { apiUrl } from '../config';
 import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
 import { Link } from 'react-router-dom';
+import {clearProducts} from "../store/slices/productsSlice";
 
 const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
@@ -23,6 +24,10 @@ const SingleProduct = ({ match }) => {
         if (user) {
             dispatch(fetchHistory());
             dispatch(sendHistory(match.params.id));
+        }
+
+        return () => {
+            dispatch(clearProducts());
         }
     }, [dispatch, match.params.id, user]);
 
@@ -87,14 +92,14 @@ const SingleProduct = ({ match }) => {
                                 )}
                             </div>
                             <span>
-                                {product.inStock
+                                {product.amount > 0
                                     ? 'в наличии'
                                     : ' в наличии нет'}
                             </span>
                             <div className="product-card__cart product-card__cart--single">
                                 <div>
                                     <button className="product-card__add">
-                                        В корзину{' '}
+                                        В корзину
                                         <img src={productCart} alt="" />
                                     </button>
                                 </div>
@@ -113,8 +118,7 @@ const SingleProduct = ({ match }) => {
                             </p>
                             <div className="product__subinfo">
                                 <p>Кратность товара: {product.amount}</p>
-                                <p>Единица измерения: 3шт</p>
-                                <p>Объем (м3): 0.000502</p>
+                                <p>Единица измерения: шт</p>
                             </div>
                             <div className="product__delivery">
                                 <img src={delivery} alt="Доставка" width={40} />

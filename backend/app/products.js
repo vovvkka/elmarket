@@ -22,6 +22,24 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
+router.get('/sales', async (req, res) => {
+    try {
+        const products = await Product.aggregate([
+            {$match: {discount: {$gt: 0}}},
+            {
+                $addFields: {
+                    rating: {$avg: '$rating.rating'},
+                    ratingCount: {$size: '$rating'},
+                },
+            },
+        ]);
+        await Product.populate(products, {path: "category subCategory"});
+        return  res.send({ products, totalPages: 0 });
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const {page, limit} = req.query;

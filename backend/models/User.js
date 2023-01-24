@@ -43,6 +43,7 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
     }],
+    phone: String,
     additionalPhone: String,
     city: String,
     street: String,

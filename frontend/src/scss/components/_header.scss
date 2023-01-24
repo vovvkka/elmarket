@@ -10,7 +10,6 @@
             rgba(11, 10, 10, 0.8)
         ),
         url('../../assets/main-page-bg.png'), center;
-    background-position: center;
     background-size: cover;
 
     &__mobile {
@@ -96,7 +95,7 @@
     &__middle {
         display: flex;
         justify-content: space-between;
-        align-items: end;
+        align-items: flex-end;
 
         svg {
             margin: 0 15px;

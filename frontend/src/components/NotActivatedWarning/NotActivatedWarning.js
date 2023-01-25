@@ -9,7 +9,7 @@ const NotActivatedWarning = () => {
 
     const timeOut = () => {
         if (!isClicked) {
-            let sec = 10;
+            let sec = 60;
             setIsClicked(true);
 
             const a = setInterval(() => {

@@ -1,0 +1,10 @@
+.notActivatedWarning {
+  padding: 10px 0;
+  background: #ffb77f;
+
+  &__text {
+    text-align: center;
+    color: #ab0000;
+    font-weight: 500;
+  }
+}

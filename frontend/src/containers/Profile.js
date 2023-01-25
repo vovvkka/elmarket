@@ -3,10 +3,12 @@ import ProfileForm from '../components/UI/ProfileForm/ProfileForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {editProfile, getProfile} from '../store/actions/usersActions';
 import profileIcon from "../assets/svg/profile.svg";
+import NotActivatedWarning from "../components/NotActivatedWarning/NotActivatedWarning";
 
 const Profile = () => {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.users.profile);
+    const user = useSelector(state => state.users.user);
 
     useEffect(() => {
         dispatch(getProfile());
@@ -17,13 +19,16 @@ const Profile = () => {
     };
 
     return (
-        <div className="profile">
-            <h3 className="profile__title">
-                <img src={profileIcon} alt="Профиль" />
-                Личный кабинет
-            </h3>
-            <ProfileForm profile={profile} onSubmit={submitHandler} />
-        </div>
+        <>
+            {(user && !user.isActivated) && <NotActivatedWarning/>}
+            <div className="profile">
+                <h3 className="profile__title">
+                    <img src={profileIcon} alt="Профиль" />
+                    Личный кабинет
+                </h3>
+                <ProfileForm profile={profile} onSubmit={submitHandler} />
+            </div>
+        </>
     );
 };
 

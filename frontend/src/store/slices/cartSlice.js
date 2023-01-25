@@ -16,13 +16,13 @@ const cartSlice = createSlice({
             const itemInCart = state.products.find((item) => item._id === action.payload._id);
 
             if (itemInCart) {
-                itemInCart.amount = itemInCart.amount + action.payload.amount;
+                itemInCart.quantity = itemInCart.quantity + action.payload.quantity;
 
-                if (itemInCart.amount < 1) {
+                if (itemInCart.quantity < 1) {
                     state.products = [...state.products.filter(p => p._id !== action.payload._id)];
                 }
             } else {
-                state.products.push({...action.payload, amount: action.payload.amount});
+                state.products.push({...action.payload, quantity: action.payload.quantity});
             }
         },
         deleteProduct(state, action) {

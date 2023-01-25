@@ -176,6 +176,10 @@
         border: 1px solid $orange;
         font-size: 28px;
 
+        &--disabled {
+            border: 1px solid #9d9d9d;
+        }
+
         &--single {
             margin: 0 50px;
         }
@@ -195,6 +199,11 @@
         font-size: 15px;
         padding: 13px 40px;
         cursor: pointer;
+
+        &:disabled {
+            cursor: default;
+            background: #9d9d9d;
+        }
 
         @include media('<=tablet') {
             font-size: 12px;

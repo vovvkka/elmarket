@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import loginIcon from "../../../assets/svg/login.svg";
 import registerIcon from "../../../assets/svg/register.svg";
 import forgotIcon from "../../../assets/svg/forgot.png";
 import Backdrop from "../Backdrop/Backdrop";
 import {useDispatch, useSelector} from "react-redux";
-import {forgotPassword, loginUser, registerUser} from "../../../store/actions/usersActions";
+import {forgotPassword, getProfile, loginUser, registerUser} from "../../../store/actions/usersActions";
 import {addOrder} from "../../../store/actions/ordersActions";
 
 const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
@@ -12,6 +12,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const LoginError = useSelector(state => state.users.loginError);
     const RegisterError = useSelector(state => state.users.registerError);
     const products = useSelector(state => state.cart.products);
+    const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);
     const [user, setUser] = useState({
         username: "",
@@ -26,8 +27,21 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
     const [email, setEmail] = useState('');
 
+
+    useEffect(() => {
+        if (order) {
+            dispatch(getProfile());
+        }
+    }, [dispatch, order]);
+
+    useEffect(() => {
+        if (profile?.phone) setCustomer(prev => ({...prev, phone: profile.phone}));
+        if (profile?.username) setCustomer(prev => ({...prev, customer: profile.username}));
+    }, [profile]);
+
     const onCloseModal = () => {
         setUser({username: "", password: "", email: ""});
+        setCustomer({customer: '', phone: ''});
         closed();
     };
 
@@ -47,7 +61,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         if (order) {
             const order = products.map(p => ({
                 product: p._id,
-                amount: p.amount,
+                quantity: p.quantity,
             }));
 
             const orderObj = {...customer, order};

@@ -11,7 +11,7 @@ const Cart = () => {
     const cartProduct = products?.map(p => <CartProduct key={p._id} p={p}/>);
 
     const getTotalPrice = products?.reduce((acc, rec) => {
-        return acc + rec.price * rec.amount - rec.discount || rec.price;
+        return acc + rec.price * rec.quantity - rec.discount || rec.price;
     }, 0);
 
     return (

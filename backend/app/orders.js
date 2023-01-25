@@ -5,6 +5,15 @@ const Order = require("../models/Order");
 const Product = require("../models/Product");
 const router = express.Router();
 
+router.get("/user-orders", auth, async (req, res) => {
+    try {
+        const orders = await Order.find({userId: req.user._id}).populate("order.product").limit(10).sort({dateTime: 1});
+        res.send(orders);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
 router.get("/", auth, permit("admin"), async (req, res) => {
     try {
         const query = {};
@@ -17,9 +26,6 @@ router.get("/", auth, permit("admin"), async (req, res) => {
 
         const orders = await Order.find(query).populate("order.product");
 
-        console.log(req.query);
-        console.log(orders);
-
         res.send(orders);
     } catch (e) {
         res.status(500).send(e);
@@ -29,6 +35,7 @@ router.get("/", auth, permit("admin"), async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const {userId, customer, phone, order} = req.body;
+        console.log(order);
 
         if (!customer || !phone || !order) {
             return res.status(400).send({error: "Data not valid"});
@@ -50,8 +57,10 @@ router.post("/", async (req, res) => {
 
         const newOrder = new Order(orderData);
         await newOrder.save();
+
         await res.send(order);
     } catch (e) {
+        console.log(e)
         res.status(400).send(e);
     }
 });

@@ -8,7 +8,7 @@ const ProductsSchema = new Schema({
         ref: 'Product',
         required: true,
     },
-    amount: {
+    quantity: {
         type: Number,
         min: 1,
     },

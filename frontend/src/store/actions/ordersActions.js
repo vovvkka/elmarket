@@ -11,6 +11,20 @@ import {
     fetchOrdersSuccess,
 } from "../slices/ordersSlice";
 
+export const fetchUserOrders = () => {
+    return async dispatch => {
+        try {
+            dispatch(fetchOrdersRequest());
+
+            const response = await axiosApi.get('/orders/user-orders');
+
+            dispatch(fetchOrdersSuccess(response.data));
+        } catch (e) {
+            dispatch(fetchOrdersFailure(e));
+        }
+    }
+};
+
 export const fetchOrders = query => {
     return async dispatch => {
         try {
@@ -29,7 +43,8 @@ export const fetchOrders = query => {
             dispatch(fetchOrdersFailure(e));
         }
     }
-}
+};
+
 export const addOrder = orderData => {
     return async (dispatch) => {
         try {

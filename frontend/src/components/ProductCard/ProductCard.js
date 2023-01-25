@@ -10,7 +10,7 @@ import { addProduct } from '../../store/slices/cartSlice';
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
-    const [amount, setAmount] = useState(1);
+    const [quantity, setQuantity] = useState(1);
 
     return (
         product && (
@@ -81,23 +81,6 @@ const ProductCard = ({ product }) => {
                                     {product.price} сом
                                 </p>
                             )}
-                            {/*<p className="product-card__price">*/}
-                            {/*    {product.discount ? (*/}
-                            {/*        <div className="product-card__price-discount">*/}
-                            {/*            <span>*/}
-                            {/*                {Math.round(*/}
-                            {/*                    product.price -*/}
-                            {/*                        (product.price / 100) **/}
-                            {/*                            product.discount*/}
-                            {/*                )}*/}
-                            {/*            </span>*/}
-                            {/*            <span>{product.price} сом</span>*/}
-                            {/*        </div>*/}
-                            {/*    ) : (*/}
-                            {/*        product.price*/}
-                            {/*    )}{' '}*/}
-                            {/*    сом*/}
-                            {/*</p>*/}
                             <span className={`product-card__in-stock ${product.amount === 0 ? 'product-card__in-stock--not' : ''}`}>
                                 {product.amount > 0
                                     ? 'в наличии'
@@ -106,21 +89,21 @@ const ProductCard = ({ product }) => {
                             <div className="product-card__cart-block"></div>
                         </Link>
                         <div className="product-card__cart">
-                            <div className="product-card__buttons">
+                            <div className={`product-card__buttons ${product.amount === 0? 'product-card__buttons--disabled' : ''}`}>
                                 <button
                                     className="product-card__button"
                                     onClick={() =>
-                                        setAmount((prev) => prev + 1)
+                                        setQuantity((prev) => prev + 1)
                                     }
                                 >
                                     +
                                 </button>
-                                <span>{amount}</span>
+                                <span>{quantity}</span>
                                 <button
                                     className="product-card__button"
                                     onClick={() => {
-                                        if (amount > 0)
-                                            setAmount((prev) => prev - 1);
+                                        if (quantity > 0)
+                                            setQuantity((prev) => prev - 1);
                                     }}
                                 >
                                     -
@@ -128,12 +111,13 @@ const ProductCard = ({ product }) => {
                             </div>
                             <div>
                                 <button
-                                    className="product-card__add"
+                                    className='product-card__add'
                                     onClick={() =>
                                         dispatch(
-                                            addProduct({ ...product, amount })
+                                            addProduct({ ...product, quantity })
                                         )
                                     }
+                                    disabled={product.amount === 0}
                                 >
                                     В корзину <img src={productCard} alt="" />
                                 </button>

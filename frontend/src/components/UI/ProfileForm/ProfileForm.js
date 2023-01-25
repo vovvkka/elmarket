@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import contacts from '../../../assets/svg/contacts.svg';
 import address from '../../../assets/svg/address.svg';
 import pen from '../../../assets/svg/pen.svg';
-import { useDispatch } from 'react-redux';
-import { changePassword } from '../../../store/actions/usersActions';
+import {useDispatch} from 'react-redux';
+import {changePassword} from '../../../store/actions/usersActions';
 
 const ProfileForm = ({ onSubmit, profile }) => {
     const dispatch = useDispatch();
@@ -233,10 +233,6 @@ const ProfileForm = ({ onSubmit, profile }) => {
                         Сохранить
                     </button>
                 </form>
-                <h3 className="profile__title profile__title--form">
-                    Последние заказы
-                </h3>
-                <p>У вас еще не было покупок.</p>
             </div>
         </div>
     );

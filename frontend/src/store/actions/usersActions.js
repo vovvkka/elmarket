@@ -21,7 +21,11 @@ import {
     resetPasswordRequest,
     resetPasswordSuccess,
     resetPasswordFailure,
-    changePasswordRequest, changePasswordSuccess, changePasswordFailure,
+    changePasswordRequest,
+    changePasswordSuccess,
+    changePasswordFailure,
+    resendActivationLinkRequest,
+    resendActivationLinkFailure, resendActivationLinkSuccess,
 } from '../slices/usersSlice';
 import {historyPush} from "./historyActions";
 
@@ -151,6 +155,20 @@ export const changePassword = (data) => {
             dispatch(changePasswordSuccess());
         } catch (e) {
             dispatch(changePasswordFailure(e.response.data));
+        }
+    };
+};
+
+export const resendActivationLink = data => {
+    return async dispatch => {
+        try {
+            dispatch(resendActivationLinkRequest());
+
+            await axiosApi.post(`/users/resend-activationLink`, data);
+
+            dispatch(resendActivationLinkSuccess());
+        } catch (e) {
+            dispatch(resendActivationLinkFailure(e.response.data));
         }
     };
 };

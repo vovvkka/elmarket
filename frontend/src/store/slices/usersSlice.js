@@ -110,7 +110,18 @@ const usersSlice = createSlice({
         changePasswordFailure(state, {payload}) {
             state.loading = false;
             state.error = payload;
-        }
+        },
+        resendActivationLinkRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        resendActivationLinkSuccess(state) {
+            state.loading = false;
+        },
+        resendActivationLinkFailure(state, {payload}) {
+            state.loading = false;
+            state.error = payload;
+        },
     },
 });
 
@@ -138,7 +149,10 @@ export const {
     resetPasswordFailure,
     changePasswordRequest,
     changePasswordSuccess,
-    changePasswordFailure
+    changePasswordFailure,
+    resendActivationLinkRequest,
+    resendActivationLinkSuccess,
+    resendActivationLinkFailure
 } = usersSlice.actions;
 
 export default usersSlice;

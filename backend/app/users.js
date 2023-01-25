@@ -3,18 +3,10 @@ const User = require('../models/User');
 const auth = require('../middlewares/auth');
 const permit = require('../middlewares/permit');
 const Product = require('../models/Product');
-const nodemailer = require('nodemailer');
+const transporter = require("../service/transporter");
 const jwt = require('jsonwebtoken');
 const {nanoid} = require("nanoid");
 const router = express.Router();
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-    },
-});
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -78,18 +70,7 @@ router.post('/', async (req, res) => {
         user.generateToken();
         await user.save();
 
-        const mailOptions = {
-            from: 'taitai.software@gmail.com',
-            to: email,
-            subject: 'Активация аккаунта ElectroMarket.kg',
-            html: `
-                    <h3>ElectroMarket.kg</h3> 
-                    <p>Для активации аккаунта, перейдите по ссылке: </p> 
-                    <a href="${process.env.API_URL}/users/activate/${userData.activationLink}">${process.env.API_URL}/activate/${userData.activationLink}</a> 
-                `,
-        };
-
-        transporter.sendMail(mailOptions);
+        transporter.sendActivationLink(email, userData.activationLink);
 
         res.send(user);
     } catch (e) {
@@ -214,8 +195,6 @@ router.delete('/sessions', async (req, res) => {
     return res.send({ success, user });
 });
 
-// reset-password /.
-
 router.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
 
@@ -237,21 +216,8 @@ router.post('/forgot-password', async (req, res) => {
 
         const token = jwt.sign(payload, secret, { expiresIn: '10m' });
 
-        const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
+        transporter.sendResetPasswordLink(user._id, token, email);
 
-        const mailOptions = {
-            from: 'taitai.software@gmail.com',
-            to: email,
-            subject: 'ElectroMarket Reset Password',
-            html: `
-                    <h3>ElectroMarket.kg</h3> 
-                    <p>Для того чтобы сбросить свой пароль, перейдите по ссылке:</p> 
-                    <a href="${link}">{link}</a>
-                    <p>Если это не вы, то просто проигнорируйте это письмо.</p>
-                `,
-        };
-
-        transporter.sendMail(mailOptions);
         res.send('Ссылка для сброса пароля была отправлена на почту: ' + email);
     } catch (e) {
         res.status(401).send(e);

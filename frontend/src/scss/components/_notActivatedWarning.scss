@@ -7,4 +7,22 @@
     color: #ab0000;
     font-weight: 500;
   }
+
+  &__again {
+    margin-left: 10px;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: #ab0000;
+      bottom: -2px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

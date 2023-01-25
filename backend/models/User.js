@@ -43,6 +43,15 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
     }],
+    isActivated: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    activationLink: {
+        type: String,
+        required: true,
+    },
     phone: String,
     additionalPhone: String,
     city: String,

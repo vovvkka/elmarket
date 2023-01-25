@@ -5,7 +5,18 @@ const permit = require('../middlewares/permit');
 const Product = require('../models/Product');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const {nanoid} = require("nanoid");
 const router = express.Router();
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+});
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.get('/watchlist', auth, async (req, res) => {
     try {
@@ -60,13 +71,46 @@ router.post('/', async (req, res) => {
     const { password, email, username } = req.body;
 
     try {
-        const userData = { password, email, username };
+        let userData = { password, email, username, activationLink: nanoid(30) };
+
         const user = new User(userData);
 
         user.generateToken();
         await user.save();
 
+        const mailOptions = {
+            from: 'taitai.software@gmail.com',
+            to: email,
+            subject: 'Активация аккаунта ElectroMarket.kg',
+            html: `
+                    <h3>ElectroMarket.kg</h3> 
+                    <p>Для активации аккаунта, перейдите по ссылке: </p> 
+                    <a href="${process.env.API_URL}/users/activate/${userData.activationLink}">${process.env.API_URL}/activate/${userData.activationLink}</a> 
+                `,
+        };
+
+        transporter.sendMail(mailOptions);
+
         res.send(user);
+    } catch (e) {
+        res.status(400).send({ error: e.errors });
+    }
+});
+
+router.get('/activate/:link', async (req, res) => {
+    try {
+        const activationLink = req.params.link;
+
+        const user = await User.findOne({activationLink});
+
+        if (!user) {
+            return res.status(404).send("Неккоретная ссылка активации");
+        }
+
+        user.isActivated = true;
+        await user.save({validateBeforeSave: false});
+
+        return res.redirect(process.env.CLIENT_URL + "/activated")
     } catch (e) {
         res.status(400).send({ error: e.errors });
     }
@@ -170,17 +214,7 @@ router.delete('/sessions', async (req, res) => {
     return res.send({ success, user });
 });
 
-// reset-password //
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-    },
-});
-
-const JWT_SECRET = process.env.JWT_SECRET;
+// reset-password /.
 
 router.post('/forgot-password', async (req, res) => {
     const { email } = req.body;
@@ -209,7 +243,12 @@ router.post('/forgot-password', async (req, res) => {
             from: 'taitai.software@gmail.com',
             to: email,
             subject: 'ElectroMarket Reset Password',
-            html: `<h3>ElectroMarket.kg</h3> <p>Для того чтобы сбросить свой пароль, перейдите по ссылке: <br> ${link}</p> <p>Если это не вы, то просто проигнорируйте это письмо.</p>`,
+            html: `
+                    <h3>ElectroMarket.kg</h3> 
+                    <p>Для того чтобы сбросить свой пароль, перейдите по ссылке:</p> 
+                    <a href="${link}">{link}</a>
+                    <p>Если это не вы, то просто проигнорируйте это письмо.</p>
+                `,
         };
 
         transporter.sendMail(mailOptions);

@@ -23,12 +23,15 @@ const run = async () => {
         password: 'admin',
         email: 'vovvkka0587@gmail.com',
         token: nanoid(),
+        isActivated: true,
+        activationLink: "jfsdkasd",
         role: 'admin',
     }, {
         username: 'user',
         displayName: 'Вова',
         password: 'user',
         email: 'vova@gmail.com',
+        activationLink: "asdsadads",
         token: nanoid(),
         role: 'user',
     });

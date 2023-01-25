@@ -1,17 +1,17 @@
 import React from 'react';
-import {fetchProducts} from '../../../store/actions/productsActions';
+import {fetchProducts, fetchSales} from '../../../store/actions/productsActions';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import Pagination from 'react-paginate';
 import {historyPush} from '../../../store/actions/historyActions';
-import {fetchCategories} from '../../../store/actions/categoriesActions';
+import {fetchCategories} from "../../../store/actions/categoriesActions";
 
-const Paginate = ({ isProducts, limit }) => {
+const Paginate = ({ isProducts, limit, sales }) => {
     const dispatch = useDispatch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const page = Number(searchParams.get('page')) || 1;
-    const totalProducts = useSelector((state) => state.products.pages);
+    const totalProducts = useSelector((state) => state.products.totalPages);
     const totalCategories = useSelector((state) => state.categories.pages);
 
     const handlePageChange = (data) => {
@@ -23,13 +23,17 @@ const Paginate = ({ isProducts, limit }) => {
     };
 
     const fetchData = (page) => {
-        isProducts
-            ? dispatch(fetchProducts('?page=' + page + '&limit=' + limit))
-            : dispatch(
-                  fetchCategories(
-                      '?toTable=true&page=' + page + '&limit=' + limit
-                  )
-              );
+        const query = new URLSearchParams(location.search);
+        query.set("page", page);
+        query.set("limit", limit);
+        if (sales) {
+            dispatch(fetchSales(`?${query.toString()}`));
+        } else if (isProducts) {
+            dispatch(fetchProducts(`?${query.toString()}`));
+        } else {
+            dispatch(fetchCategories('?toTable=true&' + query));
+        }
+
     };
 
     return (

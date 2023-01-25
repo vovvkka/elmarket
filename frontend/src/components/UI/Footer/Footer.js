@@ -1,40 +1,61 @@
-import React, {useEffect} from 'react';
-import logo from "../../../assets/logo.png";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getPopularCategories} from "../../../store/actions/categoriesActions";
+import React, { useEffect } from 'react';
+import logo from '../../../assets/logo.png';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPopularCategories } from '../../../store/actions/categoriesActions';
 import facebook from '../../../assets/svg/facebook.svg';
 import instagram from '../../../assets/svg/instagram.svg';
 
 const Footer = () => {
     const dispatch = useDispatch();
-    const popularCategories = useSelector(state => state.categories.popularCategories);
-    const contacts = useSelector(state => state.contacts.contacts);
+    const popularCategories = useSelector(
+        (state) => state.categories.popularCategories
+    );
+    const contacts = useSelector((state) => state.contacts.contacts);
 
     useEffect(() => {
         dispatch(getPopularCategories());
     }, [dispatch]);
 
-    const categoriesList = popularCategories.map(c => (
-        <li key={c._id}>{c.title}</li>
+    const categoriesList = popularCategories.map((c) => (
+        <li key={c._id}>
+            <Link to={`/catalog?category=${c._id}&page=1`}>{c.title}</Link>
+        </li>
     ));
 
     return (
         <div className="footer">
             <div className="footer__container">
                 <div className="footer__top">
-                    <img src={logo} alt="Electromarket.kg" className='logo' draggable={false}/>
+                    <img
+                        src={logo}
+                        alt="Electromarket.kg"
+                        className="logo"
+                        draggable={false}
+                    />
                     <div className="footer__contacts">
-                        <h2 className="footer__contacts-title">Мы в соц сетях</h2>
+                        <h2 className="footer__contacts-title">
+                            Мы в соц сетях
+                        </h2>
                         <div className="footer__icons">
-                            <img src={facebook} alt="Facebook" className="footer__social"/>
-                            <img src={instagram} alt="Instagram" className="footer__social"/>
+                            <img
+                                src={facebook}
+                                alt="Facebook"
+                                className="footer__social"
+                            />
+                            <img
+                                src={instagram}
+                                alt="Instagram"
+                                className="footer__social"
+                            />
                         </div>
                     </div>
                 </div>
                 <div className="footer__bottom">
                     <ul className="footer__nav">
-                        <li className="footer__nav-first">Популярные разделы</li>
+                        <li className="footer__nav-first">
+                            Популярные разделы
+                        </li>
                         {categoriesList}
                     </ul>
                     <ul className="footer__nav">
@@ -57,30 +78,46 @@ const Footer = () => {
                         </Link>
 
                         <li className="footer__contacts-mobile">
-                            <h2 className="footer__contacts-title">Мы в соц сетях</h2>
+                            <h2 className="footer__contacts-title">
+                                Мы в соц сетях
+                            </h2>
                             <div className="footer__icons">
-                                <img src={facebook} alt="Facebook" className="footer__social"/>
-                                <img src={instagram} alt="Instagram" className="footer__social"/>
+                                <img
+                                    src={facebook}
+                                    alt="Facebook"
+                                    className="footer__social"
+                                />
+                                <img
+                                    src={instagram}
+                                    alt="Instagram"
+                                    className="footer__social"
+                                />
                             </div>
                         </li>
                     </ul>
                     <ul className="footer__nav">
-                        <li className="footer__nav-first">Контакты и реквизиты</li>
-                        {contacts?.phone?.map(ph => <li key={ph}>{ph}</li>)}
-                        {contacts?.email?.map(em => <li key={em}>{em}</li>)}
+                        <li className="footer__nav-first">
+                            Контакты и реквизиты
+                        </li>
+                        {contacts?.phone?.map((ph) => (
+                            <li key={ph}>{ph}</li>
+                        ))}
+                        {contacts?.email?.map((em) => (
+                            <li key={em}>{em}</li>
+                        ))}
                         <li>
-                            Понедельник-пятница: <br/>
-                            с 9:30 до 18:30 <br/>
-                            Суббота:с 10:00 до 18:00 <br/>
-                            Воскресенье: ВЫХОДНОЙ <br/>
+                            Понедельник-пятница: <br />
+                            с 9:30 до 18:30 <br />
+                            Суббота:с 10:00 до 18:00 <br />
+                            Воскресенье: ВЫХОДНОЙ <br />
                         </li>
                         <li>
-                            ОсОО “Има Электро” <br/>
+                            ОсОО “Има Электро” <br />
                             ИНН01603201810293
                         </li>
                         <li>
-                            Юр.адрес: УГНС Ленинского <br/>
-                            района, код 002 Код ОКПО <br/>
+                            Юр.адрес: УГНС Ленинского <br />
+                            района, код 002 Код ОКПО <br />
                             30023004
                         </li>
                     </ul>

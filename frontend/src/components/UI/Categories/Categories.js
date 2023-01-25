@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Backdrop from '../Backdrop/Backdrop';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '../../../store/actions/categoriesActions';
-import {fetchProducts} from "../../../store/actions/productsActions";
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCategories} from '../../../store/actions/categoriesActions';
+import {useHistory, useLocation} from "react-router-dom";
 
-const Categories = () => {
+const Categories = ({setCategory}) => {
     const dispatch = useDispatch();
+    const location = useLocation();
+    const history = useHistory();
     const categories = useSelector((state) => state.categories.categories);
     const [catalogActive, setCatalogActive] = useState(false);
     const [subActive, setSubActive] = useState([]);
+    const query = new URLSearchParams(location.search);
 
     useEffect(() => {
         dispatch(fetchCategories());
     }, [dispatch]);
 
-    const handleChoice = (id, parent) => {
-        if (!parent) {
-            setCatalogActive(false);
-            dispatch(fetchProducts('?category=' + id));
-        } else {
-            setCatalogActive(false);
-            dispatch(fetchProducts('?category=' + id + '&parent=true'));
-        }
+    const handleChoice = (id, parent, title) => {
+        query.set("category", id);
+        parent ? query.set("parent", 'true') : query.delete("parent");
+        history.push({
+            pathname: location.pathname,
+            search: `?${query.toString()}`
+        });
+        setCatalogActive(false);
+        setCategory(title);
     };
 
     return (
@@ -56,7 +60,7 @@ const Categories = () => {
                                 <li
                                     key={category._id}
                                     onMouseOver={() => setSubActive(category.subCategories)}
-                                    onClick={() => handleChoice(category._id, category.parentCategory)}
+                                    onClick={() => handleChoice(category._id, category.parentCategory, category.title)}
                                 >
                                     <span>{category.title}</span>
                                     {category.subCategories?.length ? (
@@ -67,7 +71,7 @@ const Categories = () => {
                         </ul>
                         <ul className='categories__sub'>
                             {subActive?.length ? subActive.map(sub => (
-                                <li    onClick={() => handleChoice(sub._id, sub.parentCategory)}>{sub.title}</li>
+                                <li key={sub._id} onClick={() => handleChoice(sub._id, sub.parentCategory, sub.title)}>{sub.title}</li>
                             )) : null}
                         </ul>
                     </div>

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const idValidator = require('mongoose-id-validator');
-const mongoosePaginate = require('mongoose-paginate');
+
 const Schema = mongoose.Schema;
 
 const RatingSchema = new Schema({
@@ -81,7 +81,6 @@ const ProductSchema = new Schema({
 });
 
 ProductSchema.plugin(idValidator, {message: 'Bad ID value for {PATH}'});
-ProductSchema.plugin(mongoosePaginate);
 const Product = mongoose.model('Product', ProductSchema);
 
 module.exports = Product;

@@ -23,13 +23,11 @@ const HeaderDesktop = ({ mainPage }) => {
 
     const searchHandler = (e) => {
         e.preventDefault();
-
-        if (search) {
-            setSearch('');
-            dispatch(historyPush('/catalog?search=' + search));
-        } else {
-            dispatch(historyPush('/catalog'));
-        }
+        const searchParams = new URLSearchParams();
+        searchParams.set("search", search);
+        searchParams.set("page", "1");
+        const newUrl = `/search?${searchParams.toString()}`;
+        dispatch(historyPush(newUrl));
     };
 
     return (
@@ -87,7 +85,7 @@ const HeaderDesktop = ({ mainPage }) => {
                         <Link to="/sales">
                             <li>Акции</li>
                         </Link>
-                        <Link to="/catalog">
+                        <Link to="/catalog?page=1">
                             <li>Каталог</li>
                         </Link>
                         <Link to="/about-us">

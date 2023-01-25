@@ -7,7 +7,7 @@ const permit = require('../middlewares/permit');
 const path = require('path');
 const multer = require('multer');
 const config = require('../config');
-const {nanoid} = require('nanoid');
+const { nanoid } = require('nanoid');
 const Category = require('../models/Category');
 const SubCategory = require('../models/SubCategory');
 
@@ -20,21 +20,33 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({storage});
+const upload = multer({ storage });
 
 router.get('/sales', async (req, res) => {
     try {
+        let { page, limit } = req.query;
+        const query = {};
+
+        if (!page) page = 1;
+        if (!limit) limit = 10;
+
         const products = await Product.aggregate([
-            {$match: {discount: {$gt: 0}}},
+            { $match: { "discount": { $gt: 0 } } },
+            { $skip: (page - 1) * limit },
+            { $limit: parseInt(limit) },
             {
                 $addFields: {
-                    rating: {$avg: '$rating.rating'},
-                    ratingCount: {$size: '$rating'},
+                    rating: { $avg: '$rating.rating' },
+                    ratingCount: { $size: '$rating' },
                 },
             },
         ]);
-        await Product.populate(products, {path: "category subCategory"});
-        return  res.send({ products, totalPages: 0 });
+
+        const totalItems = await Product.countDocuments(query);
+        const totalPages = Math.ceil(totalItems / limit);
+        await Product.populate(products, { path: 'category subCategory' });
+
+        return res.send({products, totalPages, totalItems});
     } catch (e) {
         res.status(500).send(e);
     }
@@ -42,8 +54,11 @@ router.get('/sales', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const {page, limit} = req.query;
+        let { page, limit } = req.query;
         const query = {};
+
+        if (!page) page = 1;
+        if (!limit) limit = 10;
 
         if (req.query.search) {
             query.title = {
@@ -60,45 +75,26 @@ router.get('/', async (req, res) => {
             }
         }
 
-        const skip = (parseInt(page) - 1) * parseInt(limit);
-        const totalDocuments = await Product.countDocuments(query);
-        const totalPages = Math.ceil(totalDocuments / limit);
-        let products;
 
-        if (page && limit) {
-            products = await Product.aggregate([
-                {$match: query},
-                {
-                    $addFields: {
-                        rating: {$avg: '$rating.rating'},
-                        ratingCount: {$size: '$rating'},
-                    },
+        const products = await Product.aggregate([
+            { $match: query },
+            { $skip: (page - 1) * limit },
+            { $limit: parseInt(limit) },
+            {
+                $addFields: {
+                    rating: { $avg: '$rating.rating' },
+                    ratingCount: { $size: '$rating' },
                 },
-                {$skip: skip},
-                {$limit: parseInt(limit)},
-            ]);
-            await Product.populate(products, {path: "category subCategory"});
-            return  res.send({ products, totalPages });
-        } else {
-            products = await Product.aggregate([
-                {$match: query},
-                {
-                    $addFields: {
-                        rating: {$avg: '$rating.rating'},
-                        ratingCount: {$size: '$rating'},
-                    },
-                },
-            ]);
-            await Product.populate(products, {path: "category subCategory"});
+            },
+        ]);
 
-            return  res.send({products, totalPages: 0});
+        const totalItems = await Product.countDocuments(query);
+        const totalPages = Math.ceil(totalItems / limit);
+        await Product.populate(products, { path: 'category subCategory' });
 
-        }
-
-
-
-
+        return res.send({products, totalPages, totalItems});
     } catch (e) {
+        console.log(e)
         res.status(500).send(e);
     }
 });
@@ -118,11 +114,11 @@ router.get('/feedback/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const product = await Product.aggregate([
-            {$match: {_id: mongoose.Types.ObjectId(req.params.id)}},
+            { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
             {
                 $addFields: {
-                    rating: {$avg: '$rating.rating'},
-                    ratingCount: {$size: '$rating'},
+                    rating: { $avg: '$rating.rating' },
+                    ratingCount: { $size: '$rating' },
                 },
             },
         ]);
@@ -136,16 +132,15 @@ router.get('/:id', async (req, res) => {
 
 router.get('/admin/:id', async (req, res) => {
     try {
-        const product = await Product
-            .findById({_id: req.params.id})
-            .select("_id category subCategory title description code price amount image isHit isNovelty discount")
+        const product = await Product.findById({ _id: req.params.id }).select(
+            '_id category subCategory title description code price amount image isHit isNovelty discount'
+        );
 
         if (product.subCategory) {
             product.category = product.subCategory;
         }
 
         product.subCategory = null;
-
 
         if (!product) res.status(404).send('Product not found!');
         res.send(product);
@@ -156,7 +151,7 @@ router.get('/admin/:id', async (req, res) => {
 
 router.post('/feedback/:id', auth, async (req, res) => {
     try {
-        const {rating, text} = req.body;
+        const { rating, text } = req.body;
 
         const feedbackData = {
             rating,
@@ -165,7 +160,9 @@ router.post('/feedback/:id', auth, async (req, res) => {
         };
 
         if (req.params.id) {
-            await Product.findByIdAndUpdate(req.params.id, { $push: { rating: feedbackData } });
+            await Product.findByIdAndUpdate(req.params.id, {
+                $push: { rating: feedbackData },
+            });
         }
 
         res.send('Success');
@@ -174,10 +171,24 @@ router.post('/feedback/:id', auth, async (req, res) => {
     }
 });
 
-
-router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
+router.post(
+    '/',
+    auth,
+    permit('admin'),
+    upload.array('image', 5),
+    async (req, res) => {
         try {
-            const {category, title, description, code, price, amount, isHit, isNovelty, discount} = req.body;
+            const {
+                category,
+                title,
+                description,
+                code,
+                price,
+                amount,
+                isHit,
+                isNovelty,
+                discount,
+            } = req.body;
 
             const productData = {
                 category: '',
@@ -217,15 +228,30 @@ router.post('/', auth, permit('admin'), upload.array('image', 5), async (req, re
 
             res.send(newProduct);
         } catch (e) {
-            console.log(e)
+            console.log(e);
             res.status(400).send(e);
         }
     }
 );
 
-router.put('/:id', auth, permit('admin'), upload.array('image', 5), async (req, res) => {
+router.put(
+    '/:id',
+    auth,
+    permit('admin'),
+    upload.array('image', 5),
+    async (req, res) => {
         try {
-            const {category, title, description, code, price, amount, isHit, isNovelty, discount} = req.body;
+            const {
+                category,
+                title,
+                description,
+                code,
+                price,
+                amount,
+                isHit,
+                isNovelty,
+                discount,
+            } = req.body;
 
             const productData = {
                 category: '',
@@ -260,7 +286,10 @@ router.put('/:id', auth, permit('admin'), upload.array('image', 5), async (req, 
                 );
             }
 
-            const updateProduct = await Product.findByIdAndUpdate(req.params.id, productData);
+            const updateProduct = await Product.findByIdAndUpdate(
+                req.params.id,
+                productData
+            );
             res.send(updateProduct);
         } catch (e) {
             res.status(400).send(e);
@@ -273,11 +302,11 @@ router.delete('/:id', auth, permit('admin'), async (req, res) => {
         const product = await Product.findById(req.params.id);
 
         if (!product) {
-            return res.status(404).send({message: 'Product not found!'});
+            return res.status(404).send({ message: 'Product not found!' });
         }
 
         await Product.deleteOne(product);
-        res.send({message: "Продукт успешно удален!"});
+        res.send({ message: 'Продукт успешно удален!' });
     } catch (e) {
         res.status(400).send(e);
     }

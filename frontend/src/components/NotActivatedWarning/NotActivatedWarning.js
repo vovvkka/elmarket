@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {resendActivationLink} from "../../store/actions/usersActions";
 
 const NotActivatedWarning = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
     const [isClicked, setIsClicked] = useState(false);
 
     const timeOut = () => {
@@ -19,13 +23,21 @@ const NotActivatedWarning = () => {
         }
     };
 
+    const resend = () => {
+        const { email, activationLink } = user;
+        dispatch(resendActivationLink({email, activationLink}));
+    };
+
     return (
         <div className="notActivatedWarning">
             <p className="notActivatedWarning__text">
                 Ваш аккаунт не активирован! Пожалуйста активируйте аккаунт, для доступа ко всем возможностям.
                 <span
                     className="notActivatedWarning__again"
-                    onClick={timeOut}
+                    onClick={() => {
+                        timeOut();
+                        resend();
+                    }}
                 >
                     {!isClicked && "Отправить письмо повторно"}
                 </span>

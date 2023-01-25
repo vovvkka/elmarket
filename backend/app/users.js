@@ -37,6 +37,7 @@ router.get('/', auth, async (req, res) => {
         const {
             username,
             email,
+            isActivated,
             phone,
             additionalPhone,
             city,
@@ -44,9 +45,13 @@ router.get('/', auth, async (req, res) => {
             house,
             flat,
         } = user;
+
+        console.log(user);
+
         res.send({
             username,
             email,
+            isActivated,
             phone,
             additionalPhone,
             city,
@@ -96,6 +101,20 @@ router.get('/activate/:link', async (req, res) => {
         res.status(400).send({ error: e.errors });
     }
 });
+
+router.post('/resend-activationLink', async (req, res) => {
+    const { email, activationLink } = req.body;
+
+    try {
+        console.log(email, activationLink);
+        transporter.sendActivationLink(email, activationLink);
+    } catch (e) {
+        res.status(400).send({ error: e.errors });
+    }
+});
+
+
+
 
 router.put('/', auth, async (req, res) => {
     const {

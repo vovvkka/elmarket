@@ -8,7 +8,6 @@ import NotActivatedWarning from "../components/NotActivatedWarning/NotActivatedW
 const Profile = () => {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.users.profile);
-    const user = useSelector(state => state.users.user);
 
     useEffect(() => {
         dispatch(getProfile());
@@ -20,7 +19,7 @@ const Profile = () => {
 
     return (
         <>
-            {(user && !user.isActivated) && <NotActivatedWarning/>}
+            {(profile && !profile.isActivated) && <NotActivatedWarning/>}
             <div className="profile">
                 <h3 className="profile__title">
                     <img src={profileIcon} alt="Профиль" />

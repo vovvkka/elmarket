@@ -197,13 +197,14 @@ const AddProduct = ({match}) => {
                         />
                     </div>
                     <div className="product-form__row">
-                        <label>Скидка (%)</label>
+                        <label>* Скидка (%)</label>
                         <input
                             type="number"
                             name="discount"
                             value={product.discount}
                             onChange={(e) => handleChange(e)}
                             className="product-form__input-xs"
+                            required
                         />
                     </div>
                     <button className='button'>{match.params.id ? "Сохранить" : "Добавить товар"}</button>

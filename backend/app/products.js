@@ -52,6 +52,25 @@ router.get('/sales', async (req, res) => {
     }
 });
 
+router.get('/admin', async (req, res) => {
+    try {
+        const { search } = req.query;
+
+        let query = {};
+
+        if (req.query.search) {
+            query = { $or: [ { name: { $regex: new RegExp(`${search}`), $options: 'i' } }, { code: { $regex: new RegExp(`${search}`), $options: 'i' } } ] };
+        }
+
+        const products = await Product.find(query);
+
+        return res.send(products);
+    } catch (e) {
+        console.log(e)
+        res.status(500).send(e);
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         let { page, limit } = req.query;
@@ -208,7 +227,9 @@ router.post(
 
             if (isLeafCategory) {
                 productData.category = isLeafCategory._id;
+                delete productData.subCategory;
             } else {
+                console.log(123)
                 const subCategory = await SubCategory.findById(category);
 
                 if (subCategory) {

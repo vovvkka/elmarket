@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import ProfileForm from '../components/UI/ProfileForm/ProfileForm';
-import NotActivatedWarning from "../components/NotActivatedWarning/NotActivatedWarning";
+import NotActivatedWarning from '../components/NotActivatedWarning/NotActivatedWarning';
 import { useDispatch, useSelector } from 'react-redux';
 import { editProfile, getProfile } from '../store/actions/usersActions';
 import profileIcon from '../assets/svg/profile.svg';
@@ -23,7 +23,7 @@ const Profile = () => {
 
     return (
         <>
-            {(profile && !profile.isActivated) && <NotActivatedWarning/>}
+            {profile && !profile.isActivated && <NotActivatedWarning />}
             <div className="profile">
                 <h3 className="profile__title">
                     <img src={profileIcon} alt="Профиль" />
@@ -31,25 +31,17 @@ const Profile = () => {
                 </h3>
                 <ProfileForm profile={profile} onSubmit={submitHandler} />
             </div>
-            <div className="profile">
-                <h3 className="profile__title">
-                    <img src={profileIcon} alt="Профиль" />
-                    Личный кабинет
+            <div className="container-xs">
+                <h3 className="profile__title profile__title--form">
+                    Последние заказы
                 </h3>
-                <ProfileForm profile={profile} onSubmit={submitHandler} />
-                <div className="container-xs">
-                    <h3 className="profile__title profile__title--form">
-                        Последние заказы
-                    </h3>
-                    {orders.length ? (
-                        <OrdersTable userTable orders={orders} isArchive={false} />
-                    ) : (
-                        <p>У вас еще не было покупок.</p>
-                    )}
-                </div>
+                {orders.length ? (
+                    <OrdersTable userTable orders={orders} isArchive={false} />
+                ) : (
+                    <p>У вас еще не было покупок.</p>
+                )}
             </div>
         </>
-
     );
 };
 

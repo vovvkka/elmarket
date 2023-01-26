@@ -3,6 +3,7 @@ import Rating from 'react-rating';
 import star from '../../assets/svg/star.svg';
 import fullStar from '../../assets/svg/fullStar.svg';
 import productCard from '../../assets/svg/product-cart.svg';
+import noPhoto from '../../assets/no-photo.png';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../../config';
 import { useDispatch } from 'react-redux';
@@ -55,11 +56,19 @@ const ProductCard = ({ product }) => {
                             )}
 
                             <div className="product-card__image">
-                                <img
-                                    src={apiUrl + '/' + product.image[0]}
-                                    width="90%"
-                                    alt="product-img"
-                                />
+                                {product.image.length ? (
+                                    <img
+                                        src={apiUrl + '/' + product.image[0]}
+                                        width="90%"
+                                        alt={product.title}
+                                    />
+                                ) : (
+                                    <img
+                                        src={noPhoto}
+                                        width="90%"
+                                        alt="product-img"
+                                    />
+                                )}
                             </div>
                         </div>
                     </Link>
@@ -73,15 +82,30 @@ const ProductCard = ({ product }) => {
                             </h5>
                             {product.discount ? (
                                 <div className="product-card__price-discount">
-                                    <p className='product-card__old-price'>{product.price} сом </p>
-                                    <p className='product-card__price'>{Math.round(product.price - (product.price / 100 * product.discount))} сом</p>
+                                    <p className="product-card__old-price">
+                                        {product.price} сом{' '}
+                                    </p>
+                                    <p className="product-card__price">
+                                        {Math.floor(
+                                            product.price -
+                                                (product.price / 100) *
+                                                    product.discount
+                                        )}{' '}
+                                        сом
+                                    </p>
                                 </div>
                             ) : (
                                 <p className="product-card__price">
                                     {product.price} сом
                                 </p>
                             )}
-                            <span className={`product-card__in-stock ${product.amount === 0 ? 'product-card__in-stock--not' : ''}`}>
+                            <span
+                                className={`product-card__in-stock ${
+                                    product.amount === 0
+                                        ? 'product-card__in-stock--not'
+                                        : ''
+                                }`}
+                            >
                                 {product.amount > 0
                                     ? 'в наличии'
                                     : 'нет в наличии'}
@@ -89,7 +113,13 @@ const ProductCard = ({ product }) => {
                             <div className="product-card__cart-block"></div>
                         </Link>
                         <div className="product-card__cart">
-                            <div className={`product-card__buttons ${product.amount === 0? 'product-card__buttons--disabled' : ''}`}>
+                            <div
+                                className={`product-card__buttons ${
+                                    product.amount === 0
+                                        ? 'product-card__buttons--disabled'
+                                        : ''
+                                }`}
+                            >
                                 <button
                                     className="product-card__button"
                                     onClick={() =>
@@ -111,7 +141,7 @@ const ProductCard = ({ product }) => {
                             </div>
                             <div>
                                 <button
-                                    className='product-card__add'
+                                    className="product-card__add"
                                     onClick={() =>
                                         dispatch(
                                             addProduct({ ...product, quantity })

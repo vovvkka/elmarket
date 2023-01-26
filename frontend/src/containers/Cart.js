@@ -5,14 +5,18 @@ import CartProduct from "../components/CartProduct/CartProduct";
 
 const Cart = () => {
     const products = useSelector(state => state.cart.products);
+    const totalSum = useSelector(state => state.cart.totalSum);
     const [show, setShow] = useState(false);
     const [order, setOrder] = useState(false);
 
     const cartProduct = products?.map(p => <CartProduct key={p._id} p={p}/>);
 
-    const getTotalPrice = products?.reduce((acc, rec) => {
-        return acc + rec.price * rec.quantity - rec.discount || rec.price;
-    }, 0);
+    const getTotalPrice =  Math.floor(products.reduce(
+        (acc, num) =>
+            acc +
+            (num.price * num.quantity -
+                ((num.price * num.quantity) / 100) * num.discount), 0
+    ));
 
     return (
         <>
@@ -34,7 +38,7 @@ const Cart = () => {
                                 <div className="cart__block">
                                     <div className="cart__product">
                                         <div className="cart__product-image"/>
-                                        <h5 className="cart__product-title"/>
+                                        <p className="cart__product-title"/>
                                         <p className="cart__product-amount"><b>Количество</b></p>
                                         <p className="cart__product-discount"><b>Скидка</b></p>
                                         <p className="cart__product-price"><b>Цена</b></p>
@@ -45,7 +49,7 @@ const Cart = () => {
                                 </div>
                                 <div className="cart__order">
                                     <p className="cart__total">
-                                        Общая сумма: {getTotalPrice} сом
+                                        Общая сумма: {totalSum ? totalSum : getTotalPrice} сом
                                     </p>
                                     <button className="cart__btn" onClick={() => {
                                         setShow(true);

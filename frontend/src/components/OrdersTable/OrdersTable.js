@@ -10,13 +10,13 @@ import {
 const OrdersTable = ({ orders, isArchive, userTable }) => {
     const dispatch = useDispatch();
 
-    const total = orders?.reduce((acc, rec) => {
-        rec?.order.forEach((o) => {
-            acc += o.quantity * o.price;
-        });
-
-        return acc;
-    }, 0);
+    // const total = orders?.reduce((acc, rec) => {
+    //     rec?.order.forEach((o) => {
+    //         acc += o.quantity * o.price;
+    //     });
+    //
+    //     return acc;
+    // }, 0);
 
     return (
         <div className="table table__orders">
@@ -50,12 +50,12 @@ const OrdersTable = ({ orders, isArchive, userTable }) => {
                                             key={order._id}
                                             className="table__subFields"
                                         >
-                                            <b>{order.product.title}</b>{' '}
-                                            <span>x{order.quantity}</span>
+                                            <b>{order.product.title}</b>
+                                            <span>x <b>{order.quantity}</b></span>
                                         </p>
                                     ))}
                                 </td>
-                                <td className="table__xs">{total}</td>
+                                <td className="table__xs">{Math.floor(order.order.reduce((num, acc) => num + acc.price * acc.quantity, 0))}</td>
                                 <td className={classes.join(' ')}>
                                     {order.status}
                                 </td>

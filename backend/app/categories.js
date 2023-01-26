@@ -23,6 +23,17 @@ const upload = multer({ storage });
 
 router.get('/', async (req, res) => {
     try {
+        if (req.query.search) {
+            const { search } = req.query;
+            let query = {};
+
+            query = { title: { $regex: `${search}`, $options: 'i' } };
+
+            const categories = await Category.find(query);
+
+            return res.send(categories);
+        }
+
         if (req.query.toOptions) {
             const categories = await Category.find();
 

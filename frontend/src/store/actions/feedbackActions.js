@@ -3,8 +3,13 @@ import {historyPush} from "./historyActions";
 import {
     addFeedbackFailure,
     addFeedbackRequest,
-    addFeedbackSuccess, fetchFeedbacksFailure,
-    fetchFeedbacksRequest, fetchFeedbacksSuccess
+    addFeedbackSuccess,
+    deleteFeedbackFailure,
+    deleteFeedbackRequest,
+    deleteFeedbackSuccess,
+    fetchFeedbacksFailure,
+    fetchFeedbacksRequest,
+    fetchFeedbacksSuccess
 } from "../slices/feedbackSlice";
 
 export const addFeedback = feedbackData => {
@@ -28,6 +33,19 @@ export const fetchFeedbacks = (productId) => {
             dispatch(fetchFeedbacksSuccess(response.data));
         } catch (e) {
             dispatch(fetchFeedbacksFailure(e));
+        }
+    };
+};
+
+export const deleteFeedback = (feedbackId) => {
+    return async (dispatch) => {
+        try {
+            dispatch(deleteFeedbackRequest());
+            const response = await axiosApi.delete(`/products/feedback/${feedbackId}`);
+            dispatch(deleteFeedbackSuccess(response.data));
+        } catch (e) {
+            console.log(e)
+            dispatch(deleteFeedbackFailure(e));
         }
     };
 };

@@ -35,6 +35,20 @@ const feedbackSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        deleteFeedbackRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        deleteFeedbackSuccess(state, {payload}) {
+            state.loading = false;
+            state.feedbacks.rating = [
+                ...state.feedbacks.rating.filter((i) => i._id !== payload._id),
+            ];
+        },
+        deleteFeedbackFailure(state, {payload}) {
+            state.loading = false;
+            state.error = payload;
+        }
     }
 });
 
@@ -44,7 +58,10 @@ export const {
     addFeedbackFailure,
     fetchFeedbacksRequest,
     fetchFeedbacksSuccess,
-    fetchFeedbacksFailure
+    fetchFeedbacksFailure,
+    deleteFeedbackRequest,
+    deleteFeedbackSuccess,
+    deleteFeedbackFailure
 } = feedbackSlice.actions;
 
 export default feedbackSlice;

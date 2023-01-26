@@ -42,17 +42,6 @@ const Contacts = () => {
                                 Вы можете круглосуточно.
                             </p>
                         </div>
-                        <div className="contacts__orders-block contacts__orders-block-2">
-                            <p className="contacts__orders-write">
-                                НАПИШИТЕ ДИРЕКТОРУ <br/>
-                                Есть замечания, вопросы, <br/>
-                                предложения по нашей работе?
-                            </p>
-
-                            <button className="contacts__btn">
-                                Написать директору
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

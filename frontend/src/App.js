@@ -20,6 +20,7 @@ import {fetchContacts} from "./store/actions/contactsActions";
 import ResetPassword from "./containers/ResetPassword";
 import Sales from "./containers/Sales";
 import SearchPage from "./containers/SearchPage";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -35,6 +36,7 @@ const App = () => {
 
     return (
         <Layout>
+            <ScrollToTop />
             <Switch>
                 <Route path="/" exact component={MainPage} />
                 <Route path="/payment" exact component={Payment} />

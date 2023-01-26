@@ -1,22 +1,34 @@
-import React, { useEffect } from 'react';
-import star from '../assets/svg/star.svg';
-import fullStar from '../assets/svg/fullStar.svg';
+import React, {useEffect, useRef} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { apiUrl } from '../config';
 import Rating from 'react-rating';
+import star from '../assets/svg/star.svg';
+import noPhoto from '../assets/no-photo.png';
+import fullStar from '../assets/svg/fullStar.svg';
 import productCart from '../assets/svg/product-cart.svg';
 import delivery from '../assets/svg/delivery.svg';
 import ProductCard from '../components/ProductCard/ProductCard';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchOne } from '../store/actions/productsActions';
-import { apiUrl } from '../config';
 import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
-import { Link } from 'react-router-dom';
 import {clearProducts} from "../store/slices/productsSlice";
+import "@splidejs/react-splide/css";
+
 
 const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const user = useSelector((state) => state.users.user);
     const history = useSelector((state) => state.watchList.history);
+    const mainRef = useRef(null);
+    const thumbsRef = useRef(null);
+
+    useEffect(() => {
+        if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
+            mainRef.current.sync(thumbsRef.current.splide);
+        }
+    });
 
     useEffect(() => {
         dispatch(fetchOne(match.params.id));
@@ -31,17 +43,93 @@ const SingleProduct = ({ match }) => {
         }
     }, [dispatch, match.params.id, user]);
 
+    const mainOptions = {
+        type: "slide",
+        width: 600,
+        heightRatio: 1,
+        pagination: false,
+        arrows: false,
+        cover: true,
+        breakpoints: {
+            780: {
+                fixedHeight: 355,
+            },
+        },
+    };
+    const thumbsOptions = {
+        rewind: false,
+        fixedWidth: 104,
+        fixedHeight: 110,
+        padding: "75px",
+        isNavigation: true,
+        gap: 1,
+        focus: "none",
+        pagination: false,
+        cover: true,
+        dragMinThreshold: {
+            mouse: 4,
+            touch: 10,
+        },
+        breakpoints: {
+            780: {
+                fixedWidth: 80,
+                fixedHeight: 80,
+                padding: "60px",
+            },
+        },
+    };
+
     return (
         product && (
             <div className="container">
                 <div className="single-product">
                     <div className="product">
                         <div className="product__image">
-                            <img
-                                src={apiUrl + '/' + product.image[0]}
-                                alt="Product"
-                                className="product__main-image"
-                            />
+                            {product.image.length > 1 ? (
+                                <>
+                                    <Splide options={mainOptions} ref={mainRef}>
+                                        {product.image.map((slide, index) => (
+                                            <SplideSlide key={index}>
+                                                <img
+                                                    src={apiUrl + "/" + slide}
+                                                    alt={product.title}
+                                                    width={500}
+                                                />
+                                            </SplideSlide>
+                                        ))}
+                                    </Splide>
+
+                                    <Splide options={thumbsOptions} ref={thumbsRef}>
+                                        {product.image.map((slide) => (
+                                            <SplideSlide key={slide}>
+                                                <img
+                                                    src={apiUrl + "/" + slide}
+                                                    alt={product.title}
+
+                                                />
+                                            </SplideSlide>
+                                        ))}
+                                    </Splide>
+                                </>
+                            ) : (
+                                <>
+                                    {product.image.length ? product.image.map((slide) => (
+                                        <img
+                                            key={slide}
+                                            className="product__single-image"
+                                            src={slide ? apiUrl + "/" + slide : noPhoto}
+                                            alt={product.title}
+                                        />
+                                    )) :
+                                        <img
+                                            className="product__single-image"
+                                            src={noPhoto}
+                                            alt={product.title}
+                                        />
+                                    }
+                                </>
+                            )}
+
                         </div>
                         <div className="product__info">
                             <span>Артикул {product.code}</span>
@@ -123,7 +211,7 @@ const SingleProduct = ({ match }) => {
                             <div className="product__delivery">
                                 <img src={delivery} alt="Доставка" width={40} />
                                 <span>
-                                    Доставка курьером 27 марта или позже
+                                    Доставка курьером
                                 </span>
                             </div>
                             <p className="product__subtitle">Описание</p>

@@ -35,7 +35,6 @@ router.get("/", auth, permit("admin"), async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const {userId, customer, phone, order} = req.body;
-        console.log(order);
 
         if (!customer || !phone || !order) {
             return res.status(400).send({error: "Data not valid"});
@@ -43,8 +42,9 @@ router.post("/", async (req, res) => {
 
         const orderWithPrice = await Promise.all(order.map(async i => {
             const item = await Product.findById(i.product);
-
-            return {...i, price: item.price};
+            let price = item.price;
+            if (item.discount) price = Math.floor(item.price - item.price / 100 * item.discount);
+            return {...i, price};
         }));
 
         const orderData = {

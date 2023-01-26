@@ -25,28 +25,22 @@
         }
     }
 
-    &__main-image {
-        width: 70%;
+    &__single-image {
+        width: 600px;
 
-        @include media('<=tablet') {
-            width: 100%;
+        @include media('<=desktop') {
+            width: 400px;
+            height: auto;
         }
-    }
 
-    &__other-images {
-        display: flex;
-
-        img {
-            margin: 20px;
-            width: 25%;
-
-            @include media('<=desktop') {
-                flex-direction: column;
-            }
+        @include media('<=desktop') {
+            width: 100%;
+            margin-bottom: 20px;
         }
     }
 
     &__info {
+        margin-left: 30px;
         width: 100%;
     }
 

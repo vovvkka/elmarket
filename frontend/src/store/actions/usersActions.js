@@ -53,7 +53,6 @@ export const loginUser = (userData) => {
             dispatch(loginRequest());
 
             const response = await axiosApi.post('/users/sessions', userData);
-            console.log(response.data.user);
 
             dispatch(loginSuccess(response.data.user));
         } catch (e) {

@@ -2,15 +2,17 @@ import React from 'react';
 import { addProduct, deleteProduct } from '../../store/slices/cartSlice';
 import { apiUrl } from '../../config';
 import { useDispatch } from 'react-redux';
+import noPhoto from "../../assets/no-photo.png";
 
 const CartProduct = ({ p }) => {
     const dispatch = useDispatch();
-    const imageUrl = `${apiUrl}/${p.image[0]}`;
+    let imageUrl;
+    p.image[0] ? imageUrl = `${apiUrl}/${p.image[0]}` : imageUrl = noPhoto;
 
     return (
         p && (
             <div className="cart__product">
-                <img className="cart__product-image" src={imageUrl} alt="a" />
+                <img className="cart__product-image" src={imageUrl} alt={p.title} />
                 <h5 className="cart__product-title">{p.title}</h5>
                 <div className="cart__product-amount">
                     <div className="product-card__buttons">
@@ -38,7 +40,7 @@ const CartProduct = ({ p }) => {
                 <p className="cart__product-price">{p.price} сом</p>
                 <p className="cart__product-total">
                     {p.discount
-                        ? Math.round(p.price * p.quantity - (p.price * p.quantity / 100 * p.discount))
+                        ? Math.floor(p.price * p.quantity - (p.price * p.quantity / 100 * p.discount))
                         : p.price * p.quantity} сом
                 </p>
                 <div

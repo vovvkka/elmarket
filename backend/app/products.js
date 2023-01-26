@@ -31,7 +31,7 @@ router.get('/sales', async (req, res) => {
         if (!limit) limit = 10;
 
         const products = await Product.aggregate([
-            { $match: { "discount": { $gt: 0 } } },
+            { $match: { discount: { $gt: 0 } } },
             { $skip: (page - 1) * limit },
             { $limit: parseInt(limit) },
             {
@@ -46,7 +46,7 @@ router.get('/sales', async (req, res) => {
         const totalPages = Math.ceil(totalItems / limit);
         await Product.populate(products, { path: 'category subCategory' });
 
-        return res.send({products, totalPages, totalItems});
+        return res.send({ products, totalPages, totalItems });
     } catch (e) {
         res.status(500).send(e);
     }
@@ -94,7 +94,6 @@ router.get('/', async (req, res) => {
             }
         }
 
-
         const products = await Product.aggregate([
             { $match: query },
             { $skip: (page - 1) * limit },
@@ -111,9 +110,9 @@ router.get('/', async (req, res) => {
         const totalPages = Math.ceil(totalItems / limit);
         await Product.populate(products, { path: 'category subCategory' });
 
-        return res.send({products, totalPages, totalItems});
+        return res.send({ products, totalPages, totalItems });
     } catch (e) {
-        console.log(e)
+        console.log(e);
         res.status(500).send(e);
     }
 });
@@ -317,6 +316,30 @@ router.put(
         }
     }
 );
+
+router.delete('/feedback/:id', auth, permit('admin'),async (req, res) => {
+    try {
+        const product = await Product.findOne({
+            rating: { $elemMatch: { _id: req.params.id } },
+        });
+
+        if (!product) {
+            return res.status(404).send({ message: 'Not found!' });
+        }
+
+        const feedback = product.rating.find(i => i._id.toString() === req.params.id);
+
+        await Product.updateOne(
+            { _id: product._id },
+            { $pull: { rating: { _id: req.params.id } } }
+        );
+
+        res.send(feedback);
+    } catch (e) {
+        console.log(e)
+        res.status(500).send(e);
+    }
+});
 
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     try {

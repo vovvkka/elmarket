@@ -40,6 +40,17 @@
         word-break: break-word;
     }
 
+    &__upper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__delete {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
     &__rating {
         margin: 15px;
     }

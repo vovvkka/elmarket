@@ -1,0 +1,31 @@
+@import "../variables";
+
+.activated {
+  padding: 25px 0;
+  display: flex;
+  justify-content: center;
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__button {
+    margin-top: 20px;
+  }
+
+  &__authorize {
+    margin-top: 20px;
+  }
+
+  &__text {
+    color: $dark-gray;
+    margin-top: 15px;
+  }
+
+  &__icon {
+    width: 70px;
+  }
+}

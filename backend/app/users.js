@@ -94,7 +94,7 @@ router.get('/activate/:link', async (req, res) => {
         user.isActivated = true;
         await user.save({validateBeforeSave: false});
 
-        return res.redirect(process.env.CLIENT_URL + "/activated")
+        return res.redirect(process.env.CLIENT_URL + `/${user._id}/activated`)
     } catch (e) {
         res.status(400).send({ error: e.errors });
     }

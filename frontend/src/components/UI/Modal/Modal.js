@@ -9,8 +9,8 @@ import {addOrder} from "../../../store/actions/ordersActions";
 
 const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const dispatch = useDispatch();
-    const LoginError = useSelector(state => state.users.loginError);
-    const RegisterError = useSelector(state => state.users.registerError);
+    const loginError = useSelector(state => state.users.loginError);
+    const registerError = useSelector(state => state.users.registerError);
     const products = useSelector(state => state.cart.products);
     const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);
@@ -87,6 +87,14 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         setCustomer(prev => ({...prev, [name]: value}));
     };
 
+    const getRegisterFieldError = fieldName => {
+        try {
+            return registerError.errors[fieldName].message;
+        } catch {
+            return undefined;
+        }
+    };
+
     let children = null;
     let icon = null;
 
@@ -96,9 +104,9 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
-                {LoginError && (
+                {loginError && (
                     <div className="alert alert--error">
-                        Ошибка! {LoginError.error}
+                        Ошибка! {loginError.error}
                     </div>
                 )}
 
@@ -147,12 +155,6 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
-                {RegisterError && (
-                    <div className="alert alert--error">
-                        Error! {RegisterError.error}
-                    </div>
-                )}
-
                 <div className="modal__input-block">
                     <label>ФИО</label>
                     <input
@@ -163,6 +165,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={user?.username}
                         onChange={inputUserChangeHandler}
                     />
+                    <p className="modal__error">{getRegisterFieldError("username")}</p>
                 </div>
 
                 <div className="modal__input-block">
@@ -175,6 +178,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={user?.email}
                         onChange={inputUserChangeHandler}
                     />
+                    <p className="modal__error">{getRegisterFieldError("email")}</p>
                 </div>
 
                 <div className="modal__input-block">
@@ -187,6 +191,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={user?.password}
                         onChange={inputUserChangeHandler}
                     />
+                    <p className="modal__error">{getRegisterFieldError("password")}</p>
                 </div>
             </div>
         );
@@ -197,9 +202,9 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
-                {RegisterError && (
+                {registerError && (
                     <div className="alert alert--error">
-                        Error! {RegisterError.error}
+                        Ошибка! {registerError.error}
                     </div>
                 )}
 
@@ -235,9 +240,9 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
-                {LoginError && (
+                {loginError && (
                     <div className="alert alert--error">
-                        Error! {LoginError.error}
+                        Ошибка! {loginError.error}
                     </div>
                 )}
 

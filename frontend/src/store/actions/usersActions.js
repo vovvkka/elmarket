@@ -40,8 +40,10 @@ export const registerUser = (userData) => {
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(registerFailure(e.response.data));
+                throw e;
             } else {
                 dispatch(registerFailure({ global: 'No internet' }));
+                throw e;
             }
         }
     };

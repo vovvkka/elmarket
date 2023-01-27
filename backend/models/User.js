@@ -11,23 +11,46 @@ const validateUnique = async value => {
     if (user) return false;
 };
 
+const validateEmail = (email) => {
+    return /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(email);
+};
+
+const validateUsernameLength = username => {
+    return username.length < 50;
+};
+
+const validatePasswordLength = password => {
+    return password.length > 7;
+};
+
 const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
+        validate: {
+            validator: validateUsernameLength,
+            message: "Максимальная длина символов - 50"
+        }
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        validate: {
+        validate: [{
             validator: validateUnique,
             message: 'Пользователь с такой почтой уже зарегистрирован',
-        }
+        }, {
+            validator: validateEmail,
+            message: 'Некорректный почтовый адрес'
+        }]
     },
     password: {
         type: String,
         required: true,
+        validate: {
+            validator: validatePasswordLength,
+            message: "Длина пароля должна быть больше 8 символов"
+        }
     },
     token: {
         type: String,

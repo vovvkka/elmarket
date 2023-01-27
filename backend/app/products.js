@@ -54,17 +54,27 @@ router.get('/sales', async (req, res) => {
 
 router.get('/admin', async (req, res) => {
     try {
-        const { search } = req.query;
-
+        let { search, page, limit } = req.query;
         let query = {};
 
+        if (!page) page = 1;
+        if (!limit) limit = 4;
+
         if (req.query.search) {
-            query = { $or: [ { name: { $regex: new RegExp(`${search}`), $options: 'i' } }, { code: { $regex: new RegExp(`${search}`), $options: 'i' } } ] };
+            query = { $or: [ { title: { $regex: new RegExp(`${search}`), $options: 'i' } }, { code: { $regex: new RegExp(`${search}`), $options: 'i' } } ] };
         }
 
-        const products = await Product.find(query);
+        const products = await Product.aggregate([
+            { $match: query },
+            { $skip: (page - 1) * limit },
+            { $limit: parseInt(limit) },
+        ]);
 
-        return res.send(products);
+        const totalItems = await Product.countDocuments(query);
+        const totalPages = Math.ceil(totalItems / limit);
+        await Product.populate(products, { path: 'category subCategory' });
+
+        return res.send({ products, totalPages, totalItems });
     } catch (e) {
         console.log(e)
         res.status(500).send(e);

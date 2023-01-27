@@ -10,7 +10,7 @@ const AdminCategories = () => {
     const categories = useSelector((state) => state.categories.categories);
 
     const onSearch = val => {
-        dispatch(fetchCategories("admin?search=" + val));
+        dispatch(fetchCategories("?toTable=true&search=" + val));
     };
 
     return (

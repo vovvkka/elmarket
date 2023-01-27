@@ -24,7 +24,7 @@ const AdminProducts = () => {
             <div>
                 <input
                     type="search"
-                    placeholder="Введите артикуль или название"
+                    placeholder="Введите артикул или название"
                     onKeyPress={e => e.key === "Enter" && onSearch(e.target.value)}
                     className="admin-products__search"
                 />

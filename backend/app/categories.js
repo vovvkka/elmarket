@@ -23,17 +23,6 @@ const upload = multer({ storage });
 
 router.get('/', async (req, res) => {
     try {
-        if (req.query.search) {
-            const { search } = req.query;
-            let query = {};
-
-            query = { title: { $regex: `${search}`, $options: 'i' } };
-
-            const categories = await Category.find(query);
-
-            return res.send(categories);
-        }
-
         if (req.query.toOptions) {
             const categories = await Category.find();
 
@@ -67,18 +56,27 @@ router.get('/', async (req, res) => {
         }
 
         if (req.query.toTable) {
-            const categories = await Category.find();
-            const subCategories = await SubCategory.find().populate(
+            let { search, page, limit } = req.query;
+            let query = {};
+
+            if (!page) page = 1;
+            if (!limit) limit = 4;
+
+            if (search) {
+                query =  { title: { $regex: `${search}`, $options: 'i' } };
+            }
+
+            const categories = await Category.find(query);
+            const subCategories = await SubCategory.find(query).populate(
                 'parentCategory',
                 'title'
             );
-            const data = [...categories, ...subCategories];
-            const { page, limit } = req.query;
+           const data = [...categories, ...subCategories];
 
             if (page && limit) {
                 const skip = (parseInt(page) - 1) * parseInt(limit);
-                const totalCategories = await Category.countDocuments();
-                const totalSub = await SubCategory.countDocuments();
+                const totalCategories = await Category.countDocuments(query);
+                const totalSub = await SubCategory.countDocuments(query);
                 const totalPages = Math.ceil(
                     (totalCategories + totalSub) / limit
                 );

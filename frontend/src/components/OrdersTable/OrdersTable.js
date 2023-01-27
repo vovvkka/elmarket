@@ -10,14 +10,6 @@ import {
 const OrdersTable = ({ orders, isArchive, userTable }) => {
     const dispatch = useDispatch();
 
-    // const total = orders?.reduce((acc, rec) => {
-    //     rec?.order.forEach((o) => {
-    //         acc += o.quantity * o.price;
-    //     });
-    //
-    //     return acc;
-    // }, 0);
-
     return (
         <div className="table table__orders">
             <table>
@@ -50,8 +42,9 @@ const OrdersTable = ({ orders, isArchive, userTable }) => {
                                             key={order._id}
                                             className="table__subFields"
                                         >
-                                            <b>{order.product.title}</b>
-                                            <span>x <b>{order.quantity}</b></span>
+                                            <span>({order.product.code})</span>
+                                            <b> {order.product.title}</b>
+                                            <span> x<b>{order.quantity}</b></span>
                                         </p>
                                     ))}
                                 </td>

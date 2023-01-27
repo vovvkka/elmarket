@@ -1,16 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProductsTable from '../components/ProductsTable/ProductsTable';
-import {useDispatch, useSelector} from 'react-redux';
-import Paginate from "../components/UI/Paginate/Paginate";
-import {fetchProducts} from "../store/actions/productsActions";
+import { useDispatch, useSelector } from 'react-redux';
+import Paginate from '../components/UI/Paginate/Paginate';
+import { fetchProducts } from '../store/actions/productsActions';
 
 const AdminProducts = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
 
-    const onSearch = val => {
-        dispatch(fetchProducts("admin?search=" + val));
+    const onSearch = (val) => {
+        dispatch(fetchProducts('admin?search=' + val));
     };
 
     return (
@@ -25,13 +25,15 @@ const AdminProducts = () => {
                 <input
                     type="search"
                     placeholder="Введите артикул или название"
-                    onKeyPress={e => e.key === "Enter" && onSearch(e.target.value)}
+                    onKeyPress={(e) =>
+                        e.key === 'Enter' && onSearch(e.target.value)
+                    }
                     className="admin-products__search"
                 />
 
                 <ProductsTable products={products} />
                 <div className="admin-products__paginate">
-                    <Paginate isProducts limit={4}/>
+                    <Paginate isProducts limit={4} />
                 </div>
             </div>
         </div>

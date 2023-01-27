@@ -35,7 +35,7 @@ const AddProduct = ({match}) => {
         if (!!match.params.id) {
             dispatch(fetchOne(match.params.id, "admin"));
         }
-    }, [match.params.id]);
+    }, [dispatch, match.params.id]);
 
     useEffect(() => {
         if (oneProduct) {

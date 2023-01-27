@@ -28,7 +28,7 @@ const EditContacts = () => {
         return () => {
             dispatch(clearContactsError());
         }
-    }, [contacts]);
+    }, [dispatch, contacts]);
 
     const multipleChangeHandler = (e, index) => {
         const { name, value } = e.target;
@@ -173,7 +173,6 @@ const EditContacts = () => {
                                     instagramLink: e.target.value,
                                 }))
                             }
-                            required
                         />
                     </div>
                 </div>

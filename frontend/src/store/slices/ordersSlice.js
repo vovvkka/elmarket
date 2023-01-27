@@ -4,6 +4,7 @@ const name = 'orders';
 
 export const initialState = {
     orders: [],
+    totalPages: null,
     loading: false,
     createError: null,
     error: null,
@@ -17,9 +18,10 @@ const ordersSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchOrdersSuccess(state, {payload: orders}) {
+        fetchOrdersSuccess(state, {payload}) {
             state.loading = false;
-            state.orders = orders;
+            state.orders = payload.orders;
+            state.totalPages = payload.totalPages;
         },
         fetchOrdersFailure(state, action) {
             state.loading = false;

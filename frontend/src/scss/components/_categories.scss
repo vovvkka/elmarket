@@ -1,106 +1,67 @@
 @import '../variables';
 @import '../libs/breakpoints';
 
-.categories {
-    position: relative;
-    padding: 10px 0 50px 0;
-
-    &__flex {
-        display: flex;
-    }
-
-    &__button {
-        z-index: 500;
-        position: absolute;
-        margin: 20px;
-    }
-
-    &__catalog {
-        display: flex;
-    }
-
-    &__selected {
-        margin-top: 20px;
-        margin-left: 15%;
-        display: inline-block;
-        padding: 10px 15px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 1px 1px 7px 0 #939393;
-    }
-
-    &__triangle {
-        content: "";
-        left: 65px;
-        top: -15px;
-        position: absolute;
-        border-style: solid;
-        border-width: 0 20px 20px 20px;
-        border-color: transparent transparent #ffffff transparent;
-    }
-
-    &__modal {
-        padding: 20px;
-        top: 100px;
-        position: absolute;
-        z-index: 500;
-        width: 70%;
-        background: white;
-        border-radius: 5px;
-
-        @include media('<tablet') {
-            width: 100%;
-            padding: 1px;
-        }
-    }
+.category-menu {
+    margin-right: 30px;
+    max-width: 320px;
 
     &__title {
-        margin: 10px 0;
-        font-weight: 800;
-        font-size: 23px;
-
-        @include media('<tablet') {
-            text-align: center;
-        }
+        padding: 10px 15px;
+        background: $orange;
+        color: white;
+        border: 1px solid #ff5200;
     }
 
-    &__main {
-        width: 70%;
-        border-right: 1px solid $orange;
-        padding: 0 10px;
-        word-break: break-word;
+    &__category {
+        padding: 10px;
+        cursor: pointer;
+        border: 1px solid $light-grey;
+        border-top: none;
+        transition: all 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        @include media('<tablet') {
-            width: 60%;
+        &--active {
+            color: #ff5200;
         }
-    }
 
-    &__sub {
-        width: 30%;
-        padding: 0 10px;
-        word-break: break-word;
-
-        @include media('<tablet') {
-            width: 40%;
+        &:hover {
+            color: #ff5200;
         }
-    }
 
-    &__list {
-        li {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 30px 10px 10px;
+        span {
+            margin-right: 20px;
+        }
+
+        button {
+            border: none;
+            background: none;
             cursor: pointer;
-            border-bottom: 1px solid $orange;
 
-            &:last-child {
-                border-bottom: none;
+            img {
+                &:hover {
+                    filter: brightness(0) saturate(100%) invert(34%) sepia(83%)
+                        saturate(1768%) hue-rotate(360deg) brightness(100%)
+                        contrast(107%);
+                }
             }
+        }
+    }
 
-            &:hover {
-                background: $orange;
-                color: white;
-            }
+    &__subCategory {
+        padding: 10px 10px 10px 35px;
+        border: 1px dotted $light-grey;
+        border-top: none;
+        background: #d2d2d2;
+        cursor: pointer;
+
+        &:hover {
+            color: #ff5200;
+        }
+
+        &--active {
+            color: #ff5200;
         }
     }
 }

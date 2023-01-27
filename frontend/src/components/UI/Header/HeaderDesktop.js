@@ -133,6 +133,7 @@ const HeaderDesktop = ({ mainPage }) => {
                             className="search__input"
                             placeholder="поиск по каталогу"
                             type="text"
+                            value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                         <button className="search__button" type="submit">

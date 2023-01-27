@@ -1,10 +1,14 @@
 @import '../variables';
 @import '../libs/breakpoints';
 
+.catalog-flex {
+    display: flex;
+    padding-top: 30px;
+}
+
 .catalog {
-    padding: 30px 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 30px;
     grid-row-gap: 2em;
 
@@ -25,6 +29,10 @@
         display: flex;
         justify-content: center;
         padding: 20px 0;
+    }
+
+    &__title {
+        padding-bottom: 15px;
     }
 }
 
@@ -59,7 +67,7 @@
 
     &__novelty {
         margin: 0 5px;
-        background: #F8CA5A;
+        background: #f8ca5a;
         display: inline-block;
         padding: 10px 20px;
         font-weight: 600;
@@ -72,7 +80,7 @@
 
     &__hit {
         margin: 0 5px;
-        background: #8CC864;
+        background: #8cc864;
         display: inline-block;
         padding: 10px 20px;
         font-weight: 600;
@@ -87,7 +95,7 @@
 
     &__discount {
         margin: 0 5px;
-        background: #E11033;
+        background: #e11033;
         display: inline-block;
         padding: 10px 20px;
         font-weight: 600;
@@ -106,7 +114,7 @@
         color: #7e7e7e;
 
         &:before {
-            content: "";
+            content: '';
             border-bottom: 1px solid #7e7e7e;
             position: absolute;
             width: 100%;
@@ -149,7 +157,7 @@
         color: #538f26;
 
         &--not {
-            color: #E11033;
+            color: #e11033;
         }
     }
 

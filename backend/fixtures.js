@@ -20,7 +20,7 @@ const run = async () => {
     const [admin, user] = await User.create({
         username: 'admin',
         displayName: 'Айбек',
-        password: 'admin',
+        password: 'adminadmin',
         email: 'vovvkka0587@gmail.com',
         token: nanoid(),
         isActivated: true,
@@ -29,7 +29,7 @@ const run = async () => {
     }, {
         username: 'user',
         displayName: 'Вова',
-        password: 'user',
+        password: 'useruser',
         email: 'vova@gmail.com',
         activationLink: "asdsadads",
         token: nanoid(),

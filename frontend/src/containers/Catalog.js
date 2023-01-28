@@ -36,7 +36,7 @@ const Catalog = () => {
                         {products?.map((product) => (
                             <ProductCard key={product._id} product={product} />
                         ))}
-                        {!products?.length && <p>Продукты не найдены!</p>}
+                        {!products?.length && <p>Товары не найдены!</p>}
                     </div>
                     {products?.length ? (
                         <div className="catalog__paginate">

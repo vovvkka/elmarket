@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import burger from '../../../assets/svg/burger.svg';
 import logo from '../../../assets/logo.png';
 import Backdrop from '../Backdrop/Backdrop';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../../store/actions/usersActions';
+import Anonymous from '../Anonymous/Anonymous';
 
 const AppDrawer = () => {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
     const [sidebar, setSidebar] = useState(false);
 
@@ -15,14 +18,14 @@ const AppDrawer = () => {
         <>
             <Backdrop show={sidebar} clicked={showSidebar} />
             <div className="navbar">
-                <Link to="#" className="navbar__menu-bars">
+                <div className="navbar__menu-bars">
                     <img
                         className="header__user-icon"
                         src={burger}
-                        alt=""
+                        alt="Навигация"
                         onClick={showSidebar}
                     />
-                </Link>
+                </div>
             </div>
             <nav
                 className={
@@ -36,18 +39,36 @@ const AppDrawer = () => {
                         &times;
                     </p>
                     <div className="navbar__logo">
-                        <img src={logo} alt="" width={200} />
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                alt="Electromarket.kg"
+                                width={200}
+                            />
+                        </Link>
                     </div>
                     <ul className="navbar__list">
                         {user && (
-                            <Link to={user.role === 'admin' ? '/admin/products' : '/profile'}>
+                            <Link
+                                to={
+                                    user.role === 'admin'
+                                        ? '/admin/products?page=1'
+                                        : '/profile'
+                                }
+                            >
                                 <li>Личный кабинет</li>
                             </Link>
                         )}
-                        <Link to="/sales">
+                        {!user ? (
+                            <div className="navbar__auth">
+                                <Anonymous />
+                            </div>
+                        ) : null}
+
+                        <Link to="/sales?page=1">
                             <li>Акции</li>
                         </Link>
-                        <Link to="/catalog">
+                        <Link to="/catalog?page=1">
                             <li>Каталог</li>
                         </Link>
                         <Link to="/about-us">
@@ -66,6 +87,14 @@ const AppDrawer = () => {
                             <li className="navbar__last">Оплата</li>
                         </Link>
                     </ul>
+                    {user ? (
+                        <button
+                            className="navbar__logout"
+                            onClick={() => dispatch(logoutUser())}
+                        >
+                            Выйти
+                        </button>
+                    ) : null}
                 </div>
             </nav>
         </>

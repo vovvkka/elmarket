@@ -32,10 +32,10 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
 
     useEffect(() => {
-        if (order) {
+        if (order && userData) {
             dispatch(getProfile());
         }
-    }, [dispatch, order]);
+    }, [dispatch, order, userData]);
 
     useEffect(() => {
         if (profile?.phone) setCustomer(prev => ({...prev, phone: profile.phone}));
@@ -162,6 +162,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     }
 
     if (register) {
+        console.log('123 ')
         icon = registerIcon;
 
         children = (

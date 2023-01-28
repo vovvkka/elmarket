@@ -39,7 +39,7 @@ const HeaderDesktop = ({ mainPage }) => {
                             <img
                                 className="header__phone-icon"
                                 src={phone}
-                                alt="Phone"
+                                alt="Телефон"
                                 width={20}
                             />
                             <div className="header__numbers">
@@ -65,13 +65,13 @@ const HeaderDesktop = ({ mainPage }) => {
                             ) : null}
                             {user?.role !== 'admin' && (
                                 <Link to="/profile">
-                                    <img src={cabinet} alt="Profile" />
+                                    <img src={cabinet} alt="Профиль" />
                                 </Link>
                             )}
 
                             <img
                                 src={logout}
-                                alt="Logout"
+                                alt="Выйти"
                                 onClick={() => dispatch(logoutUser())}
                             />
                         </div>

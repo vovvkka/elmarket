@@ -11,6 +11,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const dispatch = useDispatch();
     const loginError = useSelector(state => state.users.loginError);
     const registerError = useSelector(state => state.users.registerError);
+    const forgotError = useSelector(state => state.users.forgotError);
     const products = useSelector(state => state.cart.products);
     const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);
@@ -202,12 +203,6 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
-                {registerError && (
-                    <div className="alert alert--error">
-                        Ошибка! {registerError.error}
-                    </div>
-                )}
-
                 <div className="modal__input-block">
                     <label>ФИО</label>
                     <input
@@ -230,6 +225,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={customer?.phone}
                         onChange={inputCustomerChangeHandler}
                     />
+                    <p>{}</p>
                 </div>
             </div>
         )
@@ -255,6 +251,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
+                    <p className="modal__error">{forgotError.message}</p>
                 </div>
             </div>
         );

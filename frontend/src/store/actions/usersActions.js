@@ -127,6 +127,7 @@ export const forgotPassword = email => {
             dispatch(forgotPasswordSuccess());
         } catch (e) {
             dispatch(forgotPasswordFailure(e.response.data));
+            throw e;
         }
     };
 };

@@ -7,6 +7,8 @@ export const initialState = {
     profile: null,
     loginLoading: false,
     loginError: null,
+    forgotLoading: false,
+    forgotError: null,
     registerLoading: false,
     registerError: null,
     logoutLoading: false,
@@ -79,15 +81,15 @@ const usersSlice = createSlice({
             state.error = action.payload;
         },
         forgotPasswordRequest(state) {
-            state.loginLoading = true;
-            state.loginError = null;
+            state.forgotLoading = true;
+            state.forgotError = null;
         },
         forgotPasswordSuccess(state) {
-            state.loginLoading = false;
+            state.forgotLoading = false;
         },
         forgotPasswordFailure(state, action) {
-            state.loginLoading = false;
-            state.loginError = action.payload;
+            state.forgotLoading = false;
+            state.forgotError = action.payload;
         },
         resetPasswordRequest(state) {
             state.loginLoading = true;

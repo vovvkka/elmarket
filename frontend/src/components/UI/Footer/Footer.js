@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import logo from '../../../assets/logo.png';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPopularCategories } from '../../../store/actions/categoriesActions';
-import facebook from '../../../assets/svg/facebook.svg';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {getPopularCategories} from '../../../store/actions/categoriesActions';
 import instagram from '../../../assets/svg/instagram.svg';
 
 const Footer = () => {
@@ -38,16 +37,13 @@ const Footer = () => {
                             Мы в соц сетях
                         </h2>
                         <div className="footer__icons">
-                            <img
-                                src={facebook}
-                                alt="Facebook"
-                                className="footer__social"
-                            />
-                            <img
-                                src={instagram}
-                                alt="Instagram"
-                                className="footer__social"
-                            />
+                            <a href={contacts.instagramLink} target="_blank">
+                                <img
+                                    src={instagram}
+                                    alt="Instagram"
+                                    className="footer__social"
+                                />
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -82,16 +78,13 @@ const Footer = () => {
                                 Мы в соц сетях
                             </h2>
                             <div className="footer__icons">
-                                <img
-                                    src={facebook}
-                                    alt="Facebook"
-                                    className="footer__social"
-                                />
-                                <img
-                                    src={instagram}
-                                    alt="Instagram"
-                                    className="footer__social"
-                                />
+                                <a href={contacts.instagramLink}>
+                                    <img
+                                        src={instagram}
+                                        alt="Instagram"
+                                        className="footer__social"
+                                    />
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -106,18 +99,18 @@ const Footer = () => {
                             <li key={em}>{em}</li>
                         ))}
                         <li>
-                            Понедельник-пятница: <br />
-                            с 9:30 до 18:30 <br />
-                            Суббота:с 10:00 до 18:00 <br />
-                            Воскресенье: ВЫХОДНОЙ <br />
+                            Понедельник-пятница: <br/>
+                            с 9:30 до 18:30 <br/>
+                            Суббота:с 10:00 до 18:00 <br/>
+                            Воскресенье: ВЫХОДНОЙ <br/>
                         </li>
                         <li>
-                            ОсОО “Има Электро” <br />
+                            ОсОО “Има Электро” <br/>
                             ИНН01603201810293
                         </li>
                         <li>
-                            Юр.адрес: УГНС Ленинского <br />
-                            района, код 002 Код ОКПО <br />
+                            Юр.адрес: УГНС Ленинского <br/>
+                            района, код 002 Код ОКПО <br/>
                             30023004
                         </li>
                     </ul>

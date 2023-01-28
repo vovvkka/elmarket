@@ -93,10 +93,11 @@ router.put('/:id/changeStatus', auth, permit('admin'), async (req, res) => {
             return res.status(404).send({ message: 'Заказ не найден!' });
 
         order.status = 'Закрыт';
-        await order.save();
+        await order.save({validateBeforeSave: false});
 
         res.send(order);
     } catch (e) {
+        console.log(e)
         res.status(400).send({ error: e.errors });
     }
 });

@@ -5,6 +5,13 @@ const validateUsernameLength = username => {
     return username.length < 50;
 };
 
+const validatePhoneNumber = phoneNumber => {
+    const phoneNumberRegex = /^\+\d{3}\(\d{3}\)[\d-]{7,}$/;
+
+    return phoneNumber.match(phoneNumberRegex);
+};
+
+
 const ProductsSchema = new Schema({
     product: {
         type: Schema.Types.ObjectId,
@@ -38,6 +45,10 @@ const OrderSchema  = new Schema({
     phone: {
         type: String,
         required: true,
+        validate: {
+            validator: validatePhoneNumber,
+            message: "Неккоректный номер телефона"
+        }
     },
     address:  String,
     order: [ProductsSchema],

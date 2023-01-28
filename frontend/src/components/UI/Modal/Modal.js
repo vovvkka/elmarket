@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import loginIcon from "../../../assets/svg/login.svg";
 import registerIcon from "../../../assets/svg/register.svg";
 import forgotIcon from "../../../assets/svg/forgot.png";
+import InputMask from 'react-input-mask';
 import Backdrop from "../Backdrop/Backdrop";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPassword, getProfile, loginUser, registerUser} from "../../../store/actions/usersActions";
@@ -12,6 +13,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const loginError = useSelector(state => state.users.loginError);
     const registerError = useSelector(state => state.users.registerError);
     const forgotError = useSelector(state => state.users.forgotError);
+    const orderError = useSelector(state => state.orders.createError);
     const products = useSelector(state => state.cart.products);
     const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);
@@ -91,6 +93,14 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const getRegisterFieldError = fieldName => {
         try {
             return registerError.errors[fieldName].message;
+        } catch {
+            return undefined;
+        }
+    };
+
+    const getOrderFieldError = fieldName => {
+        try {
+            return orderError.errors[fieldName].message;
         } catch {
             return undefined;
         }
@@ -213,19 +223,21 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={customer?.customer}
                         onChange={inputCustomerChangeHandler}
                     />
+                    <p className="modal__error">{getOrderFieldError("customer")}</p>
                 </div>
 
                 <div className="modal__input-block">
                     <label>Телефон</label>
-                    <input
-                        type="tel"
-                        name="phone"
-                        autoComplete="off"
-                        className="modal__input"
-                        value={customer?.phone}
-                        onChange={inputCustomerChangeHandler}
-                    />
-                    <p>{}</p>
+                    <InputMask mask="+\9\96(999)99-99-99" value={customer?.phone} onChange={inputCustomerChangeHandler}>
+                        {
+                            inputProps => <input
+                                {...inputProps}
+                                type="tel"
+                                className="modal__input"
+                                name="phone"
+                            />
+                        }
+                    </InputMask>
                 </div>
             </div>
         )

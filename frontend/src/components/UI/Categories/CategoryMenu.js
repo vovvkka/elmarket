@@ -50,6 +50,7 @@ const CategoryMenu = ({ setCategory }) => {
                                     ? 'category-menu__category--active'
                                     : ''
                             }`}
+                            key={category._id}
                             onClick={() => handleChoice(category)}
                         >
                             <span>{category.title}</span>
@@ -70,6 +71,7 @@ const CategoryMenu = ({ setCategory }) => {
                                                 ? 'category-menu__subCategory--active'
                                                 : ''
                                         }`}
+                                        key={sub._id}
                                         onClick={() => handleChoice(sub)}
                                     >
                                         {sub.title}

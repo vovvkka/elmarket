@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const validateUsernameLength = username => {
+    return username.length < 50;
+};
 
 const ProductsSchema = new Schema({
     product: {
@@ -27,6 +30,10 @@ const OrderSchema  = new Schema({
     customer: {
         type: String,
         required: true,
+        validate: {
+            validator: validateUsernameLength,
+            message: "Максимальная длина символов - 50"
+        }
     },
     phone: {
         type: String,

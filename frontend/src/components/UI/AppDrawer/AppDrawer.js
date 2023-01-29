@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import burger from '../../../assets/svg/burger.svg';
 import logo from '../../../assets/logo.png';
 import Backdrop from '../Backdrop/Backdrop';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../../store/actions/usersActions';
 import Anonymous from '../Anonymous/Anonymous';
+import searchIcon from '../../../assets/svg/search.svg';
+import { historyPush } from '../../../store/actions/historyActions';
 
 const AppDrawer = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
     const user = useSelector((state) => state.users.user);
     const [sidebar, setSidebar] = useState(false);
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setSidebar(false);
+    }, [location]);
 
     const showSidebar = () => setSidebar(!sidebar);
+
+    const searchHandler = (e) => {
+        e.preventDefault();
+        const searchParams = new URLSearchParams();
+        searchParams.set('search', search);
+        searchParams.set('page', '1');
+        const newUrl = `/search?${searchParams.toString()}`;
+        dispatch(historyPush(newUrl));
+        setSidebar(false);
+    };
 
     return (
         <>
@@ -34,7 +52,7 @@ const AppDrawer = () => {
                         : 'navbar__nav-menu'
                 }
             >
-                <div className="navbar__menu-items" onClick={showSidebar}>
+                <div className="navbar__menu-items">
                     <p className="navbar__close-btn" onClick={showSidebar}>
                         &times;
                     </p>
@@ -47,6 +65,21 @@ const AppDrawer = () => {
                             />
                         </Link>
                     </div>
+                    <form
+                        className="search search--mobile"
+                        onSubmit={searchHandler}
+                    >
+                        <input
+                            className="search__input"
+                            placeholder="поиск по каталогу"
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <button className="search__button" type="submit">
+                            <img src={searchIcon} alt="Search" />
+                        </button>
+                    </form>
                     <ul className="navbar__list">
                         {user && (
                             <Link
@@ -61,7 +94,9 @@ const AppDrawer = () => {
                         )}
                         {!user ? (
                             <div className="navbar__auth">
-                                <Anonymous />
+                                <Anonymous
+                                    onDrawerClose={() => setSidebar(false)}
+                                />
                             </div>
                         ) : null}
 

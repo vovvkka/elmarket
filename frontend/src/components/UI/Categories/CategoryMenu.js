@@ -52,7 +52,7 @@ const CategoryMenu = ({ setCategory }) => {
         });
         setCategory(title);
         setSelected(_id);
-        setMobileExpanded(false)
+        setMobileExpanded(false);
     };
 
     return (
@@ -83,9 +83,10 @@ const CategoryMenu = ({ setCategory }) => {
                                         : ''
                                 }`}
                                 key={category._id}
-                                onClick={() => handleChoice(category)}
                             >
-                                <span>{category.title}</span>
+                                <span onClick={() => handleChoice(category)}>
+                                    {category.title}
+                                </span>
                                 {category.subCategories.length ? (
                                     <button
                                         onClick={() =>

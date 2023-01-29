@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
 import { useMediaQuery } from 'react-responsive';
 
-const Anonymous = () => {
+const Anonymous = ({onDrawerClose}) => {
     const [show, setShow] = useState(false);
     const [login, setLogin] = useState(false);
     const [register, setRegister] = useState(false);
@@ -42,6 +42,7 @@ const Anonymous = () => {
                         onClick={() => {
                             setShow(true);
                             setLogin(true);
+                            onDrawerClose();
                         }}
                     >
                         Вход
@@ -51,6 +52,7 @@ const Anonymous = () => {
                         onClick={() => {
                             setShow(true);
                             setRegister(true);
+                            onDrawerClose();
                         }}
                     >
                         Регистрация

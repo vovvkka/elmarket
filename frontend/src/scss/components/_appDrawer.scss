@@ -8,7 +8,7 @@
     &__nav-menu {
         background-color: $dark-gray;
         width: 250px;
-        padding: 10px;
+        padding: 15px;
         height: 100vh;
         display: flex;
         justify-content: center;
@@ -17,6 +17,7 @@
         right: -100%;
         transition: 850ms;
         z-index: 500;
+
 
         &--active {
             right: 0;

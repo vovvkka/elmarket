@@ -1,45 +1,44 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import logo from '../../../assets/logo-mobile.png';
-import search from '../../../assets/svg/search.svg';
 import cart from '../../../assets/svg/cart.svg';
 import AppDrawer from "../AppDrawer/AppDrawer";
+import Backdrop from "../Backdrop/Backdrop";
 
 const HeaderMobile = ({ mainPage }) => {
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     return (
-        <div className={classes.join(' ')}>
-            <div className="container-sm">
-                <div className="header__mobile">
-                    <Link to="/">
-                        <img
-                            src={logo}
-                            alt="Electromarket.kg"
-                            className="logo"
-                            draggable={false}
-                            width="65"
-                            height="50"
-                        />
-                    </Link>
-                    <div className="header__user-icons">
-                        <img
-                            className="header__user-icon"
-                            src={search}
-                            alt=""
-                        />
-                        <Link to="/cart" className="clickable">
+        <>
+            <Backdrop/>
+            <div className={classes.join(' ')}>
+                <div className="container-sm">
+                    <div className="header__mobile">
+                        <Link to="/">
                             <img
-                                className="header__user-icon"
-                                src={cart}
-                                alt=""
+                                src={logo}
+                                alt="Electromarket.kg"
+                                className="logo"
+                                draggable={false}
+                                width="65"
+                                height="50"
                             />
                         </Link>
-                        <AppDrawer/>
+                        <div className="header__user-icons">
+                            <Link to="/cart" className="clickable">
+                                <img
+                                    className="header__user-icon"
+                                    src={cart}
+                                    alt="Корзина"
+                                />
+                            </Link>
+                            <AppDrawer/>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
+
     );
 };
 

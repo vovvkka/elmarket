@@ -9,6 +9,7 @@ import Pagination from 'react-paginate';
 import { historyPush } from '../../../store/actions/historyActions';
 import { fetchCategories } from '../../../store/actions/categoriesActions';
 import { fetchOrders } from '../../../store/actions/ordersActions';
+import {useMediaQuery} from "react-responsive";
 
 const Paginate = ({ isProducts, limit, sales, isOrders }) => {
     const dispatch = useDispatch();
@@ -18,8 +19,10 @@ const Paginate = ({ isProducts, limit, sales, isOrders }) => {
     const totalProducts = useSelector((state) => state.products.totalPages);
     const totalCategories = useSelector((state) => state.categories.pages);
     const totalOrders = useSelector((state) => state.orders.totalPages);
+    const matches = useMediaQuery({maxWidth: 768});
 
     let totalPages;
+
     if (isProducts) {
         totalPages = totalProducts;
     } else if (isOrders) {
@@ -63,10 +66,10 @@ const Paginate = ({ isProducts, limit, sales, isOrders }) => {
                 marginPagesDisplayed={2}
                 onPageChange={handlePageChange}
                 initialPage={page - 1}
-                previousLabel="< Предудыщая"
-                nextLabel="Следующая >"
+                previousLabel={matches ? "<" : "<  Предудыщая"}
+                nextLabel={matches ? ">" : "Следующая >"}
                 containerClassName="paginate__container"
-                pageLinkClassName="paginate__page"
+                pageLinkClassName={`paginate__page`}
                 activeLinkClassName="paginate__page--active"
                 previousLinkClassName="paginate__button"
                 nextLinkClassName="paginate__button"

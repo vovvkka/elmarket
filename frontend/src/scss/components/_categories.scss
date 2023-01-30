@@ -3,13 +3,25 @@
 
 .category-menu {
     margin-right: 30px;
-    max-width: 320px;
+    max-width: 280px;
+
+    @include media('<=800px') {
+        max-width: 100%;
+        margin: 0 0 30px 0;
+    }
 
     &__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 10px 15px;
         background: $orange;
         color: white;
         border: 1px solid #ff5200;
+
+        img {
+            cursor: pointer;
+        }
     }
 
     &__category {

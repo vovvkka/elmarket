@@ -1,21 +1,29 @@
 @import '../variables';
 
 .search {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  &__input {
-    background: transparent;
-    border: 1px solid $orange;
-    color: white;
-    padding: 15px 10px;
-    width: 300px;
-  }
+    &__input {
+        background: transparent;
+        border: 1px solid $orange;
+        color: white;
+        padding: 15px 10px;
+        width: 300px;
+    }
 
-  &__button {
-    border: none;
-    background: $orange;
-    padding: 10px;
-    cursor: pointer;
+    &__button {
+        border: none;
+        background: $orange;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+  &--mobile {
+    width: 10%;
+
+    input {
+      width: 165px;
+    }
   }
 }

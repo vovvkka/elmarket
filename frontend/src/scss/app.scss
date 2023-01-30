@@ -4,6 +4,7 @@
 @import './components/all';
 
 * {
+  -webkit-tap-highlight-color: transparent;
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;
 }
@@ -49,7 +50,7 @@
 
 .main {
   background: #E5E5E5;
-  padding-bottom: 478px;
+  min-height: 500px;
 }
 
 .fieldError {

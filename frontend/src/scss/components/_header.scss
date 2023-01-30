@@ -11,12 +11,18 @@
         ),
         url('../../assets/main-page-bg.png'), center;
     background-size: cover;
+    position: relative;
 
     &__mobile {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
+
+    &__mobile-search {
+        position: absolute;
+    }
+
 
     &--main-page {
         background: transparent;

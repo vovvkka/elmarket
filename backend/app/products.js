@@ -108,6 +108,7 @@ router.get('/', async (req, res) => {
             { $match: query },
             { $skip: (page - 1) * limit },
             { $limit: parseInt(limit) },
+            { $sort: { amount: -1 } },
             {
                 $addFields: {
                     rating: { $avg: '$rating.rating' },
@@ -122,7 +123,6 @@ router.get('/', async (req, res) => {
 
         return res.send({ products, totalPages, totalItems });
     } catch (e) {
-        console.log(e);
         res.status(500).send(e);
     }
 });

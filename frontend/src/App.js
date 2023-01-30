@@ -49,9 +49,15 @@ const App = () => {
                 <Route path="/:id/activated" exact component={Activated} />
                 <Route path="/search" exact component={SearchPage} />
                 <Route path="/catalog" exact component={Catalog} />
-                <Route path="/cart" exact component={Cart} />
                 <Route path="/reviews/:id" exact component={Reviews} />
                 <Route path="/reset-password/:id/:token" exact component={ResetPassword} />
+                <ProtectedRoute
+                    path="/cart"
+                    component={Cart}
+                    isAllowed={!user || user?.role !== 'admin'}
+                    redirectTo="/"
+                    exact
+                />
                 <ProtectedRoute
                     path="/feedback"
                     component={Feedback}

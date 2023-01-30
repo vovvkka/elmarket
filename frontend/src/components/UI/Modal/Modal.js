@@ -32,10 +32,10 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
 
     useEffect(() => {
-        if (order) {
+        if (order && userData) {
             dispatch(getProfile());
         }
-    }, [dispatch, order]);
+    }, [dispatch, order, userData]);
 
     useEffect(() => {
         if (profile?.phone) setCustomer(prev => ({...prev, phone: profile.phone}));
@@ -169,7 +169,6 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                 <div className="modal__input-block">
                     <label>ФИО</label>
                     <input
-
                         name="username"
                         autoComplete="off"
                         className="modal__input"
@@ -250,7 +249,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
             <div className="modal__body">
                 {loginError && (
                     <div className="alert alert--error">
-                        Ошибка! {loginError.error}
+                        Ошибка! {loginError?.error}
                     </div>
                 )}
 
@@ -263,7 +262,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
-                    <p className="modal__error">{forgotError.message}</p>
+                    <p className="modal__error">{forgotError?.message}</p>
                 </div>
             </div>
         );

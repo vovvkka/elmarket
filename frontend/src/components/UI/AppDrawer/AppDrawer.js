@@ -1,28 +1,49 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import burger from '../../../assets/svg/burger.svg';
 import logo from '../../../assets/logo.png';
 import Backdrop from '../Backdrop/Backdrop';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../../store/actions/usersActions';
+import Anonymous from '../Anonymous/Anonymous';
+import searchIcon from '../../../assets/svg/search.svg';
+import { historyPush } from '../../../store/actions/historyActions';
 
 const AppDrawer = () => {
+    const dispatch = useDispatch();
+    const location = useLocation();
     const user = useSelector((state) => state.users.user);
     const [sidebar, setSidebar] = useState(false);
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setSidebar(false);
+    }, [location]);
 
     const showSidebar = () => setSidebar(!sidebar);
+
+    const searchHandler = (e) => {
+        e.preventDefault();
+        const searchParams = new URLSearchParams();
+        searchParams.set('search', search);
+        searchParams.set('page', '1');
+        const newUrl = `/search?${searchParams.toString()}`;
+        dispatch(historyPush(newUrl));
+        setSidebar(false);
+    };
 
     return (
         <>
             <Backdrop show={sidebar} clicked={showSidebar} />
             <div className="navbar">
-                <Link to="#" className="navbar__menu-bars">
+                <div className="navbar__menu-bars">
                     <img
                         className="header__user-icon"
                         src={burger}
-                        alt=""
+                        alt="Навигация"
                         onClick={showSidebar}
                     />
-                </Link>
+                </div>
             </div>
             <nav
                 className={
@@ -31,23 +52,58 @@ const AppDrawer = () => {
                         : 'navbar__nav-menu'
                 }
             >
-                <div className="navbar__menu-items" onClick={showSidebar}>
+                <div className="navbar__menu-items">
                     <p className="navbar__close-btn" onClick={showSidebar}>
                         &times;
                     </p>
                     <div className="navbar__logo">
-                        <img src={logo} alt="" width={200} />
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                alt="Electromarket.kg"
+                                width={200}
+                            />
+                        </Link>
                     </div>
+                    <form
+                        className="search search--mobile"
+                        onSubmit={searchHandler}
+                    >
+                        <input
+                            className="search__input"
+                            placeholder="поиск по каталогу"
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <button className="search__button" type="submit">
+                            <img src={searchIcon} alt="Search" />
+                        </button>
+                    </form>
                     <ul className="navbar__list">
                         {user && (
-                            <Link to={user.role === 'admin' ? '/admin/products' : '/profile'}>
+                            <Link
+                                to={
+                                    user.role === 'admin'
+                                        ? '/admin/products?page=1'
+                                        : '/profile'
+                                }
+                            >
                                 <li>Личный кабинет</li>
                             </Link>
                         )}
-                        <Link to="/sales">
+                        {!user ? (
+                            <div className="navbar__auth">
+                                <Anonymous
+                                    onDrawerClose={() => setSidebar(false)}
+                                />
+                            </div>
+                        ) : null}
+
+                        <Link to="/sales?page=1">
                             <li>Акции</li>
                         </Link>
-                        <Link to="/catalog">
+                        <Link to="/catalog?page=1">
                             <li>Каталог</li>
                         </Link>
                         <Link to="/about-us">
@@ -66,6 +122,14 @@ const AppDrawer = () => {
                             <li className="navbar__last">Оплата</li>
                         </Link>
                     </ul>
+                    {user ? (
+                        <button
+                            className="navbar__logout"
+                            onClick={() => dispatch(logoutUser())}
+                        >
+                            Выйти
+                        </button>
+                    ) : null}
                 </div>
             </nav>
         </>

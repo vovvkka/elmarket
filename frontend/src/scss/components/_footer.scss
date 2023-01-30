@@ -1,130 +1,128 @@
-@import "../variables";
-@import "../libs/breakpoints";
+@import '../variables';
+@import '../libs/breakpoints';
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: $dark-gray;
-  padding: 38px;
-  color: $orange;
+    width: 100%;
+    background: $dark-gray;
+    padding: 38px;
+    color: $orange;
 
-  &__container {
-    max-width: 1500px;
-    margin: 0 auto;
-  }
-
-  &__top {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__icons {
-    display: flex;
-    align-items: center;
-    padding-top: 8px;
-  }
-
-  &__social {
-    width: 30px;
-    height: 30px;
-
-    &:first-child {
-      margin-right: 17px;
-    }
-  }
-
-  &__contacts {
-    margin-right: 50px;
-
-    &-mobile {
-      display: none;
+    &__container {
+        max-width: 1500px;
+        margin: 0 auto;
     }
 
-    &-title {
-      text-transform: uppercase;
-      font-size: 20px;
-    }
-  }
-
-  &__bottom {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  &__nav {
-    margin: 20px 2px 0 2px;
-
-    li {
-      color: $white;
-      line-height: 18px;
-      margin-bottom: 10px;
-      word-break: break-word;
-      max-width: 280px;
-
-      &:hover {
-        cursor: pointer;
-      }
+    &__top {
+        display: flex;
+        justify-content: space-between;
     }
 
-    &-first {
-      color: $orange !important;
-      font-weight: 700;
-      font-size: 20px;
-      margin-bottom: 15px;
-
-      &:hover {
-        cursor: text !important;
-      }
+    &__icons {
+        display: flex;
+        align-items: center;
+        padding-top: 8px;
     }
 
-    a {
-      color: $white;
-      line-height: 18px;
-      margin-bottom: 8px;
-      word-break: break-all;
+    &__social {
+        width: 30px;
+        height: 30px;
 
-      &:hover {
-        cursor: pointer;
-      }
+        &:first-child {
+            margin-right: 17px;
+        }
     }
-  }
 
-  @include media("<=tablet") {
+    &__contacts {
+        margin-right: 50px;
+
+        &-mobile {
+            display: none;
+        }
+
+        &-title {
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+    }
+
     &__bottom {
-      margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
     }
 
-    &__contacts {
-      display: none;
-    }
-  }
+    &__nav {
+        margin: 20px 2px 0 2px;
 
-  @media (min-width: 600px) and (max-width: 767px) {
-    &__contacts {
-      display: none;
+        li {
+            color: $white;
+            line-height: 18px;
+            margin-bottom: 10px;
+            word-break: break-word;
+            max-width: 280px;
 
-      &-mobile {
-        margin-top: 20px;
-        color: $orange !important;
-        display: block;
-      }
-    }
-  }
+            &:hover {
+                cursor: pointer;
+            }
+        }
 
-  @media (max-width: 767px) {
-    &__contacts-mobile {
-      margin-top: 20px;
-      color: $orange !important;
-      display: block !important;
-    }
-  }
+        &-first {
+            color: $orange !important;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 15px;
 
-  @media (max-width: 550px) {
-    &__contacts-mobile {
-      display: none !important;
+            &:hover {
+                cursor: text !important;
+            }
+        }
+
+        a {
+            color: $white;
+            line-height: 18px;
+            margin-bottom: 8px;
+            word-break: break-all;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
-  }
+
+    @include media('<=tablet') {
+        &__bottom {
+            margin-top: 20px;
+        }
+
+        &__contacts {
+            display: none;
+        }
+    }
+
+    @media (min-width: 600px) and (max-width: 767px) {
+        &__contacts {
+            display: none;
+
+            &-mobile {
+                margin-top: 20px;
+                color: $orange !important;
+                display: block;
+            }
+        }
+    }
+
+    @media (max-width: 767px) {
+        &__contacts-mobile {
+            margin-top: 20px;
+            color: $orange !important;
+            display: block !important;
+        }
+    }
+
+    @media (max-width: 550px) {
+        &__contacts-mobile {
+            display: none !important;
+        }
+    }
 }

@@ -180,7 +180,7 @@ const SingleProduct = ({ match }) => {
                                     </div>
                                 )}
                             </div>
-                            <span>
+                            <span className="product-card__in-stock">
                                 {product.amount > 0
                                     ? 'в наличии'
                                     : ' в наличии нет'}

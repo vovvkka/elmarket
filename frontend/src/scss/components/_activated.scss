@@ -1,7 +1,7 @@
 @import "../variables";
 
 .activated {
-  padding: 25px 0;
+  padding-top: 100px;
   display: flex;
   justify-content: center;
 
@@ -23,9 +23,28 @@
   &__text {
     color: $dark-gray;
     margin-top: 15px;
+    text-align: center;
   }
 
   &__icon {
     width: 70px;
+  }
+
+  @media (max-width: 767px) {
+    &__text {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 499px) {
+    padding-top: 140px;
+
+    &__icon {
+      width: 50px;
+    }
+
+    &__text {
+      font-size: 20px;
+    }
   }
 }

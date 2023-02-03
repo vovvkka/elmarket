@@ -31,7 +31,7 @@ const Profile = () => {
                 </h3>
                 <ProfileForm profile={profile} onSubmit={submitHandler} />
             </div>
-            <div className="container-xs">
+            <div className="container-xs profile__orders">
                 <h3 className="profile__title profile__title--form">
                     Последние заказы
                 </h3>

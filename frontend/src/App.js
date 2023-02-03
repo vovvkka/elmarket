@@ -22,6 +22,7 @@ import Sales from "./containers/Sales";
 import SearchPage from "./containers/SearchPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import Activated from "./containers/Activated";
+import {getProfile} from "./store/actions/usersActions";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -30,9 +31,11 @@ const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
 const App = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
+    const profile = useSelector((state) => state.users.profile);
 
     useEffect(() => {
         dispatch(fetchContacts());
+        dispatch(getProfile());
     }, [dispatch]);
 
     return (
@@ -68,7 +71,7 @@ const App = () => {
                 <ProtectedRoute
                     path="/feedback/:id"
                     component={Feedback}
-                    isAllowed={user}
+                    isAllowed={user && profile?.isActivated}
                     redirectTo="/"
                     exact
                 />

@@ -35,7 +35,7 @@ const Profile = () => {
                 <h3 className="profile__title profile__title--form">
                     Последние заказы
                 </h3>
-                {orders.length ? (
+                {orders?.length ? (
                     <OrdersTable userTable orders={orders} isArchive={false} />
                 ) : (
                     <p>У вас еще не было покупок.</p>

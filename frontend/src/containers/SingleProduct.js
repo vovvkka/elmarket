@@ -20,6 +20,7 @@ const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const user = useSelector((state) => state.users.user);
+    const profile = useSelector((state) => state.users.profile);
     const history = useSelector((state) => state.watchList.history);
     const mainRef = useRef(null);
     const thumbsRef = useRef(null);
@@ -169,7 +170,7 @@ const SingleProduct = ({ match }) => {
                                 ) : (
                                     <div className="product__no-feedback">
                                         <p>Пока нет отзывов.</p>
-                                        {user && (
+                                        {user && profile?.isActivated && (
                                             <Link
                                                 to={`/feedback/${product._id}`}
                                             >

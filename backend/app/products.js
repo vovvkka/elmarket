@@ -181,6 +181,10 @@ router.post('/feedback/:id', auth, async (req, res) => {
     try {
         const { rating, text } = req.body;
 
+        if (!req.user.isActivated) {
+            return res.status(403).send({message: "Чтобы оставить отзыв, ваш аккаунт должен быть активирован."});
+        }
+
         const feedbackData = {
             rating,
             user: req.user._id,
@@ -238,7 +242,6 @@ router.post(
                 productData.category = isLeafCategory._id;
                 delete productData.subCategory;
             } else {
-                console.log(123)
                 const subCategory = await SubCategory.findById(category);
 
                 if (subCategory) {

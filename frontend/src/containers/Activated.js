@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import activatedIcon from "../assets/activated.png";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getProfile} from "../store/actions/usersActions";
 
 const Activated = () => {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
+
+    useEffect(() => {
+        dispatch(getProfile());
+    }, [dispatch]);
 
     return (
         <div className="activated">

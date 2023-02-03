@@ -15,6 +15,7 @@ const Reviews = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const feedbacks = useSelector((state) => state.feedback.feedbacks.rating);
+    const profile = useSelector((state) => state.users.profile);
     const user = useSelector((state) => state.users.user);
 
     useEffect(() => {
@@ -34,7 +35,7 @@ const Reviews = ({ match }) => {
                 <div className="reviews__upper">
                     <div className="reviews__empty" />
                     <h2 className="reviews__title">Отзывы</h2>
-                    {user ? (
+                    {user && profile?.isActivated ? (
                         <div className="reviews__button">
                             <Link
                                 to={`/feedback/${match.params.id}`}

@@ -13,12 +13,6 @@ const MainPageProduction = () => {
                                 cиловые, греющие, <br/>
                                 слаботочные кабели и аксессуары
                             </p>
-                            <button className="production__btn production__btn-1">
-                                Отправить Заявку
-                            </button>
-                            <button className="production__btn production__btn--mobile production__btn-1">
-                                Отправить Заявку
-                            </button>
                         </div>
                         <img className="production__image production__image-1" src={cable} alt="production"/>
                     </div>
@@ -28,12 +22,6 @@ const MainPageProduction = () => {
                             <p className="production__description production__description-2">
                                 светильники, прожекторы и лампы
                             </p>
-                            <button className="production__btn production__btn-2">
-                                Отправить Заявку
-                            </button>
-                            <button className="production__btn production__btn--mobile production__btn-2">
-                                Отправить Заявку
-                            </button>
                         </div>
                         <img className="production__image production__image-2" src={bulb} alt="production"/>
                     </div>

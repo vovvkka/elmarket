@@ -2,7 +2,7 @@
 @import '../libs/breakpoints';
 
 .instruments {
-    padding: 30px 10px 0;
+    padding: 30px 10px 10px;
     background: #383838;
 
     &__block {
@@ -31,28 +31,10 @@
     }
 
     &__description {
-        padding: 45px 0;
+        padding: 70px 0;
         font-size: 16px;
         font-weight: 500;
         line-height: 25px;
-    }
-
-    &__btn {
-        background: transparent;
-        border: 2px solid $white;
-        color: $white;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 19px;
-        padding: 20px 10px 20px 30px;
-
-        svg {
-            margin-left: 10px;
-        }
-
-        &:hover {
-            cursor: pointer;
-        }
     }
 
     @media (max-width: 1200px) {

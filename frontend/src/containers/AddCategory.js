@@ -33,7 +33,7 @@ const AddCategory = ({ match }) => {
         if (!!match.params.id && location.pathname !== '/admin/add-category') {
             dispatch(fetchCategory(match.params.id));
         }
-    }, [dispatch, match.params.id]);
+    }, [dispatch, match.params.id, location.pathname]);
 
     useEffect(() => {
         if (category && location.pathname !== '/admin/add-category') {

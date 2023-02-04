@@ -37,7 +37,7 @@ const Footer = () => {
                             Мы в соц сетях
                         </h2>
                         <div className="footer__icons">
-                            <a href={contacts.instagramLink} target="_blank">
+                            <a href={contacts.instagramLink} target="_blank" rel="noreferrer">
                                 <img
                                     src={instagram}
                                     alt="Instagram"
@@ -78,7 +78,7 @@ const Footer = () => {
                                 Мы в соц сетях
                             </h2>
                             <div className="footer__icons">
-                                <a href={contacts.instagramLink}>
+                                <a href={contacts.instagramLink} target="_blank" rel="noreferrer">
                                     <img
                                         src={instagram}
                                         alt="Instagram"

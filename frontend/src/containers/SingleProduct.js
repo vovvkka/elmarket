@@ -14,11 +14,13 @@ import { fetchOne } from '../store/actions/productsActions';
 import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
 import {clearProducts} from "../store/slices/productsSlice";
 import "@splidejs/react-splide/css";
+import Spinner from "../components/UI/Spinner/Spinner";
 
 
 const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
+    const loading = useSelector(state => state.products.loading);
     const user = useSelector((state) => state.users.user);
     const profile = useSelector((state) => state.users.profile);
     const history = useSelector((state) => state.watchList.history);
@@ -79,6 +81,10 @@ const SingleProduct = ({ match }) => {
             },
         },
     };
+
+    if (loading) {
+        return <Spinner/>;
+    }
 
     return (
         product && (

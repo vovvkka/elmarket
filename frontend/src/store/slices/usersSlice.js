@@ -73,7 +73,7 @@ const usersSlice = createSlice({
             state.error = null;
         },
         getProfileSuccess(state, { payload: profile }) {
-            state.loading = true;
+            state.loading = false;
             state.profile = profile;
         },
         getProfileFailure(state, action) {
@@ -113,17 +113,6 @@ const usersSlice = createSlice({
             state.loading = false;
             state.error = payload;
         },
-        resendActivationLinkRequest(state) {
-            state.loading = true;
-            state.error = null;
-        },
-        resendActivationLinkSuccess(state) {
-            state.loading = false;
-        },
-        resendActivationLinkFailure(state, {payload}) {
-            state.loading = false;
-            state.error = payload;
-        },
     },
 });
 
@@ -152,9 +141,6 @@ export const {
     changePasswordRequest,
     changePasswordSuccess,
     changePasswordFailure,
-    resendActivationLinkRequest,
-    resendActivationLinkSuccess,
-    resendActivationLinkFailure
 } = usersSlice.actions;
 
 export default usersSlice;

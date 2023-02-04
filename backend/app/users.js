@@ -18,7 +18,7 @@ router.get('/watchlist', auth, async (req, res) => {
         });
         res.send(user.history);
     } catch (e) {
-        res.status(400).send({ error: e.errors });
+        res.status(400).send({error: e.errors});
     }
 });
 
@@ -63,10 +63,10 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { password, email, username } = req.body;
+    const {password, email, username} = req.body;
 
     try {
-        let userData = { password, email, username, activationLink: nanoid(30) };
+        let userData = {password, email, username, activationLink: nanoid(30)};
 
         const user = new User(userData);
 
@@ -96,22 +96,14 @@ router.get('/activate/:link', async (req, res) => {
 
         return res.redirect(process.env.CLIENT_URL + `/${user._id}/activated`);
     } catch (e) {
-        res.status(400).send({ error: e.errors });
+        res.status(400).send({error: e.errors});
     }
 });
 
-router.post('/resend-activationLink', async (req, res) => {
-    const { email, activationLink } = req.body;
-
-    try {
-        console.log(email, activationLink);
-        transporter.sendActivationLink(email, activationLink);
-    } catch (e) {
-        res.status(400).send({ error: e.errors });
-    }
+router.post('/resend-activationLink', async (req) => {
+    const {email, activationLink} = req.body;
+    transporter.sendActivationLink(email, activationLink);
 });
-
-
 
 
 router.put('/', auth, async (req, res) => {
@@ -141,17 +133,17 @@ router.put('/', auth, async (req, res) => {
         const updated = await User.updateOne(req.user, userData);
         res.send(updated);
     } catch (e) {
-        res.status(400).send({ error: e.errors });
+        res.status(400).send({error: e.errors});
     }
 });
 
 router.post('/history', auth, async (req, res) => {
-    const { product } = req.body;
+    const {product} = req.body;
 
     try {
         const productInfo = await Product.findById(product);
         const updated = await User.findOneAndUpdate(
-            { _id: req.user._id },
+            {_id: req.user._id},
             {
                 $set: {
                     history: [
@@ -169,17 +161,17 @@ router.post('/history', auth, async (req, res) => {
 
         res.send(updated);
     } catch (e) {
-        res.status(400).send({ error: e.errors });
+        res.status(400).send({error: e.errors});
     }
 });
 
 router.post('/sessions', async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({email: req.body.email});
 
     if (!user) {
         return res
             .status(401)
-            .send({ error: 'Неправильный логин или пароль!' });
+            .send({error: 'Неправильный логин или пароль!'});
     }
 
     const isMatch = await user.checkPassword(req.body.password);
@@ -187,41 +179,41 @@ router.post('/sessions', async (req, res) => {
     if (!isMatch) {
         return res
             .status(401)
-            .send({ error: 'Неправильный логин или пароль!' });
+            .send({error: 'Неправильный логин или пароль!'});
     }
 
     user.generateToken();
-    await user.save({ validateBeforeSave: false });
+    await user.save({validateBeforeSave: false});
 
-    res.send({ message: 'Успешная авторизация!', user });
+    res.send({message: 'Успешная авторизация!', user});
 });
 
 router.delete('/sessions', async (req, res) => {
     const token = req.get('Authorization');
-    const success = { message: 'Success' };
+    const success = {message: 'Success'};
 
     if (!token) return res.send(success);
 
-    const user = await User.findOne({ token });
+    const user = await User.findOne({token});
 
     if (!user) return res.send(success);
 
     user.generateToken();
-    await user.save({ validateBeforeSave: false });
+    await user.save({validateBeforeSave: false});
 
-    return res.send({ success, user });
+    return res.send({success, user});
 });
 
 router.post('/forgot-password', async (req, res) => {
-    const { email } = req.body;
+    const {email} = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({email});
 
         if (!user) {
             return res
                 .status(404)
-                .send({ message: 'Пользователь с данной почтой не найден.' });
+                .send({message: 'Пользователь с данной почтой не найден.'});
         }
 
         const secret = JWT_SECRET + user.password;
@@ -231,7 +223,7 @@ router.post('/forgot-password', async (req, res) => {
             id: user._id,
         };
 
-        const token = jwt.sign(payload, secret, { expiresIn: '10m' });
+        const token = jwt.sign(payload, secret, {expiresIn: '10m'});
 
         transporter.sendResetPasswordLink(user._id, token, email);
 
@@ -242,18 +234,18 @@ router.post('/forgot-password', async (req, res) => {
 });
 
 router.post('/reset-password/:id/:token', async (req, res) => {
-    const { id, token } = req.params;
-    const { password, password1 } = req.body;
+    const {id, token} = req.params;
+    const {password, password1} = req.body;
 
     try {
         const user = await User.findById(id);
 
         if (!user) {
-            return res.status(404).send({ error: 'Пользователь не найден.' });
+            return res.status(404).send({error: 'Пользователь не найден.'});
         }
 
         if (password !== password1) {
-            return res.status(400).send({ message: 'Пароли не совпадают!' });
+            return res.status(400).send({message: 'Пароли не совпадают!'});
         }
 
         const secret = JWT_SECRET + user.password;
@@ -261,19 +253,19 @@ router.post('/reset-password/:id/:token', async (req, res) => {
         jwt.verify(token, secret);
 
         user.password = password;
-        await user.save({ validateBeforeSave: false });
+        await user.save({validateBeforeSave: false});
 
-        res.send({ message: 'Пароль успешно изменен!' });
+        res.send({message: 'Пароль успешно изменен!'});
     } catch (e) {
         res.status(404).send(e);
     }
 });
 
 router.put('/change-password', auth, async (req, res) => {
-    const { currentPassword, newPassword, newPassword2 } = req.body;
+    const {currentPassword, newPassword, newPassword2} = req.body;
 
     if (newPassword !== newPassword2) {
-        return res.status(400).send({ error: 'Пароли не совпадают!' });
+        return res.status(400).send({error: 'Пароли не совпадают!'});
     }
 
     try {
@@ -283,12 +275,12 @@ router.put('/change-password', auth, async (req, res) => {
         if (!isMatch) {
             return res
                 .status(401)
-                .send({ error: 'Неправильный старый пароль!' });
+                .send({error: 'Неправильный старый пароль!'});
         }
 
         user.password = newPassword;
-        await user.save({ validateBeforeSave: false });
-        res.send({ message: 'Пароль успешно изменен!' });
+        await user.save({validateBeforeSave: false});
+        res.send({message: 'Пароль успешно изменен!'});
     } catch (e) {
         res.status(400).send(e);
     }

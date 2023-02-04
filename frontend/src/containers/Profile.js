@@ -6,11 +6,14 @@ import { editProfile, getProfile } from '../store/actions/usersActions';
 import profileIcon from '../assets/svg/profile.svg';
 import { fetchUserOrders } from '../store/actions/ordersActions';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const Profile = () => {
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.users.profile);
     const orders = useSelector((state) => state.orders.orders);
+    const OLoading = useSelector(state => state.orders.loading);
+    const PLoading = useSelector(state => state.users.loading);
 
     useEffect(() => {
         dispatch(fetchUserOrders());
@@ -23,6 +26,7 @@ const Profile = () => {
 
     return (
         <>
+            {OLoading || PLoading ? <Spinner/> : null}
             {profile && !profile.isActivated && <NotActivatedWarning />}
             <div className="profile">
                 <h3 className="profile__title">

@@ -4,11 +4,13 @@ import { useLocation } from 'react-router-dom';
 import ProductCard from '../components/ProductCard/ProductCard';
 import Paginate from '../components/UI/Paginate/Paginate';
 import { fetchProducts } from '../store/actions/productsActions';
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const products = useSelector((state) => state.products.products);
+    const loading = useSelector(state => state.products.loading);
     const totalItems = useSelector((state) => state.products.totalItems);
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
@@ -18,25 +20,28 @@ const SearchPage = () => {
     }, [location.search, dispatch, search]);
 
     return (
-        <div className="container-sm">
-            <div className="search-page">
-                <h2 className="search-page__title">
-                    Результатов поиска по запросу "
-                    {new URLSearchParams(location.search).get('search')}" -{' '}
-                    {totalItems}
-                </h2>
-                <div className="catalog">
-                    {products?.map((product) => (
-                        <ProductCard key={product._id} product={product} />
-                    ))}
-                    {!products?.length && <p>Продукты не найдены!</p>}
-                </div>
+        <>
+            {loading && <Spinner/>}
+            <div className="container-sm">
+                <div className="search-page">
+                    <h2 className="search-page__title">
+                        Результатов поиска по запросу "
+                        {new URLSearchParams(location.search).get('search')}" -{' '}
+                        {totalItems}
+                    </h2>
+                    <div className="catalog">
+                        {products?.map((product) => (
+                            <ProductCard key={product._id} product={product} />
+                        ))}
+                        {!products?.length && <p>Продукты не найдены!</p>}
+                    </div>
 
-                <div className="catalog__paginate">
-                    <Paginate isProducts limit={10} />
+                    <div className="catalog__paginate">
+                        <Paginate isProducts limit={10} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

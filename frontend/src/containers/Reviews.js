@@ -10,11 +10,13 @@ import star from '../assets/svg/star.svg';
 import fullStar from '../assets/svg/fullStar.svg';
 import deleteIcon from '../assets/svg/delete.svg';
 import { Link } from 'react-router-dom';
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const Reviews = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const feedbacks = useSelector((state) => state.feedback.feedbacks.rating);
+    const loading = useSelector(state => state.feedback.loading);
     const profile = useSelector((state) => state.users.profile);
     const user = useSelector((state) => state.users.user);
 
@@ -28,6 +30,10 @@ const Reviews = ({ match }) => {
     const deleteHandler = (id) => {
         dispatch(deleteFeedback(id));
     };
+
+    if (loading) {
+        return <Spinner/>;
+    }
 
     return (
         <div className="container-sm">

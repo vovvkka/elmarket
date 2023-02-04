@@ -6,10 +6,13 @@ import {useLocation} from 'react-router-dom';
 import CategoryMenu from '../components/UI/Categories/CategoryMenu';
 import Paginate from '../components/UI/Paginate/Paginate';
 import {fetchCategories} from '../store/actions/categoriesActions';
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const Catalog = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
+    const PLoading = useSelector(state => state.products.loading);
+    const CLoading = useSelector(state => state.categories.loading);
     const location = useLocation();
     const [title, setTitle] = useState('');
 
@@ -27,25 +30,28 @@ const Catalog = () => {
     }, [dispatch, location]);
 
     return (
-        <div className="container-sm">
-            <div className="catalog-flex">
-                <CategoryMenu setCategory={(title) => setTitle(title)}/>
-                <div>
-                    <h2 className='catalog__title'>{title ? title : 'Все товары'}</h2>
-                    <div className="catalog">
-                        {products?.map((product) => (
-                            <ProductCard key={product._id} product={product} />
-                        ))}
-                        {!products?.length && <p>Товары не найдены!</p>}
-                    </div>
-                    {products?.length ? (
-                        <div className="catalog__paginate">
-                            <Paginate isProducts limit={10} />
+        <>
+            {PLoading || CLoading ? <Spinner/> : null}
+            <div className="container-sm">
+                <div className="catalog-flex">
+                    <CategoryMenu setCategory={(title) => setTitle(title)}/>
+                    <div>
+                        <h2 className='catalog__title'>{title ? title : 'Все товары'}</h2>
+                        <div className="catalog">
+                            {products?.map((product) => (
+                                <ProductCard key={product._id} product={product} />
+                            ))}
+                            {!products?.length && <p>Товары не найдены!</p>}
                         </div>
-                    ) : null}
+                        {products?.length ? (
+                            <div className="catalog__paginate">
+                                <Paginate isProducts limit={10} />
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

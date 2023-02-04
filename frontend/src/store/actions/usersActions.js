@@ -24,8 +24,6 @@ import {
     changePasswordRequest,
     changePasswordSuccess,
     changePasswordFailure,
-    resendActivationLinkRequest,
-    resendActivationLinkFailure, resendActivationLinkSuccess,
 } from '../slices/usersSlice';
 import {historyPush} from "./historyActions";
 
@@ -42,7 +40,7 @@ export const registerUser = (userData) => {
                 dispatch(registerFailure(e.response.data));
                 throw e;
             } else {
-                dispatch(registerFailure({ global: 'No internet' }));
+                dispatch(registerFailure({global: 'No internet'}));
                 throw e;
             }
         }
@@ -62,7 +60,7 @@ export const loginUser = (userData) => {
                 dispatch(loginFailure(e.response.data));
                 throw e;
             } else {
-                dispatch(loginFailure({ global: 'No internet' }));
+                dispatch(loginFailure({global: 'No internet'}));
                 throw e;
             }
         }
@@ -82,7 +80,7 @@ export const editProfile = (userData) => {
                 dispatch(editProfileFailure(e.response.data));
                 throw e;
             } else {
-                dispatch(editProfileFailure({ global: 'No internet' }));
+                dispatch(editProfileFailure({global: 'No internet'}));
                 throw e;
             }
         }
@@ -161,16 +159,6 @@ export const changePassword = (data) => {
     };
 };
 
-export const resendActivationLink = data => {
-    return async dispatch => {
-        try {
-            dispatch(resendActivationLinkRequest());
-
-            await axiosApi.post(`/users/resend-activationLink`, data);
-
-            dispatch(resendActivationLinkSuccess());
-        } catch (e) {
-            dispatch(resendActivationLinkFailure(e.response.data));
-        }
-    };
+export const resendActivationLink = async data => {
+    await axiosApi.post(`/users/resend-activationLink`, data);
 };

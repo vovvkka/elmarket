@@ -102,7 +102,7 @@ const AddProduct = ({match}) => {
                             value={product.category}
                             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                             treeData={categories}
-                            placeholder="Please select"
+                            placeholder="Выберите категорию"
                             treeDefaultExpandAll={!!match.params.id}
                             className="product-form__select"
                             onChange={onChangeCategory}

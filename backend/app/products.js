@@ -304,6 +304,7 @@ router.put(
 
             if (isLeafCategory) {
                 productData.category = isLeafCategory._id;
+                delete productData.subCategory;
             } else {
                 const subCategory = await SubCategory.findById(category);
 
@@ -317,7 +318,12 @@ router.put(
                 productData.image = req.files.map(
                     (i) => 'uploads/' + i.filename
                 );
+            } else {
+                delete productData.image;
             }
+
+            console.log(productData);
+
 
             const updateProduct = await Product.findByIdAndUpdate(
                 req.params.id,

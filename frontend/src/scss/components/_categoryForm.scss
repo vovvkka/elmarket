@@ -1,7 +1,13 @@
 @import '../variables';
+@import '../libs/breakpoints';
 
 .category-form {
     margin-left: 50px;
+    width: 100%;
+
+    @include media('<=desktop') {
+        margin-left: 0;
+    }
 
     &__title {
         margin: 20px 0;
@@ -18,6 +24,13 @@
         grid-template-columns: 1fr 8fr;
         align-items: center;
         margin: 15px 0;
+
+        @include media('<=desktop') {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
 
         input {
             background: none;
@@ -38,6 +51,14 @@
 
     &__input-xl {
         width: 600px;
+
+        @include media('<=desktop') {
+            width: 500px;
+        }
+
+        @include media('<=tablet') {
+            width: 100%;
+        }
     }
 
     &__select {
@@ -46,6 +67,10 @@
         div {
             background: transparent !important;
             border: 1px solid #969696 !important;
+        }
+
+        @include media('<=desktop') {
+          width: 80%;
         }
     }
 }

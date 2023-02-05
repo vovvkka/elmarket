@@ -44,7 +44,6 @@ export const deleteFeedback = (feedbackId) => {
             const response = await axiosApi.delete(`/products/feedback/${feedbackId}`);
             dispatch(deleteFeedbackSuccess(response.data));
         } catch (e) {
-            console.log(e)
             dispatch(deleteFeedbackFailure(e));
         }
     };

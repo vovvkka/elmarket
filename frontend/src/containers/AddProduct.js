@@ -138,7 +138,7 @@ const AddProduct = ({match}) => {
                             onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <div className="category-form__row">
+                    <div className="product-form__row">
                         <label>Фото</label>
 
                         <label className="custom-file-upload">

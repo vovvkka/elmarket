@@ -5,6 +5,7 @@ import ProductCard from '../components/ProductCard/ProductCard';
 import Paginate from '../components/UI/Paginate/Paginate';
 import { fetchProducts } from '../store/actions/productsActions';
 import Spinner from "../components/UI/Spinner/Spinner";
+import { clearProducts } from "../store/slices/productsSlice";
 
 const SearchPage = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,10 @@ const SearchPage = () => {
 
     useEffect(() => {
         dispatch(fetchProducts(location.search));
+
+        return () => {
+            dispatch(clearProducts());
+        };
     }, [location.search, dispatch, search]);
 
     return (

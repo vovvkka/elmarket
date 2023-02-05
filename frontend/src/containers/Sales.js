@@ -5,6 +5,7 @@ import {fetchSales} from '../store/actions/productsActions';
 import {useLocation} from 'react-router-dom';
 import Paginate from '../components/UI/Paginate/Paginate';
 import Spinner from "../components/UI/Spinner/Spinner";
+import { clearProducts } from "../store/slices/productsSlice";
 
 const Sales = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,10 @@ const Sales = () => {
 
     useEffect(() => {
         dispatch(fetchSales());
+
+        return () => {
+            dispatch(clearProducts());
+        };
     }, [location.search, dispatch, search]);
 
     return (

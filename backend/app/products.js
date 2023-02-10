@@ -320,9 +320,6 @@ router.put(
                 delete productData.image;
             }
 
-            console.log(productData);
-
-
             const updateProduct = await Product.findByIdAndUpdate(
                 req.params.id,
                 productData

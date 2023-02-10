@@ -23,6 +23,7 @@ import SearchPage from "./containers/SearchPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import Activated from "./containers/Activated";
 import {getProfile} from "./store/actions/usersActions";
+import {newVisit} from "./store/actions/visitsActions";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -36,6 +37,7 @@ const App = () => {
     useEffect(() => {
         dispatch(fetchContacts());
         dispatch(getProfile());
+        dispatch(newVisit());
     }, [dispatch]);
 
     return (

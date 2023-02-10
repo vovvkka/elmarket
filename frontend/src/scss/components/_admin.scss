@@ -4,6 +4,16 @@
 .admin {
   padding: 15px 0;
 
+  &__visits-block {
+    margin-bottom: 10px;
+  }
+
+  &__visits {
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
   &__page {
     display: flex;
 

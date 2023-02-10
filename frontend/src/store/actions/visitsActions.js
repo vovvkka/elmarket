@@ -6,22 +6,15 @@ export const fetchVisits = () => {
         try {
             dispatch(fetchVisitsRequest());
             const response = await axiosApi.get(`/visits`);
-            dispatch(fetchVisitsSuccess(response.data));
+            dispatch(fetchVisitsSuccess(response.data.visits));
         } catch (e) {
             dispatch(fetchVisitsFailure(e));
         }
     };
 };
 
-// export const editContacts = (data) => {
-//     return async (dispatch) => {
-//         try {
-//             dispatch(editContactsRequest());
-//             const response = await axiosApi.put(`/contacts`, data);
-//             dispatch(editContactsSuccess(response.data));
-//             dispatch(historyPush('/admin/contacts'));
-//         } catch (e) {
-//             dispatch(editContactsFailure(e));
-//         }
-//     };
-// };
+export const newVisit = () => {
+    return async () => {
+        await axiosApi.post('/visits');
+    };
+};

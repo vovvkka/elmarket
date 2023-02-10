@@ -17,8 +17,7 @@ router.post('/', async (req, res) => {
     try {
         const visits = await Visit.findOne();
 
-        const updateVisits = await Visit.findOneAndUpdate({}, {visits: visits + 1});
-        res.send(updateVisits);
+        await Visit.findOneAndUpdate({}, {visits: visits.visits + 1});
     } catch (e) {
         res.status(500).send(e);
     }

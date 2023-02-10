@@ -18,7 +18,7 @@ const usersSlice = createSlice({
         },
         fetchVisitsSuccess(state, action) {
             state.loading = false;
-            state.visists = action.payload;
+            state.visits = action.payload;
         },
         fetchVisitsFailure(state, action) {
             state.loading = false;

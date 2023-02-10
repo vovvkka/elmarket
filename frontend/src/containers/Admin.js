@@ -12,7 +12,7 @@ import AdminOrders from "./AdminOrders";
 import AdminContacts from "./AdminContacts";
 import EditContacts from "./EditContacts";
 import {fetchVisits} from "../store/actions/visitsActions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const listItems = [
     {
@@ -40,6 +40,7 @@ const listItems = [
 const Admin = () => {
     const location = useLocation();
     const dispatch = useDispatch();
+    const visits = useSelector(state => state.visits.visits);
     const [path, setPath] = useState('');
 
     useEffect(() => {
@@ -50,6 +51,11 @@ const Admin = () => {
     return (
         <div className="admin">
             <div className="container-sm">
+                <div className="admin__visits-block">
+                    <h3 className="admin__visits">
+                        Посещений сайта: {visits}
+                    </h3>
+                </div>
                 <div className="admin__page">
                     <div className="admin__menu">
                         <ul>

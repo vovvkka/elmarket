@@ -14,7 +14,6 @@ export const fetchHistory = () => {
             const response = await axiosApi.get("/users/watchlist");
             dispatch(fetchHistorySuccess(response.data));
         } catch (e) {
-            console.log(e)
             dispatch(fetchHistoryFailure(e));
         }
     };
@@ -27,7 +26,6 @@ export const sendHistory = (product) => {
             await axiosApi.post("/users/history", {product});
             dispatch(sendHistorySuccess());
         } catch (e) {
-            console.log(e)
             dispatch(sendHistoryFailure(e));
         }
     };

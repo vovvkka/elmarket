@@ -98,6 +98,8 @@ const productsSlice = createSlice({
         clearProducts(state) {
             state.product = null;
             state.products = [];
+            state.totalPages = null;
+            state.totalItems = null;
         }
     },
 });

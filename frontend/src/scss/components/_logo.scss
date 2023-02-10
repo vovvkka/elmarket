@@ -1,3 +1,11 @@
+@import '../libs/breakpoints';
+
 .logo {
   cursor: pointer;
+
+  &--desktop {
+    @include media('<=phone') {
+      width: 210px;
+    }
+  }
 }

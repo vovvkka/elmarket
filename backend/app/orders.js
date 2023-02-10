@@ -37,7 +37,6 @@ router.get('/', auth, permit('admin'), async (req, res) => {
             { $limit: parseInt(limit) },
             { $skip: (page - 1) * limit },
         ]);
-        console.log(orders)
 
         const totalItems = await Order.countDocuments(query);
         const totalPages = Math.ceil(totalItems / limit);
@@ -97,7 +96,6 @@ router.put('/:id/changeStatus', auth, permit('admin'), async (req, res) => {
 
         res.send(order);
     } catch (e) {
-        console.log(e)
         res.status(400).send({ error: e.errors });
     }
 });

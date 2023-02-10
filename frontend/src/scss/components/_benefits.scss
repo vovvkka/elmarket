@@ -1,0 +1,52 @@
+@import '../libs/breakpoints';
+@import '../variables';
+
+.benefits {
+    display: flex;
+    justify-content: center;
+
+    @include media('<tablet') {
+        flex-direction: column;
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+        padding: 0 20px;
+
+        @include media('<tablet') {
+            width: 100%;
+            min-height: auto;
+            margin-bottom: 30px;
+        }
+    }
+
+    &__img {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        padding: 20px 0;
+        font-size: 28px;
+        color: #383838;
+        text-align: center;
+    }
+
+    &__text {
+        width: 70%;
+        margin: 0 auto;
+        font-size: 17px;
+        font-weight: 600;
+        color: #383838;
+
+        @include media('<tablet') {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}

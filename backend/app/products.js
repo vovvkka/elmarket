@@ -76,7 +76,6 @@ router.get('/admin', async (req, res) => {
 
         return res.send({ products, totalPages, totalItems });
     } catch (e) {
-        console.log(e)
         res.status(500).send(e);
     }
 });
@@ -261,7 +260,6 @@ router.post(
 
             res.send(newProduct);
         } catch (e) {
-            console.log(e);
             res.status(400).send(e);
         }
     }
@@ -355,7 +353,6 @@ router.delete('/feedback/:id', auth, permit('admin'),async (req, res) => {
 
         res.send(feedback);
     } catch (e) {
-        console.log(e)
         res.status(500).send(e);
     }
 });

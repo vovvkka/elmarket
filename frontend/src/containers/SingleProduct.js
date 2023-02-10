@@ -222,7 +222,7 @@ const SingleProduct = ({ match }) => {
                                 </span>
                             </div>
                             <p className="product__subtitle">Описание</p>
-                            <p>{product.description}</p>
+                            <p className='product__description'>{product.description}</p>
                         </div>
                     </div>
                     {user && (

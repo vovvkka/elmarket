@@ -11,6 +11,8 @@ import AddCategory from "./AddCategory";
 import AdminOrders from "./AdminOrders";
 import AdminContacts from "./AdminContacts";
 import EditContacts from "./EditContacts";
+import {fetchVisits} from "../store/actions/visitsActions";
+import {useDispatch} from "react-redux";
 
 const listItems = [
     {
@@ -37,10 +39,12 @@ const listItems = [
 
 const Admin = () => {
     const location = useLocation();
+    const dispatch = useDispatch();
     const [path, setPath] = useState('');
 
     useEffect(() => {
         setPath(location.pathname);
+        dispatch(fetchVisits());
     }, [location.pathname]);
 
     return (

@@ -7,6 +7,7 @@ const Product = require("./models/Product");
 const Category = require("./models/Category");
 const SubCategory = require("./models/SubCategory");
 const Contacts = require("./models/Contacts");
+const Visit = require("./models/Visit");
 
 const run = async () => {
     await mongoose.connect(config.mongo.db);
@@ -42,6 +43,9 @@ const run = async () => {
         instagramLink: 'https://www.instagram.com/electromarket.kg/'
     });
 
+    await Visit.create({
+        visits: 1293
+    });
 
     const [c1, c2, c3, c4, c5, c6, c7, c8, c9] = await Category.create({
         title: "Кабель, провод",

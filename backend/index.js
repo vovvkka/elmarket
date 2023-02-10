@@ -10,6 +10,7 @@ const products = require('./app/products');
 const categories = require('./app/categories');
 const orders = require('./app/orders');
 const contacts = require('./app/contacts');
+const visits = require('./app/visits');
 
 const app = express();
 const port = 8000;
@@ -24,6 +25,7 @@ app.use('/products', products);
 app.use('/categories', categories);
 app.use('/orders', orders);
 app.use('/contacts', contacts);
+app.use('/visits', visits);
 
 const run = async () => {
     await mongoose.connect(config.mongo.db, config.mongo.options);

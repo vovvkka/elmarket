@@ -4,10 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import CategoriesTable from "../components/CategoriesTable/CategoriesTable";
 import Paginate from "../components/UI/Paginate/Paginate";
 import {fetchCategories} from "../store/actions/categoriesActions";
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const AdminCategories = () => {
     const dispatch = useDispatch();
     const categories = useSelector((state) => state.categories.categories);
+    const loading = useSelector(state => state.categories.loading);
 
     const onSearch = val => {
         dispatch(fetchCategories("?toTable=true&search=" + val));
@@ -15,6 +17,7 @@ const AdminCategories = () => {
 
     return (
         <div className='admin-categories'>
+            {loading && <Spinner/>}
             <div className='admin-categories__upper'>
                 <h2 className='admin-categories__title'>Категории</h2>
                 <Link className="button" to='/admin/add-category'>Добавить категорию</Link>

@@ -4,11 +4,13 @@ import { fetchOrders } from '../store/actions/ordersActions';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import { Link, useLocation } from 'react-router-dom';
 import Paginate from '../components/UI/Paginate/Paginate';
+import Spinner from "../components/UI/Spinner/Spinner";
 
 const AdminOrders = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const orders = useSelector((state) => state.orders.orders);
+    const loading = useSelector(state => state.orders.loading);
 
     useEffect(() => {
         if (location.search.includes('archive')) {
@@ -20,6 +22,7 @@ const AdminOrders = () => {
 
     return (
         <div className="admin-orders">
+            {loading && <Spinner/>}
             <div className="admin-orders__upper">
                 <h2 className="admin-orders__title">Заказы</h2>
                 {location.search.includes('archive') ? (

@@ -112,10 +112,6 @@ router.put('/', auth, async (req, res) => {
         email,
         phone,
         additionalPhone,
-        city,
-        street,
-        house,
-        flat,
     } = req.body;
 
     try {
@@ -124,10 +120,6 @@ router.put('/', auth, async (req, res) => {
             email,
             phone,
             additionalPhone,
-            city,
-            street,
-            house,
-            flat,
         };
 
         const updated = await User.updateOne(req.user, userData);

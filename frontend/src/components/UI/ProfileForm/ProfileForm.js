@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import contacts from '../../../assets/svg/contacts.svg';
-import address from '../../../assets/svg/address.svg';
 import pen from '../../../assets/svg/pen.svg';
 import {useDispatch} from 'react-redux';
 import {changePassword} from '../../../store/actions/usersActions';
@@ -13,10 +12,6 @@ const ProfileForm = ({ onSubmit, profile }) => {
         email: '',
         phone: '',
         additionalPhone: '',
-        city: '',
-        street: '',
-        house: '',
-        flat: '',
     });
 
     const [passwords, setPasswords] = useState({
@@ -108,54 +103,6 @@ const ProfileForm = ({ onSubmit, profile }) => {
                                     type="text"
                                     name="additionalPhone"
                                     value={profileInfo.additionalPhone}
-                                    onChange={changeHandler}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="profile-form__block">
-                        <h3 className="profile__title profile__title--form">
-                            <img src={address} alt="Контакты" />
-                            Адрес доставки
-                        </h3>
-                        <div className="profile-form__fields">
-                            <div className="profile-form__field">
-                                <label>Город</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="city"
-                                    value={profileInfo.city}
-                                    onChange={changeHandler}
-                                />
-                            </div>
-                            <div className="profile-form__field">
-                                <label>Улица</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="street"
-                                    value={profileInfo.street}
-                                    onChange={changeHandler}
-                                />
-                            </div>
-                            <div className="profile-form__field">
-                                <label>Дом</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="house"
-                                    value={profileInfo.house}
-                                    onChange={changeHandler}
-                                />
-                            </div>
-                            <div className="profile-form__field">
-                                <label>Квартира</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="flat"
-                                    value={profileInfo.flat}
                                     onChange={changeHandler}
                                 />
                             </div>

@@ -77,10 +77,6 @@ const UserSchema = new Schema({
     },
     phone: String,
     additionalPhone: String,
-    city: String,
-    street: String,
-    house: String,
-    flat: String,
     createdAt: {
         type: Date,
         required: true,

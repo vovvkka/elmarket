@@ -5,7 +5,8 @@ import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {deleteCategory} from "../../store/actions/categoriesActions";
 
-const CategoriesTable = ({categories}) => {
+const CategoriesTable = ({ categories }) => {
+    console.log(categories);
     const dispatch = useDispatch();
 
     return (
@@ -20,7 +21,7 @@ const CategoriesTable = ({categories}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {categories?.map(category => (
+                {!categories.categories && categories.map((category) => (
                     <tr key={category._id}>
                         <td>{category.parentCategory ? category.parentCategory.title : "Нет"}</td>
                         <td>{category.title}</td>

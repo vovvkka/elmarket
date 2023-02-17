@@ -5,6 +5,7 @@ import products from '../assets/svg/box.svg';
 import categories from '../assets/svg/category.svg';
 import orders from '../assets/svg/orders.svg';
 import contacts from '../assets/svg/contactsBook.svg';
+import settings from '../assets/svg/settings.svg';
 import AddProduct from './AddProduct';
 import AdminCategories from "./AdminCategories";
 import AddCategory from "./AddCategory";
@@ -13,6 +14,7 @@ import AdminContacts from "./AdminContacts";
 import EditContacts from "./EditContacts";
 import {fetchVisits} from "../store/actions/visitsActions";
 import {useDispatch, useSelector} from "react-redux";
+import Profile from "./Profile";
 
 const listItems = [
     {
@@ -34,6 +36,11 @@ const listItems = [
         path: ['/admin/contacts', '/admin/edit-contacts'],
         icon: contacts,
         label: 'Контакты',
+    },
+    {
+        path: ['/admin/settings'],
+        icon: settings,
+        label: 'Настройки',
     },
 ];
 
@@ -89,6 +96,7 @@ const Admin = () => {
                     <Route path="/admin/orders" component={AdminOrders} />
                     <Route path="/admin/contacts" component={AdminContacts} />
                     <Route path="/admin/edit-contacts" component={EditContacts} />
+                    <Route path="/admin/settings" component={Profile}/>
                 </div>
             </div>
         </div>

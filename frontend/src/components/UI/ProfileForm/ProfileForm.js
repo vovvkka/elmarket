@@ -4,7 +4,7 @@ import pen from '../../../assets/svg/pen.svg';
 import {useDispatch} from 'react-redux';
 import {changePassword} from '../../../store/actions/usersActions';
 
-const ProfileForm = ({ onSubmit, profile }) => {
+const ProfileForm = ({ onSubmit, profile, isAdmin }) => {
     const dispatch = useDispatch();
 
     const [profileInfo, setProfileInfo] = useState({
@@ -55,10 +55,10 @@ const ProfileForm = ({ onSubmit, profile }) => {
     };
 
     return (
-        <div className="profile-form">
+        <div className={isAdmin ? "profile-form profile-form__admin" : "profile-form"}>
             <div className="container-xs">
                 <div className="profile-form__upper">
-                    <div className="profile-form__block">
+                    <div className={isAdmin ? "profile-form__block-admin" : "profile-form__block"}>
                         <h3 className="profile__title profile__title--form">
                             <img src={contacts} alt="Контакты" />
                             Контактные данные
@@ -118,7 +118,7 @@ const ProfileForm = ({ onSubmit, profile }) => {
             </div>
             <hr className="profile-form__divider" />
             <div className="container-xs">
-                <form className="profile-form__block" onSubmit={submitPassword}>
+                <form className={isAdmin ? "profile-form__block-admin" : "profile-form__block"} onSubmit={submitPassword}>
                     <h3 className="profile__title profile__title--form">
                         <img src={pen} alt="Контакты" />
                         Контактные данные

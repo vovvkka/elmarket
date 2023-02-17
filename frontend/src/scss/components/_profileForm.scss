@@ -2,6 +2,10 @@
 @import "../libs/breakpoints";
 
 .profile-form {
+  &__admin {
+    margin-left: 50px;
+  }
+
   &__upper {
     display: flex;
     justify-content: space-between;
@@ -14,6 +18,10 @@
 
   &__block {
     width: 46%;
+
+    &-admin {
+      width: 100%;
+    }
 
     @include media ('<desktop') {
       width: 70%;

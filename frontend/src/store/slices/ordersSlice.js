@@ -18,10 +18,10 @@ const ordersSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchOrdersSuccess(state, {payload}) {
+        fetchOrdersSuccess(state, action) {
             state.loading = false;
-            state.orders = payload.orders;
-            state.totalPages = payload.totalPages;
+            state.orders = action.payload;
+            state.totalPages = action.payload;
         },
         fetchOrdersFailure(state, action) {
             state.loading = false;

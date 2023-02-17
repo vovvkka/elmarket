@@ -3,6 +3,7 @@ import contacts from '../../../assets/svg/contacts.svg';
 import pen from '../../../assets/svg/pen.svg';
 import {useDispatch} from 'react-redux';
 import {changePassword} from '../../../store/actions/usersActions';
+import InputMask from "react-input-mask";
 
 const ProfileForm = ({ onSubmit, profile, isAdmin }) => {
     const dispatch = useDispatch();
@@ -88,23 +89,29 @@ const ProfileForm = ({ onSubmit, profile, isAdmin }) => {
                             </div>
                             <div className="profile-form__field">
                                 <label>Телефон</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="phone"
-                                    value={profileInfo.phone}
-                                    onChange={changeHandler}
-                                />
+                                <InputMask mask="+\9\96(999)99-99-99" value={profileInfo?.phone} onChange={changeHandler}>
+                                    {
+                                        inputProps => <input
+                                            {...inputProps}
+                                            type="tel"
+                                            className="profile-form__input"
+                                            name="phone"
+                                        />
+                                    }
+                                </InputMask>
                             </div>
                             <div className="profile-form__field">
                                 <label>Дополнительный телефон</label>
-                                <input
-                                    className="profile-form__input"
-                                    type="text"
-                                    name="additionalPhone"
-                                    value={profileInfo.additionalPhone}
-                                    onChange={changeHandler}
-                                />
+                                <InputMask mask="+\9\96(999)99-99-99" value={profileInfo?.additionalPhone} onChange={changeHandler}>
+                                    {
+                                        inputProps => <input
+                                            {...inputProps}
+                                            type="tel"
+                                            className="profile-form__input"
+                                            name="additionalPhone"
+                                        />
+                                    }
+                                </InputMask>
                             </div>
                         </div>
                     </div>

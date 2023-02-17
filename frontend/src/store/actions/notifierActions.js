@@ -2,14 +2,14 @@ import {toast} from "react-toastify";
 
 export const addNotification = (message, type, options) => {
     const defaultOptions = {
-        position: "bottom-left",
+        position: "bottom-right",
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'light'
+        theme: 'dark'
     };
 
     return () => {

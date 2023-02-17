@@ -15,7 +15,6 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const forgotError = useSelector(state => state.users.forgotError);
     const orderError = useSelector(state => state.orders.createError);
     const orderLoading = useSelector(state => state.orders.loading);
-    console.log(orderLoading);
     const products = useSelector(state => state.cart.products);
     const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);

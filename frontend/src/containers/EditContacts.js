@@ -31,7 +31,6 @@ const EditContacts = () => {
     }, [dispatch, contacts]);
 
     const multipleChangeHandler = (e, index) => {
-        console.log('worked')
         const { name, value } = e.target;
 
         setState((prev) => {

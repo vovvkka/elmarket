@@ -45,7 +45,7 @@ const App = () => {
     return (
         <Layout>
             <ScrollToTop />
-            <ToastContainer/>
+            <ToastContainer style={{width: 400}}/>
             <Switch>
                 <Route path="/" exact component={MainPage} />
                 <Route path="/payment" exact component={Payment} />

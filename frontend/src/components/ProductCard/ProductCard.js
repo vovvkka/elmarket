@@ -8,21 +8,16 @@ import { Link } from 'react-router-dom';
 import { apiUrl } from '../../config';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../store/slices/cartSlice';
-import {toast} from "react-toastify";
+import {addNotification} from "../../store/actions/notifierActions";
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
 
     const handleAdd = () => {
-        dispatch(
-            addProduct({
-                ...product,
-                quantity,
-            })
-        );
+        dispatch(addProduct({...product, quantity}));
 
-        toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+        dispatch(addNotification('Товар успешно добавлен в корзину!', "success"));
     };
 
     return (

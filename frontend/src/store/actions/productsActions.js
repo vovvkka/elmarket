@@ -15,6 +15,7 @@ import {
     fetchProductsSuccess, fetchSalesFailure, fetchSalesRequest, fetchSalesSuccess
 } from "../slices/productsSlice";
 import {historyPush} from "./historyActions";
+import {toast} from "react-toastify";
 
 export const fetchProducts = (query) => {
     return async dispatch => {
@@ -73,7 +74,9 @@ export const createProduct = productData => {
 
             dispatch(createProductSuccess());
             dispatch(historyPush("/admin/products"));
+            toast.success('Товар успешно добавлен!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(createProductFailure(e.response.data));
             } else {
@@ -92,7 +95,10 @@ export const editProduct = (id, productData) => {
 
             dispatch(editProductSuccess());
             dispatch(historyPush("/admin/products"));
+            toast.success('Товар успешно отредактирован!', {position: "bottom-right", theme: "dark"});
+
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(editProductFailure(e.response.data));
             } else {
@@ -110,7 +116,9 @@ export const deleteProduct = id => {
             await axiosApi.delete("/products/" + id);
 
             dispatch(deleteProductSuccess(id));
+            toast.success('Товар успешно удален!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             dispatch(deleteProductFailure(e));
         }
     };

@@ -24,6 +24,8 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Activated from "./containers/Activated";
 import {getProfile} from "./store/actions/usersActions";
 import {newVisit} from "./store/actions/visitsActions";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/scss/main.scss';
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -43,6 +45,7 @@ const App = () => {
     return (
         <Layout>
             <ScrollToTop />
+            <ToastContainer/>
             <Switch>
                 <Route path="/" exact component={MainPage} />
                 <Route path="/payment" exact component={Payment} />

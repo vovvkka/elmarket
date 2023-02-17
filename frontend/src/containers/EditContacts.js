@@ -10,8 +10,8 @@ const EditContacts = () => {
     const error = useSelector(state => state.contacts.error);
 
     const [state, setState] = useState({
-        email: [],
-        phone: [],
+        email: [''],
+        phone: [''],
         instagramLink: '',
     });
 
@@ -19,9 +19,9 @@ const EditContacts = () => {
         if (contacts) {
             setState((prevState) => ({
                 ...prevState,
-                email: contacts.email,
-                phone: contacts.phone,
-                instagramLink: contacts.instagramLink,
+                email: contacts.email  || [''],
+                phone: contacts.phone  || [''],
+                instagramLink: contacts.instagramLink || '',
             }));
         }
 
@@ -31,6 +31,7 @@ const EditContacts = () => {
     }, [dispatch, contacts]);
 
     const multipleChangeHandler = (e, index) => {
+        console.log('worked')
         const { name, value } = e.target;
 
         setState((prev) => {
@@ -81,7 +82,7 @@ const EditContacts = () => {
                 <label>* Телефон</label>
                 <div>
                     {state.phone?.map((ph, index) => (
-                        <div className="admin-contacts__input-field">
+                        <div className="admin-contacts__input-field" key={index}>
                             <input
                                 type="text"
                                 name="phone"
@@ -122,7 +123,7 @@ const EditContacts = () => {
                 <label>* Почта</label>
                 <div>
                     {state.email?.map((ph, index) => (
-                        <div className="admin-contacts__input-field">
+                        <div className="admin-contacts__input-field" key={index}>
                             <input
                                 type="text"
                                 name="email"

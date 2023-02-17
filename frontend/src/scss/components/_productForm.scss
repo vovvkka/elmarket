@@ -42,14 +42,16 @@
 
         input {
             background: none;
-            border: 1px solid $dark-gray;
+            border: 1px solid #9a9a9a;
+            border-radius: 5px;
             padding: 8px 10px;
         }
 
         textarea {
             background: none;
-            border: 1px solid $dark-gray;
+            border: 1px solid #9a9a9a;
             padding: 15px 10px;
+            border-radius: 5px;
             resize: none;
         }
     }
@@ -61,7 +63,8 @@
 
         input {
             background: none;
-            border: 1px solid $dark-gray;
+            border: 1px solid #9a9a9a;
+            border-radius: 5px;
             padding: 8px 10px;
         }
     }

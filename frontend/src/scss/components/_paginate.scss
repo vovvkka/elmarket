@@ -2,7 +2,7 @@
 @import '../libs/breakpoints';
 
 .paginate {
-    margin-top: 10px;
+    margin-top: 20px;
 
     &__container {
         display: flex;
@@ -10,13 +10,19 @@
     }
 
     &__button {
-        background: #c7c7c7;
-        padding: 8px;
+        background: $orange;
+        padding: 8px 15px;
         border-radius: 3px;
-        color: black;
+        color: #ffffff;
         font-weight: 700;
         cursor: pointer;
         margin: 0 5px;
+    }
+
+    &__disabled {
+        cursor: not-allowed;
+        background: #d9d9d9;
+        color: #7e7e7e;
     }
 
     &__page {

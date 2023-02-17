@@ -42,7 +42,7 @@ const AddCategory = ({ match }) => {
     }, [location, category]);
 
     useEffect(() => {
-        if (categories) {
+        if (categories && categories.length) {
             setOptions(() => {
                 return [
                     { label: 'Без категории', value: 'Без категории' },

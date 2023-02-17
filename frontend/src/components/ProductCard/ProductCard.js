@@ -8,10 +8,22 @@ import { Link } from 'react-router-dom';
 import { apiUrl } from '../../config';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../store/slices/cartSlice';
+import {toast} from "react-toastify";
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
+
+    const handleAdd = () => {
+        dispatch(
+            addProduct({
+                ...product,
+                quantity,
+            })
+        );
+
+        toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+    };
 
     return (
         product && (
@@ -132,7 +144,7 @@ const ProductCard = ({ product }) => {
                                 <button
                                     className="product-card__button"
                                     onClick={() => {
-                                        if (quantity > 0)
+                                        if (quantity > 1)
                                             setQuantity((prev) => prev - 1);
                                     }}
                                 >
@@ -142,11 +154,7 @@ const ProductCard = ({ product }) => {
                             <div>
                                 <button
                                     className="product-card__add"
-                                    onClick={() =>
-                                        dispatch(
-                                            addProduct({ ...product, quantity })
-                                        )
-                                    }
+                                    onClick={handleAdd}
                                     disabled={product.amount === 0}
                                 >
                                     В корзину <img src={productCard} alt="" />

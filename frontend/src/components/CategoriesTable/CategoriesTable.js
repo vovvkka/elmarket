@@ -6,7 +6,6 @@ import {useDispatch} from "react-redux";
 import {deleteCategory} from "../../store/actions/categoriesActions";
 
 const CategoriesTable = ({ categories }) => {
-    console.log(categories);
     const dispatch = useDispatch();
 
     return (

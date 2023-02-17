@@ -26,6 +26,7 @@ import {
     changePasswordFailure,
 } from '../slices/usersSlice';
 import {historyPush} from "./historyActions";
+import {toast} from "react-toastify";
 
 export const registerUser = (userData) => {
     return async (dispatch) => {
@@ -35,7 +36,9 @@ export const registerUser = (userData) => {
             const response = await axiosApi.post('/users', userData);
 
             dispatch(registerSuccess(response.data));
+            toast.success('Вы успешно зарегистрировались!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(registerFailure(e.response.data));
                 throw e;
@@ -55,7 +58,9 @@ export const loginUser = (userData) => {
             const response = await axiosApi.post('/users/sessions', userData);
 
             dispatch(loginSuccess(response.data.user));
+            toast.success('Вы успешно авторизовались!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(loginFailure(e.response.data));
                 throw e;
@@ -75,7 +80,9 @@ export const editProfile = (userData) => {
             await axiosApi.put('/users', userData);
 
             dispatch(editProfileSuccess());
+            toast.success('Данные профиля изменены!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(editProfileFailure(e.response.data));
                 throw e;
@@ -153,7 +160,9 @@ export const changePassword = (data) => {
             await axiosApi.put(`/users/change-password`, data);
 
             dispatch(changePasswordSuccess());
+            toast.success('Пароль успешно изменен!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             dispatch(changePasswordFailure(e.response.data));
         }
     };
@@ -161,4 +170,5 @@ export const changePassword = (data) => {
 
 export const resendActivationLink = async data => {
     await axiosApi.post(`/users/resend-activationLink`, data);
+    toast.success('Ссылка отправлена!', {position: "bottom-right", theme: "dark"});
 };

@@ -46,7 +46,7 @@ const Admin = () => {
     useEffect(() => {
         setPath(location.pathname);
         dispatch(fetchVisits());
-    }, [location.pathname]);
+    }, [location.pathname, dispatch]);
 
     return (
         <div className="admin">

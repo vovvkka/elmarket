@@ -73,6 +73,9 @@ const Paginate = ({ isProducts, limit, sales, isOrders }) => {
                 activeLinkClassName="paginate__page--active"
                 previousLinkClassName="paginate__button"
                 nextLinkClassName="paginate__button"
+                disabledLinkClassName="paginate__disabled"
+                renderOnZeroPageCount={null}
+
             />
         </div>
     );

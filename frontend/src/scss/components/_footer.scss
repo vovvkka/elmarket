@@ -56,10 +56,10 @@
         margin: 20px 2px 0 2px;
 
         li {
+            word-break: break-word;
             color: $white;
             line-height: 18px;
             margin-bottom: 10px;
-            word-break: break-word;
             max-width: 280px;
 
             &:hover {
@@ -79,10 +79,10 @@
         }
 
         a {
+            word-break: break-word;
             color: $white;
             line-height: 18px;
             margin-bottom: 8px;
-            word-break: break-all;
 
             &:hover {
                 cursor: pointer;

@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { apiUrl } from '../config';
 import Rating from 'react-rating';
 import star from '../assets/svg/star.svg';
@@ -12,15 +12,16 @@ import delivery from '../assets/svg/delivery.svg';
 import ProductCard from '../components/ProductCard/ProductCard';
 import { fetchOne } from '../store/actions/productsActions';
 import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
-import {clearProducts} from "../store/slices/productsSlice";
-import "@splidejs/react-splide/css";
-import Spinner from "../components/UI/Spinner/Spinner";
-
+import { clearProducts } from '../store/slices/productsSlice';
+import '@splidejs/react-splide/css';
+import Spinner from '../components/UI/Spinner/Spinner';
+import { addProduct } from '../store/slices/cartSlice';
+import {toast} from "react-toastify";
 
 const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
-    const loading = useSelector(state => state.products.loading);
+    const loading = useSelector((state) => state.products.loading);
     const user = useSelector((state) => state.users.user);
     const profile = useSelector((state) => state.users.profile);
     const history = useSelector((state) => state.watchList.history);
@@ -43,11 +44,22 @@ const SingleProduct = ({ match }) => {
 
         return () => {
             dispatch(clearProducts());
-        }
+        };
     }, [dispatch, match.params.id, user]);
 
+    const handleAdd = () => {
+        dispatch(
+            addProduct({
+                ...product,
+                quantity: 1,
+            })
+        );
+
+        toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+    };
+
     const mainOptions = {
-        type: "slide",
+        type: 'slide',
         width: 600,
         heightRatio: 1,
         pagination: false,
@@ -63,10 +75,10 @@ const SingleProduct = ({ match }) => {
         rewind: false,
         fixedWidth: 104,
         fixedHeight: 110,
-        padding: "75px",
+        padding: '75px',
         isNavigation: true,
         gap: 1,
-        focus: "none",
+        focus: 'none',
         pagination: false,
         cover: true,
         dragMinThreshold: {
@@ -77,13 +89,13 @@ const SingleProduct = ({ match }) => {
             780: {
                 fixedWidth: 80,
                 fixedHeight: 80,
-                padding: "60px",
+                padding: '60px',
             },
         },
     };
 
     if (loading) {
-        return <Spinner/>;
+        return <Spinner />;
     }
 
     return (
@@ -98,7 +110,7 @@ const SingleProduct = ({ match }) => {
                                         {product.image.map((slide, index) => (
                                             <SplideSlide key={index}>
                                                 <img
-                                                    src={apiUrl + "/" + slide}
+                                                    src={apiUrl + '/' + slide}
                                                     alt={product.title}
                                                     width={500}
                                                 />
@@ -106,13 +118,15 @@ const SingleProduct = ({ match }) => {
                                         ))}
                                     </Splide>
 
-                                    <Splide options={thumbsOptions} ref={thumbsRef}>
+                                    <Splide
+                                        options={thumbsOptions}
+                                        ref={thumbsRef}
+                                    >
                                         {product.image.map((slide) => (
                                             <SplideSlide key={slide}>
                                                 <img
-                                                    src={apiUrl + "/" + slide}
+                                                    src={apiUrl + '/' + slide}
                                                     alt={product.title}
-
                                                 />
                                             </SplideSlide>
                                         ))}
@@ -120,23 +134,28 @@ const SingleProduct = ({ match }) => {
                                 </>
                             ) : (
                                 <>
-                                    {product.image.length ? product.image.map((slide) => (
-                                        <img
-                                            key={slide}
-                                            className="product__single-image"
-                                            src={slide ? apiUrl + "/" + slide : noPhoto}
-                                            alt={product.title}
-                                        />
-                                    )) :
+                                    {product.image.length ? (
+                                        product.image.map((slide) => (
+                                            <img
+                                                key={slide}
+                                                className="product__single-image"
+                                                src={
+                                                    slide
+                                                        ? apiUrl + '/' + slide
+                                                        : noPhoto
+                                                }
+                                                alt={product.title}
+                                            />
+                                        ))
+                                    ) : (
                                         <img
                                             className="product__single-image"
                                             src={noPhoto}
                                             alt={product.title}
                                         />
-                                    }
+                                    )}
                                 </>
                             )}
-
                         </div>
                         <div className="product__info">
                             <span>Артикул {product.code}</span>
@@ -193,18 +212,12 @@ const SingleProduct = ({ match }) => {
                             </span>
                             <div className="product-card__cart product-card__cart--single">
                                 <div>
-                                    <button className="product-card__add">
+                                    <button
+                                        className="product-card__add"
+                                        onClick={handleAdd}
+                                    >
                                         В корзину
                                         <img src={productCart} alt="" />
-                                    </button>
-                                </div>
-                                <div className="product-card__buttons product-card__buttons--single">
-                                    <button className="product-card__button">
-                                        +
-                                    </button>
-                                    <span>2</span>
-                                    <button className="product-card__button">
-                                        -
                                     </button>
                                 </div>
                             </div>
@@ -217,12 +230,12 @@ const SingleProduct = ({ match }) => {
                             </div>
                             <div className="product__delivery">
                                 <img src={delivery} alt="Доставка" width={40} />
-                                <span>
-                                    Доставка курьером
-                                </span>
+                                <span>Доставка курьером</span>
                             </div>
                             <p className="product__subtitle">Описание</p>
-                            <p className='product__description'>{product.description}</p>
+                            <p className="product__description">
+                                {product.description}
+                            </p>
                         </div>
                     </div>
                     {user && (

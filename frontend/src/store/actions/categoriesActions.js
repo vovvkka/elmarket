@@ -19,6 +19,7 @@ import {
     fetchCategorySuccess
 } from "../slices/categoriesSlice";
 import {historyPush} from "./historyActions";
+import {toast} from "react-toastify";
 
 export const fetchCategories = query => {
     return async dispatch => {
@@ -74,7 +75,9 @@ export const createCategory = categoryData => {
 
             dispatch(createCategorySuccess());
             dispatch(historyPush("/admin/categories"));
+            toast.success('Категория успешно добавлена!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             if (e.response && e.response.data) {
                 dispatch(createCategoryFailure(e.response.data));
             } else {
@@ -93,6 +96,7 @@ export const editCategory = (id, categoryData) => {
 
             dispatch(editCategorySuccess());
             dispatch(historyPush("/admin/categories"));
+            toast.success('Категория успешно отредактирована!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(editCategoryFailure(e.response.data));
@@ -111,7 +115,9 @@ export const deleteCategory = id => {
             await axiosApi.delete('/categories/' + id);
 
             dispatch(deleteCategorySuccess(id));
+            toast.success('Категория успешно удалена!', {position: "bottom-right", theme: "dark"});
         } catch (e) {
+            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
             dispatch(deleteCategoryFailure(e));
         }
     };

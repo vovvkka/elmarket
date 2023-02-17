@@ -6,8 +6,6 @@ services:
     depends_on:
       - mongodb
     restart: always
-    ports:
-      - "8000:8000"
     volumes:
       - public_images:/src/app/public
     environment:
@@ -17,7 +15,7 @@ services:
     build:
       context: ./frontend
       args:
-        api_url: "http://localhost:8000"
+        api_url: "/api"
     image: movlera/elmarket:frontend
     depends_on:
       - elmarket-backend
@@ -27,6 +25,7 @@ services:
 
   mongodb:
     image: mongo
+    restart: on-failure
     volumes:
       - mongo_data:/data/db
 

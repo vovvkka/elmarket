@@ -112,6 +112,14 @@
         letter-spacing: -0.02em;
         border: none;
 
+        &:disabled {
+            background: #7e7e7e;
+
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+
         &:hover {
             cursor: pointer;
         }

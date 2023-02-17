@@ -29,7 +29,7 @@ const ProductsSchema = new Schema({
     },
 });
 
-const OrderSchema  = new Schema({
+const OrderSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -50,7 +50,7 @@ const OrderSchema  = new Schema({
             message: "Неккоректный номер телефона"
         }
     },
-    address:  String,
+    address: String,
     order: [ProductsSchema],
     status: {
         type: String,

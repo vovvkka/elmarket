@@ -52,10 +52,6 @@ router.post('/', async (req, res) => {
     try {
         const { userId, customer, phone, order } = req.body;
 
-        if (!customer || !phone || !order) {
-            return res.status(400).send({ error: 'Data not valid' });
-        }
-
         const orderWithPrice = await Promise.all(
             order.map(async (i) => {
                 const item = await Product.findById(i.product);

@@ -14,6 +14,8 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const registerError = useSelector(state => state.users.registerError);
     const forgotError = useSelector(state => state.users.forgotError);
     const orderError = useSelector(state => state.orders.createError);
+    const orderLoading = useSelector(state => state.orders.loading);
+    console.log(orderLoading);
     const products = useSelector(state => state.cart.products);
     const profile = useSelector(state => state.users.profile);
     const userData = useSelector(state => state.users.user);
@@ -237,6 +239,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                             />
                         }
                     </InputMask>
+                    <p className="modal__error">{getOrderFieldError("phone")}</p>
                 </div>
             </div>
         )
@@ -294,7 +297,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                     {children}
 
                     <div className="modal__footer">
-                        <button className="modal__btn" type="submit">
+                        <button className="modal__btn" type="submit" disabled={orderLoading}>
                             {login && "Войти"}
                             {register && "Зарегестрироваться"}
                             {forgot && "Восстановление пароля"}

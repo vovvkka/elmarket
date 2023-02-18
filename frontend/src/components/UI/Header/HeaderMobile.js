@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 const HeaderMobile = ({ mainPage }) => {
     const user = useSelector((state) => state.users.user);
+    const products = useSelector((state) => state.cart.products);
     const classes = mainPage ? ['header', 'header--main-page'] : ['header'];
 
     return (
@@ -34,6 +35,11 @@ const HeaderMobile = ({ mainPage }) => {
                                         src={cart}
                                         alt="Корзина"
                                     />
+                                    {products.length ? (
+                                        <div className="header__badge header__badge">
+                                            {products.reduce((acc, obj) => acc + obj.quantity, 0)}
+                                        </div>
+                                    ) : null}
                                 </Link>
                             ) : null}
                             <AppDrawer />

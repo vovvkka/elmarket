@@ -13,7 +13,7 @@ const CategoryMenu = ({ setCategory }) => {
     const categories = useSelector((state) => state.categories.categories);
     const query = new URLSearchParams(location.search);
     const [expanded, setExpanded] = useState([]);
-    const [mobileExpanded, setMobileExpanded] = useState(false);
+    const [mobileExpanded, setMobileExpanded] = useState(true);
     const [selected, setSelected] = useState('');
     const matches = useMediaQuery({ maxWidth: 800 });
 

@@ -101,7 +101,7 @@ const AddCategory = ({ match }) => {
                 <p className="fieldError">{error && "* Заполните все поля"}</p>
                 <form onSubmit={submitFormHandler}>
                     <div className="category-form__row">
-                        <label>Категория</label>
+                        <label>Внешняя категория</label>
                         <Select
                             value={categoryData.parentCategory}
                             onChange={onChangeCategory}

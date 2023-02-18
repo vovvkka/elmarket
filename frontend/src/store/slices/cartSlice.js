@@ -36,28 +36,40 @@ const cartSlice = createSlice({
                 });
             }
 
-            state.totalSum = Math.floor(state.products.reduce(
-                (acc, num) =>
-                    acc +
-                    (num.price * num.quantity -
-                        ((num.price * num.quantity) / 100) * num.discount), 0
-            ));
+            state.totalSum = Math.floor(
+                state.products.reduce(
+                    (acc, num) =>
+                        acc +
+                        (num.price * num.quantity -
+                            ((num.price * num.quantity) / 100) * num.discount),
+                    0
+                )
+            );
         },
         deleteProduct(state, action) {
             state.products = [
                 ...state.products.filter((p) => p._id !== action.payload),
             ];
 
-            state.totalSum = Math.floor(state.products.reduce(
-                (acc, num) =>
-                    acc +
-                    (num.price * num.quantity -
-                        ((num.price * num.quantity) / 100) * num.discount), 0
-            ));
+            state.totalSum = Math.floor(
+                state.products.reduce(
+                    (acc, num) =>
+                        acc +
+                        (num.price * num.quantity -
+                            ((num.price * num.quantity) / 100) * num.discount),
+                    0
+                )
+            );
+        },
+        clearCart(state) {
+            state.products = [];
+            state.totalSum = null;
+            state.loading = false;
+            state.error = null;
         },
     },
 });
 
-export const { addProduct, deleteProduct } = cartSlice.actions;
+export const { addProduct, deleteProduct, clearCart } = cartSlice.actions;
 
 export default cartSlice;

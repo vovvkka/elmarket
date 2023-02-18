@@ -11,6 +11,7 @@ import {
     fetchOrdersSuccess,
 } from "../slices/ordersSlice";
 import {addNotification} from "./notifierActions";
+import {clearCart} from "../slices/cartSlice";
 
 export const fetchUserOrders = () => {
     return async dispatch => {
@@ -55,6 +56,7 @@ export const addOrder = orderData => {
 
             dispatch(historyPush("/"));
             dispatch(addNotification('Заказ был успешно оформлен!', "success"));
+            dispatch(clearCart());
         } catch (e) {
             dispatch(addNotification('Произошла ошибка!', "error"));
             if (e.response && e.response.data) {

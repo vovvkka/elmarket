@@ -1,15 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {fetchCategories} from "../store/actions/categoriesActions";
-import {TreeSelect} from "antd";
-import {createProduct, editProduct, fetchOne} from "../store/actions/productsActions";
-import {clearProductError} from "../store/slices/productsSlice";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories } from '../store/actions/categoriesActions';
+import { TreeSelect } from 'antd';
+import {
+    createProduct,
+    editProduct,
+    fetchOne,
+} from '../store/actions/productsActions';
+import { clearProductError } from '../store/slices/productsSlice';
 
-const AddProduct = ({match}) => {
+const AddProduct = ({ match }) => {
     const dispatch = useDispatch();
-    const categories = useSelector(state => state.categories.categories);
-    const oneProduct = useSelector(state => state.products.product);
-    const error = useSelector(state => state.products.createError);
+    const categories = useSelector((state) => state.categories.categories);
+    const oneProduct = useSelector((state) => state.products.product);
+    const error = useSelector((state) => state.products.createError);
     const [product, setProduct] = useState({
         category: '',
         title: '',
@@ -24,7 +28,7 @@ const AddProduct = ({match}) => {
     });
 
     useEffect(() => {
-        dispatch(fetchCategories("?toTree=true"));
+        dispatch(fetchCategories('?toTree=true'));
 
         return () => {
             dispatch(clearProductError());
@@ -33,7 +37,7 @@ const AddProduct = ({match}) => {
 
     useEffect(() => {
         if (!!match.params.id) {
-            dispatch(fetchOne(match.params.id, "admin"));
+            dispatch(fetchOne(match.params.id, 'admin'));
         }
     }, [dispatch, match.params.id]);
 
@@ -43,13 +47,13 @@ const AddProduct = ({match}) => {
         }
     }, [oneProduct]);
 
-    const submitFormHandler = e => {
+    const submitFormHandler = (e) => {
         e.preventDefault();
         const formData = new FormData();
 
-        Object.keys(product).forEach(key => {
+        Object.keys(product).forEach((key) => {
             if (key === 'image') {
-                product[key].forEach(item => {
+                product[key].forEach((item) => {
                     formData.append(`image`, item);
                 });
             } else {
@@ -58,14 +62,14 @@ const AddProduct = ({match}) => {
         });
 
         if (!!match.params.id) {
-            dispatch(editProduct(match.params.id, formData))
+            dispatch(editProduct(match.params.id, formData));
         } else {
             dispatch(createProduct(formData));
         }
     };
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setProduct((prev) => ({
             ...prev,
@@ -73,41 +77,50 @@ const AddProduct = ({match}) => {
         }));
     };
 
-    const onChangeCategory = c => setProduct(prev => ({...prev, category: c}));
+    const onChangeCategory = (c) =>
+        setProduct((prev) => ({ ...prev, category: c }));
 
-    const onChangeChecked = e => {
-        const {name} = e.target;
+    const onChangeChecked = (e) => {
+        const { name } = e.target;
 
-        setProduct(p => ({...p, [name]: !product[name]}));
+        setProduct((p) => ({ ...p, [name]: !product[name] }));
     };
 
-    const fileChangeHandler = e => {
+    const fileChangeHandler = (e) => {
         const name = e.target.name;
         const files = e.target.files;
 
-        const toArr = Object.keys(files).map(key => files[key]);
+        const toArr = Object.keys(files).map((key) => files[key]);
 
-        setProduct(prev => ({...prev, [name]: toArr}));
+        setProduct((prev) => ({ ...prev, [name]: toArr }));
     };
 
     return (
         <div className="container-sm">
             <div className="product-form">
-                <h2 className="product-form__title">{match.params.id ? "Редактировать" : "Добавить"} товар</h2>
-                <p className="fieldError">{error && "* Заполните все поля"}</p>
+                <h2 className="product-form__title">
+                    {match.params.id ? 'Редактировать' : 'Добавить'} товар
+                </h2>
+                <p className="fieldError">{error && '* Заполните все поля'}</p>
                 <form onSubmit={submitFormHandler}>
-                    <div className="product-form__row">
-                        <label>* Категория</label>
-                        <TreeSelect
-                            value={product.category}
-                            dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                            treeData={categories}
-                            placeholder="Выберите категорию"
-                            treeDefaultExpandAll={!!match.params.id}
-                            className="product-form__select"
-                            onChange={onChangeCategory}
-                        />
-                    </div>
+                    {categories.length ? (
+                        <div className="product-form__row">
+                            <label>* Категория</label>
+                            <TreeSelect
+                                value={product.category}
+                                dropdownStyle={{
+                                    maxHeight: 400,
+                                    overflow: 'auto',
+                                }}
+                                treeData={categories || []}
+                                placeholder="Выберите категорию"
+                                treeDefaultExpandAll={!!match.params.id}
+                                className="product-form__select"
+                                onChange={onChangeCategory}
+                            />
+                        </div>
+                    ) : null}
+
                     <div className="product-form__row product-form__row--sm">
                         <label>* Артикул</label>
                         <input
@@ -149,10 +162,12 @@ const AddProduct = ({match}) => {
                                 onChange={fileChangeHandler}
                                 multiple
                             />
-                            {product.image?.length ? `Выбрано файлов - ${product.image.length}` : "Выберите файл"}
+                            {product.image?.length
+                                ? `Выбрано файлов - ${product.image.length}`
+                                : 'Выберите файл'}
                         </label>
                     </div>
-                    <div className='product-form__double'>
+                    <div className="product-form__double">
                         <div className="product-form__double-row">
                             <label>* Цена</label>
                             <input
@@ -207,7 +222,9 @@ const AddProduct = ({match}) => {
                             required
                         />
                     </div>
-                    <button className='button'>{match.params.id ? "Сохранить" : "Добавить товар"}</button>
+                    <button className="button">
+                        {match.params.id ? 'Сохранить' : 'Добавить товар'}
+                    </button>
                 </form>
             </div>
         </div>

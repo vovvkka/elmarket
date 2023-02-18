@@ -73,8 +73,10 @@ export const changeOrderStatus = id => {
         try {
             dispatch(changeStatusRequest());
             await axiosApi.put(`/orders/${id}/changeStatus`);
+            dispatch(addNotification('Заказ был успешно архивирован!', "success"));
             dispatch(changeStatusSuccess(id));
         } catch (e) {
+            dispatch(addNotification('Произошла ошибка!', "error"));
             dispatch(changeStatusFailure(e));
         }
     };
@@ -86,7 +88,9 @@ export const deleteOrder = id => {
             dispatch(deleteOrderRequest());
             await axiosApi.delete(`/orders/${id}`);
             dispatch(deleteOrderSuccess(id));
+            dispatch(addNotification('Заказ был успешно удален!', "success"));
         } catch (e) {
+            dispatch(addNotification('Произошла ошибка!', "error"));
             dispatch(deleteOrderFailure(e));
         }
     };

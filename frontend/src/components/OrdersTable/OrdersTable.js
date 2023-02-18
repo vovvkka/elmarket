@@ -64,11 +64,7 @@ const OrdersTable = ({ orders, isArchive, userTable }) => {
                                                     alt="Архивировать"
                                                     width={35}
                                                     onClick={() =>
-                                                        dispatch(
-                                                            changeOrderStatus(
-                                                                order._id
-                                                            )
-                                                        )
+                                                        dispatch(changeOrderStatus(order._id))
                                                     }
                                                 />
                                             )}

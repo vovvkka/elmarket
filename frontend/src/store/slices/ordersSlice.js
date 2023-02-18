@@ -44,7 +44,7 @@ const ordersSlice = createSlice({
         },
         changeStatusSuccess(state, action) {
             state.loading = false;
-            state.orders = [...state.orders.filter(order => order._id !== action.payload)];
+            state.orders.orders = [...state.orders.orders.filter(order => order._id !== action.payload)];
         },
         changeStatusFailure(state, action) {
             state.loading = false;
@@ -56,7 +56,7 @@ const ordersSlice = createSlice({
         },
         deleteOrderSuccess(state, action) {
             state.loading = false;
-            state.orders = [...state.orders.filter(order => order._id !== action.payload)];
+            state.orders.orders = [...state.orders.orders.filter(order => order._id !== action.payload)];
         },
         deleteOrderFailure(state, action) {
             state.loading = false;

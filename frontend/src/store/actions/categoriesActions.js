@@ -19,7 +19,7 @@ import {
     fetchCategorySuccess
 } from "../slices/categoriesSlice";
 import {historyPush} from "./historyActions";
-import {toast} from "react-toastify";
+import {addNotification} from "./notifierActions";
 
 export const fetchCategories = query => {
     return async dispatch => {
@@ -75,9 +75,9 @@ export const createCategory = categoryData => {
 
             dispatch(createCategorySuccess());
             dispatch(historyPush("/admin/categories"));
-            toast.success('Категория успешно добавлена!', {position: "bottom-right", theme: "dark"});
+            dispatch(addNotification('Категория успешно добавлена!', "success"));
         } catch (e) {
-            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
+            dispatch(addNotification('Произошла ошибка!', "error"));
             if (e.response && e.response.data) {
                 dispatch(createCategoryFailure(e.response.data));
             } else {
@@ -96,8 +96,9 @@ export const editCategory = (id, categoryData) => {
 
             dispatch(editCategorySuccess());
             dispatch(historyPush("/admin/categories"));
-            toast.success('Категория успешно отредактирована!', {position: "bottom-right", theme: "dark"});
+            dispatch(addNotification('Категория успешно отредактирована!', "success"));
         } catch (e) {
+            dispatch(addNotification('Произошла ошибка!', "error"));
             if (e.response && e.response.data) {
                 dispatch(editCategoryFailure(e.response.data));
             } else {
@@ -115,9 +116,9 @@ export const deleteCategory = id => {
             await axiosApi.delete('/categories/' + id);
 
             dispatch(deleteCategorySuccess(id));
-            toast.success('Категория успешно удалена!', {position: "bottom-right", theme: "dark"});
+            dispatch(addNotification('Категория успешно удалена!', "success"));
         } catch (e) {
-            toast.error('Произошла ошибка!', {position: "bottom-right", theme: "dark"});
+            dispatch(addNotification('Произошла ошибка!', "error"));
             dispatch(deleteCategoryFailure(e));
         }
     };

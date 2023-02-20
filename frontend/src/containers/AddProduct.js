@@ -119,7 +119,7 @@ const AddProduct = ({ match }) => {
                                 onChange={onChangeCategory}
                             />
                         </div>
-                    ) : null}
+                    ) : <p>* Невозможно добавить товар без категории! Добавьте категории, чтобы привязать товар.</p>}
 
                     <div className="product-form__row product-form__row--sm">
                         <label>* Артикул</label>

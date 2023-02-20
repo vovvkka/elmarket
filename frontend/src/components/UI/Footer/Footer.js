@@ -60,16 +60,19 @@ const Footer = () => {
                         <Link to="/payment">
                             <li>Оплата</li>
                         </Link>
+                        <Link to="/catalog?page=1">
+                            <li>Каталог</li>
+                        </Link>
                         <Link to="/delivery">
                             <li>Условия доставки</li>
                         </Link>
                         <Link to="/warranty">
                             <li>Гарантия и возврат</li>
                         </Link>
-                        <Link to="/payment">
+                        <Link to="/sales?page=1">
                             <li>Акции</li>
                         </Link>
-                        <Link to="/payment">
+                        <Link to="/contacts">
                             <li>Контакты</li>
                         </Link>
 

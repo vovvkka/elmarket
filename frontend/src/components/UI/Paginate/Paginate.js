@@ -58,6 +58,7 @@ const Paginate = ({ isProducts, limit, sales, isOrders }) => {
         }
     };
 
+
     return (
         <div className="paginate">
             <Pagination
@@ -75,7 +76,6 @@ const Paginate = ({ isProducts, limit, sales, isOrders }) => {
                 nextLinkClassName="paginate__button"
                 disabledLinkClassName="paginate__disabled"
                 renderOnZeroPageCount={null}
-
             />
         </div>
     );

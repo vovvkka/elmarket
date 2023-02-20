@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Modal from '../components/UI/Modal/Modal';
 import CartProduct from '../components/CartProduct/CartProduct';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
     const products = useSelector((state) => state.cart.products);
@@ -77,6 +78,14 @@ const Cart = () => {
                         <p style={{ textAlign: 'center' }}>
                             Ваша корзина пуста!
                         </p>
+                    )}
+
+                    {!products?.length && (
+                        <div className="cart__go">
+                            <Link to="/catalog?page=1" className="button">
+                                В каталог
+                            </Link>
+                        </div>
                     )}
                 </div>
             </div>

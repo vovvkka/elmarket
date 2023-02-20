@@ -24,6 +24,15 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         email: "",
     });
 
+    useEffect(() => {
+        const body = document.querySelector('body');
+        if (show) {
+            body.classList.add('open');
+        } else {
+            body.classList.remove('open');
+        }
+    }, [show]);
+
     const [customer, setCustomer] = useState({
         customer: "",
         phone: ""

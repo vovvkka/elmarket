@@ -89,6 +89,7 @@ const CategoryMenu = ({ setCategory }) => {
                                 </span>
                                 {category.subCategories.length ? (
                                     <button
+                                        className='category-menu__button-expand'
                                         onClick={() =>
                                             expandHandler(category._id)
                                         }

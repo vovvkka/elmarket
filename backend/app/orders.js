@@ -21,6 +21,7 @@ router.get('/', auth, permit('admin'), async (req, res) => {
     try {
         let { page, limit } = req.query;
         const query = {};
+        console.log(req.query)
 
         if (!page) page = 1;
         if (!limit) limit = 4;
@@ -34,8 +35,8 @@ router.get('/', auth, permit('admin'), async (req, res) => {
         const orders = await Order.aggregate([
             { $match: query },
             { $sort: { dateTime: -1 } },
+            { $skip: (parseInt(page) - 1) * parseInt(limit) },
             { $limit: parseInt(limit) },
-            { $skip: (page - 1) * limit },
         ]);
 
         const totalItems = await Order.countDocuments(query);
@@ -88,7 +89,7 @@ router.put('/:id/changeStatus', auth, permit('admin'), async (req, res) => {
             return res.status(404).send({ message: 'Заказ не найден!' });
 
         order.status = 'Закрыт';
-        await order.save({validateBeforeSave: false});
+        await order.save({ validateBeforeSave: false });
 
         res.send(order);
     } catch (e) {

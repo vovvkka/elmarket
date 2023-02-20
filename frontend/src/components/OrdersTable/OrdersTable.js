@@ -25,7 +25,7 @@ const OrdersTable = ({ orders, isArchive, userTable }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {orders?.orders?.map((order) => {
+                    {orders?.map((order) => {
                         const classes = [];
 
                         order.status === 'Новый'

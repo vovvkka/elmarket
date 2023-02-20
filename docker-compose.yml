@@ -7,7 +7,7 @@ services:
       - mongodb
     restart: always
     volumes:
-      - public_images:/src/app/public
+      - public_images:/src/app/pubdlic
     environment:
       DB_HOST: mongodb
 
@@ -22,9 +22,20 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
   mongodb:
-    image: mongo
+    image: mongo:4.4.18
     restart: on-failure
     volumes:
       - mongo_data:/data/db

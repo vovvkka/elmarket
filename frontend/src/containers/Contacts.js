@@ -8,7 +8,7 @@ const Contacts = () => {
 
     useEffect(() => {
         dispatch(fetchContacts());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className="contacts">

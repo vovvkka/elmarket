@@ -8,7 +8,7 @@ const Warranty = () => {
 
     useEffect(() => {
         dispatch(fetchContacts());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className='warranty'>

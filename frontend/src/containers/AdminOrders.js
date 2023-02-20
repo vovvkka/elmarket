@@ -14,12 +14,12 @@ const AdminOrders = () => {
     const archive = urlParams.get('archive');
 
     useEffect(() => {
-        if (location.search.includes('archive')) {
+        if (archive) {
             dispatch(fetchOrders('?status=closed&' + location.search));
         } else {
             dispatch(fetchOrders('?status=active&' + location.search));
         }
-    }, [archive]);
+    }, [archive, dispatch]);
 
     return (
         <div className="admin-orders">

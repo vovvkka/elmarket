@@ -20,7 +20,6 @@ const ordersSlice = createSlice({
         },
         fetchOrdersSuccess(state, action) {
             state.loading = false;
-            console.log(action.payload)
             state.orders = action.payload.orders;
             state.totalPages = action.payload.totalPages;
         },

@@ -13,9 +13,9 @@ const CategoriesTable = ({ categories }) => {
             <table>
                 <thead>
                 <tr>
-                    <th>Категория</th>
+                    <th>Внешняя категория</th>
                     <th>Название</th>
-                    <th>Популярный раздел</th>
+                    <th style={{width: '10%'}}>Популярный раздел</th>
                     <th>Действие</th>
                 </tr>
                 </thead>

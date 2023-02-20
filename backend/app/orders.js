@@ -21,7 +21,6 @@ router.get('/', auth, permit('admin'), async (req, res) => {
     try {
         let { page, limit } = req.query;
         const query = {};
-        console.log(req.query)
 
         if (!page) page = 1;
         if (!limit) limit = 4;
@@ -93,7 +92,6 @@ router.put('/:id/changeStatus', auth, permit('admin'), async (req, res) => {
 
         res.send(order);
     } catch (e) {
-        console.log(e);
         res.status(400).send({ error: e.errors });
     }
 });

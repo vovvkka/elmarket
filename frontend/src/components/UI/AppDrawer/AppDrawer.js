@@ -18,17 +18,6 @@ const AppDrawer = () => {
 
     useEffect(() => {
         const body = document.querySelector('body');
-        const modal = document.querySelector('.modal');
-
-        if (sidebar) {
-            body.classList.add('open');
-        } else if (!modal) {
-            body.classList.remove('open');
-        }
-    }, [sidebar]);
-
-    useEffect(() => {
-        const body = document.querySelector('body');
         setSidebar(false);
         body.classList.remove('open');
     }, [location]);

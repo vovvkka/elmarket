@@ -2,12 +2,12 @@ version: '3'
 services:
   elmarket-backend:
     build: ./backend
-    image: movlera/elmarket:backend
+    image: movlera/elmarket:backend3.0
     depends_on:
       - mongodb
     restart: always
     volumes:
-      - public_images:/src/app/pubdlic
+      - public_images:/src/app/public
     environment:
       DB_HOST: mongodb
 
@@ -16,7 +16,7 @@ services:
       context: ./frontend
       args:
         api_url: "/api"
-    image: movlera/elmarket:frontend
+    image: movlera/elmarket:frontend3.0
     depends_on:
       - elmarket-backend
     restart: always

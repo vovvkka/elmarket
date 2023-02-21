@@ -35,12 +35,21 @@ const App = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
     const profile = useSelector((state) => state.users.profile);
+    const nonScroll = useSelector((state) => state.users.nonScroll);
 
     useEffect(() => {
         dispatch(fetchContacts());
         dispatch(getProfile());
         dispatch(newVisit());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (nonScroll) {
+            document.body.classList.add('open');
+        } else {
+            document.body.classList.remove('open');
+        }
+    }, [nonScroll]);
 
     return (
         <Layout>

@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const sendActivationLink = (email, activationLink) => {
     const mailOptions = {
-        from: 'taitai.software@gmail.com',
+        from: 'altynbek.electro@gmail.com',
         to: email,
         subject: 'Активация аккаунта ElectroMarket.kg',
         html: `
@@ -25,10 +25,10 @@ const sendActivationLink = (email, activationLink) => {
 };
 
 const sendResetPasswordLink = (id, token, email) => {
-    const resetPasswordLink = `http://localhost:3000/reset-password/${id}/${token}`;
+    const resetPasswordLink = `${process.env.CLIENT_URL}/reset-password/${id}/${token}`;
 
     const mailOptions = {
-        from: 'taitai.software@gmail.com',
+        from: 'altynbek.electro@gmail.com',
         to: email,
         subject: 'ElectroMarket Reset Password',
         html: `

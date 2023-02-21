@@ -26,7 +26,7 @@ const Instruments = () => {
                         <p className="instruments__description">
                             Диэлектрические средства защиты. <br/>
                             Заклепочники для вытяжных заклепок. <br/>
-                            Зарядные устройства USB
+                            Зарядные устройства USB.
                         </p>
                     </div>
                 </div>

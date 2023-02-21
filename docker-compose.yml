@@ -16,7 +16,7 @@ services:
       context: ./frontend
       args:
         api_url: "/api"
-    image: movlera/elmarket:frontend3.0
+    image: movlera/elmarket:frontend4.0
     depends_on:
       - elmarket-backend
     restart: always

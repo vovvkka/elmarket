@@ -8,9 +8,6 @@
     scroll-behavior: smooth;
     font-family: 'Inter', sans-serif;
 }
-.open {
-    overflow: hidden;
-}
 
 .background-wrapper {
     background: linear-gradient(
@@ -24,7 +21,7 @@
 
 .Backdrop {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: fixed;
     z-index: 100;
     left: 0;

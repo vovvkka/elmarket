@@ -15,7 +15,6 @@ export const initialState = {
     logoutError: null,
     loading: false,
     error: null,
-    nonScroll: false,
 };
 
 const usersSlice = createSlice({
@@ -114,9 +113,6 @@ const usersSlice = createSlice({
             state.loading = false;
             state.error = payload;
         },
-        setNonScroll(state, {payload}) {
-            state.nonScroll = payload;
-        }
     },
 });
 
@@ -145,7 +141,6 @@ export const {
     changePasswordRequest,
     changePasswordSuccess,
     changePasswordFailure,
-    setNonScroll,
 } = usersSlice.actions;
 
 export default usersSlice;

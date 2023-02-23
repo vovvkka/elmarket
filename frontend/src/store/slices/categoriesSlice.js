@@ -23,11 +23,10 @@ const categoriesSlice = createSlice({
         },
         fetchCategoriesSuccess(state, {payload}) {
             state.loading = false;
+            console.log(payload);
+            state.categories = payload.categories;
             if (payload.totalPages) {
-                state.categories = payload.categories;
                 state.pages = payload.totalPages;
-            } else {
-                state.categories = payload;
             }
         },
         fetchCategoriesFailure(state, action) {
@@ -94,7 +93,12 @@ const categoriesSlice = createSlice({
         },
         clearCategoryError(state) {
             state.createError = null;
-        }
+        },
+        clearAll(state) {
+            Object.keys(initialState).map((key => {
+                state[key] = initialState[key];
+            }))
+        },
     }
 });
 
@@ -117,7 +121,8 @@ export const {
     deleteCategoryRequest,
     deleteCategorySuccess,
     deleteCategoryFailure,
-    clearCategoryError
+    clearCategoryError,
+    clearAll,
 } = categoriesSlice.actions;
 
 export default categoriesSlice;

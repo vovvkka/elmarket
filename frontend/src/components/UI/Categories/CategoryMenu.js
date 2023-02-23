@@ -74,7 +74,7 @@ const CategoryMenu = ({ setCategory }) => {
             </h3>
             {matches && mobileExpanded ? (
                 <ul>
-                    {categories.map((category) => (
+                    {!!categories.length && categories?.map((category) => (
                         <div key={category._id}>
                             <li
                                 className={`category-menu__category ${
@@ -100,7 +100,7 @@ const CategoryMenu = ({ setCategory }) => {
                             </li>
                             {expanded.includes(category._id) ? (
                                 <ul>
-                                    {category.subCategories.map((sub) => (
+                                    {category?.subCategories?.map((sub) => (
                                         <li
                                             className={`category-menu__subCategory ${
                                                 sub._id === selected

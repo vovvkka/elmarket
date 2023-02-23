@@ -24,22 +24,22 @@ const upload = multer({ storage });
 router.get('/', async (req, res) => {
     try {
         if (req.query.toOptions) {
-            const categories = await Category.find();
+            const categoriesArr = await Category.find();
 
-            const categoryOptions = categories.map((c) => {
+            const categories = categoriesArr.map((c) => {
                 return { _id: c._id, label: c.title, value: c._id };
             });
 
-            return res.send(categoryOptions);
+            return res.send({categories});
         }
 
         if (req.query.toTree) {
-            const categories = await Category.find().populate(
+            const categoriesArr = await Category.find().populate(
                 'subCategories',
                 'title'
             );
 
-            const categoryOptions = categories.map((c) => {
+            const categories = categoriesArr.map((c) => {
                 return {
                     _id: c._id,
                     title: c.title,
@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
                 };
             });
 
-            return res.send(categoryOptions);
+            return res.send({categories});
         }
 
         if (req.query.toTable) {
@@ -66,12 +66,12 @@ router.get('/', async (req, res) => {
                 query =  { title: { $regex: `${search}`, $options: 'i' } };
             }
 
-            const categories = await Category.find(query);
+            const categoriesArr = await Category.find(query);
             const subCategories = await SubCategory.find(query).populate(
                 'parentCategory',
                 'title'
             );
-           const data = [...categories, ...subCategories];
+           const categories = [...categoriesArr, ...subCategories];
 
             if (page && limit) {
                 const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -81,10 +81,10 @@ router.get('/', async (req, res) => {
                     (totalCategories + totalSub) / limit
                 );
 
-                const paginatedData = data.slice(skip, skip + parseInt(limit));
+                const paginatedData = categories.slice(skip, skip + parseInt(limit));
                 return res.send({categories: paginatedData, totalPages});
             } else {
-                return res.send(data);
+                return res.send({categories});
             }
         }
 
@@ -92,7 +92,7 @@ router.get('/', async (req, res) => {
             'subCategories',
             'title'
         );
-        res.send(categories);
+        res.send({categories});
     } catch (e) {
         res.status(500).send(e);
     }

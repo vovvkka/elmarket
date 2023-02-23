@@ -15,7 +15,7 @@ const Contacts = () => {
             <div className="container-sm">
                 <div className="contacts__block">
                     <div className="contacts__aboutUs">
-                        <h2 className="contacts__title">О компании</h2>
+                        <h2 className="contacts__title">О компании:</h2>
 
                         <ul className="contacts__list">
                             <li>ОсОО “Има Электро”</li> <br />

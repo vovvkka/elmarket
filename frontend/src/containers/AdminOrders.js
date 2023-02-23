@@ -46,7 +46,7 @@ const AdminOrders = () => {
 
                 {!orders?.length ? (
                     <div className="admin-orders__no-orders">
-                        <p>Новых заказов пока нет!</p>
+                        <p>Новых заказов пока нет! Возвращайтесь позже!</p>
                         <img src={noOrders} alt="" width={150} />
                     </div>
                 ) : null}

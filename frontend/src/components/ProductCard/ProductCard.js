@@ -9,12 +9,21 @@ import { apiUrl } from '../../config';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../store/slices/cartSlice';
 import {addNotification} from "../../store/actions/notifierActions";
+import {decreaseAmount} from "../../store/slices/productsSlice";
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
     const [quantity, setQuantity] = useState(1);
 
+    const addQuantity = () => {
+        if (quantity < product.amount) {
+            setQuantity(prev => prev + 1);
+        }
+    };
+
     const handleAdd = () => {
+        dispatch(decreaseAmount({id: product._id, quantity}));
+
         dispatch(addProduct({...product, quantity}));
 
         dispatch(addNotification('Товар успешно добавлен в корзину!', "success"));
@@ -122,16 +131,14 @@ const ProductCard = ({ product }) => {
                         <div className="product-card__cart">
                             <div
                                 className={`product-card__buttons ${
-                                    product.amount === 0
+                                    product.amount <= 0
                                         ? 'product-card__buttons--disabled'
                                         : ''
                                 }`}
                             >
                                 <button
                                     className="product-card__button"
-                                    onClick={() =>
-                                        setQuantity((prev) => prev + 1)
-                                    }
+                                    onClick={addQuantity}
                                 >
                                     +
                                 </button>
@@ -150,7 +157,7 @@ const ProductCard = ({ product }) => {
                                 <button
                                     className="product-card__add"
                                     onClick={handleAdd}
-                                    disabled={product.amount === 0}
+                                    disabled={product.amount <= 0}
                                 >
                                     В корзину <img src={productCard} alt="" />
                                 </button>

@@ -52,6 +52,13 @@ router.post('/', async (req, res) => {
     try {
         const { userId, customer, phone, order } = req.body;
 
+        order.map(async i => {
+            const product = await Product.findById(i.product);
+            product.amount -= i.quantity;
+            await product.save();
+        });
+
+
         const orderWithPrice = await Promise.all(
             order.map(async (i) => {
                 const item = await Product.findById(i.product);
@@ -70,6 +77,7 @@ router.post('/', async (req, res) => {
             phone,
             order: orderWithPrice,
         };
+
 
         const newOrder = new Order(orderData);
         await newOrder.save();

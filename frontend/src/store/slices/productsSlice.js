@@ -92,6 +92,10 @@ const productsSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        decreaseAmount(state, action) {
+            const idx = state.products.findIndex(p => p._id === action.payload.id);
+            state.products[idx].amount = state.products[idx].amount - action.payload.quantity;
+        },
         clearProductError(state) {
             state.createError = null;
         },
@@ -123,6 +127,7 @@ export const {
     deleteProductRequest,
     deleteProductSuccess,
     deleteProductFailure,
+    decreaseAmount,
     clearProductError,
     clearProducts
 } = productsSlice.actions;

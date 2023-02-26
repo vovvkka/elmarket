@@ -19,7 +19,9 @@ const Profile = () => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchUserOrders());
+        if (location.pathname !== "/admin/settings") {
+            dispatch(fetchUserOrders());
+        }
         dispatch(getProfile());
     }, [dispatch]);
 

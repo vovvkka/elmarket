@@ -2,7 +2,7 @@ version: '3'
 services:
   elmarket-backend:
     build: ./backend
-    image: movlera/elmarket:backend3.0
+    image: movlera/elmarket:backend4.0
     depends_on:
       - mongodb
     restart: always
@@ -16,7 +16,7 @@ services:
       context: ./frontend
       args:
         api_url: "/api"
-    image: movlera/elmarket:frontend6.0
+    image: movlera/elmarket:frontend8.0
     depends_on:
       - elmarket-backend
     restart: always

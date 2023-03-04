@@ -4,6 +4,10 @@
 .profile-form {
   &__admin {
     margin-left: 50px;
+
+    @media (max-width: 1366px) {
+      margin-left: 0;
+    }
   }
 
   &__upper {
@@ -64,6 +68,10 @@
       @include media ('<tablet') {
         text-align: left;
         width: 120px;
+      }
+
+      @media (max-width: 1366px) {
+        text-align: left;
       }
     }
   }

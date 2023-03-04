@@ -53,6 +53,10 @@
             padding: 15px 10px;
             border-radius: 5px;
             resize: none;
+
+            @media (max-width: 1367px) {
+                min-width: 400px;
+            }
         }
     }
 
@@ -89,6 +93,10 @@
 
         @include media('<=desktop') {
             width: 80%;
+        }
+
+        @media (max-width: 1367px) {
+            max-width: 400px;
         }
     }
 

@@ -111,7 +111,7 @@ const HeaderDesktop = ({ mainPage }) => {
                                     <img src={cart} alt="Cart" />
                                     {products.length ? (
                                         <div className="header__badge">
-                                            {products.reduce((acc, obj) => acc + obj.quantity, 0)}
+                                            {products.length}
                                         </div>
                                     ) : null}
                                 </Link>

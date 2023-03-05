@@ -4,12 +4,13 @@ import ProductsTable from '../components/ProductsTable/ProductsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import Paginate from '../components/UI/Paginate/Paginate';
 import { fetchProducts } from '../store/actions/productsActions';
-import Spinner from "../components/UI/Spinner/Spinner";
+import Spinner from '../components/UI/Spinner/Spinner';
+import { clearOne } from '../store/slices/productsSlice';
 
 const AdminProducts = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
-    const loading = useSelector(state => state.products.loading);
+    const loading = useSelector((state) => state.products.loading);
 
     const onSearch = (val) => {
         dispatch(fetchProducts('admin?search=' + val));
@@ -17,10 +18,14 @@ const AdminProducts = () => {
 
     return (
         <div className="admin-products">
-            {loading && <Spinner/>}
+            {loading && <Spinner />}
             <div className="admin-products__upper">
                 <h2 className="admin-products__title">Товары</h2>
-                <Link className="button" to="/admin/add-product">
+                <Link
+                    className="button"
+                    to="/admin/add-product"
+                    onClick={() => dispatch(clearOne())}
+                >
                     Добавить товар
                 </Link>
             </div>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, useLocation } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, Route, useLocation} from 'react-router-dom';
 import AdminProducts from './AdminProducts';
 import products from '../assets/svg/box.svg';
 import categories from '../assets/svg/category.svg';

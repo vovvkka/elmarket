@@ -31,7 +31,7 @@ const middleware = [thunk];
 const store = configureStore({
     reducer: rootReducer,
     middleware,
-    devTools: false,
+    devTools: true,
     preloadedState: persistedState,
 });
 

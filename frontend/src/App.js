@@ -67,13 +67,6 @@ const App = () => {
                     exact
                 />
                 <ProtectedRoute
-                    path="/feedback"
-                    component={Feedback}
-                    isAllowed={user}
-                    redirectTo="/"
-                    exact
-                />
-                <ProtectedRoute
                     path="/feedback/:id"
                     component={Feedback}
                     isAllowed={user && profile?.isActivated}

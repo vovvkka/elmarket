@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '../store/actions/categoriesActions';
-import { TreeSelect } from 'antd';
-import {
-    createProduct,
-    editProduct,
-    fetchOne,
-} from '../store/actions/productsActions';
-import { clearProductError } from '../store/slices/productsSlice';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCategories} from '../store/actions/categoriesActions';
+import {TreeSelect} from 'antd';
+import {createProduct, editProduct, fetchOne,} from '../store/actions/productsActions';
+import {clearProductError} from '../store/slices/productsSlice';
 
 const AddProduct = ({ match }) => {
     const dispatch = useDispatch();
@@ -24,6 +20,7 @@ const AddProduct = ({ match }) => {
         isHit: false,
         isNovelty: false,
         discount: '',
+        unit: 'шт.',
         image: [],
     });
 
@@ -132,6 +129,20 @@ const AddProduct = ({ match }) => {
                             required
                         />
                     </div>
+                    <div className="product-form__row product-form__row--sm">
+                        <label>* Ед. измерения</label>
+                        <select
+                            name="unit"
+                            value={product.unit}
+                            onChange={(e) => handleChange(e)}
+                            className="product-form__input-sm"
+                        >
+                            <option value="шт.">шт.</option>
+                            <option value="уп.">уп.</option>
+                            <option value="метр">метр</option>
+                            <option value="килограмм">килограмм</option>
+                        </select>
+                    </div>
                     <div className="product-form__row">
                         <label>* Название</label>
                         <input
@@ -169,7 +180,7 @@ const AddProduct = ({ match }) => {
                     </div>
                     <div className="product-form__double">
                         <div className="product-form__double-row">
-                            <label>* Цена</label>
+                            <label>* Цена за ед.</label>
                             <input
                                 type="number"
                                 name="price"

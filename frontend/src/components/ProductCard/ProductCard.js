@@ -6,27 +6,34 @@ import productCard from '../../assets/svg/product-cart.svg';
 import noPhoto from '../../assets/no-photo.png';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../../config';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { addProduct } from '../../store/slices/cartSlice';
-import {addNotification} from "../../store/actions/notifierActions";
-import {decreaseAmount} from "../../store/slices/productsSlice";
+import { addNotification } from '../../store/actions/notifierActions';
+import { decreaseAmount } from '../../store/slices/productsSlice';
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
     const [quantity, setQuantity] = useState(1);
 
     const addQuantity = () => {
-        if (quantity < product.amount) {
-            setQuantity(prev => prev + 1);
+        if (!user || user.role !== 'admin') {
+            if (quantity < product.amount) {
+                setQuantity((prev) => prev + 1);
+            }
         }
     };
 
     const handleAdd = () => {
-        dispatch(decreaseAmount({id: product._id, quantity}));
+        if (!user || user.role !== 'admin') {
+            dispatch(decreaseAmount({ id: product._id, quantity }));
 
-        dispatch(addProduct({...product, quantity}));
+            dispatch(addProduct({ ...product, quantity }));
 
-        dispatch(addNotification('Товар успешно добавлен в корзину!', "success"));
+            dispatch(
+                addNotification('Товар успешно добавлен в корзину!', 'success')
+            );
+        }
     };
 
     return (

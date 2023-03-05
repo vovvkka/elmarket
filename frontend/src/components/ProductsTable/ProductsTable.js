@@ -16,6 +16,7 @@ const ProductsTable = ({ products }) => {
                         <th>Артикул</th>
                         <th>Название</th>
                         <th>Категория</th>
+                        <th>Единица</th>
                         <th>Количество</th>
                         <th>Цена</th>
                         <th>Действие</th>
@@ -31,6 +32,7 @@ const ProductsTable = ({ products }) => {
                                 {product.subCategory &&
                                     ` > ${product.subCategory.title}`}
                             </td>
+                            <td>{product.unit ? product.unit : 'шт.'}</td>
                             <td>{product.amount}</td>
                             <td>{product.price}</td>
                             <td>

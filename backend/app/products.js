@@ -160,7 +160,7 @@ router.get('/:id', async (req, res) => {
 router.get('/admin/:id', async (req, res) => {
     try {
         const product = await Product.findById({ _id: req.params.id }).select(
-            '_id category subCategory title description code price amount image isHit isNovelty discount'
+            '_id category subCategory title description code price amount image isHit isNovelty discount unit'
         );
 
         if (product.subCategory) {
@@ -219,6 +219,7 @@ router.post(
                 isHit,
                 isNovelty,
                 discount,
+                unit
             } = req.body;
 
             const productData = {
@@ -232,6 +233,7 @@ router.post(
                 isHit,
                 isNovelty,
                 discount,
+                unit,
                 image: null,
             };
 
@@ -260,6 +262,7 @@ router.post(
 
             res.send(newProduct);
         } catch (e) {
+            console.log(e)
             res.status(400).send(e);
         }
     }
@@ -282,6 +285,7 @@ router.put(
                 isHit,
                 isNovelty,
                 discount,
+                unit,
             } = req.body;
 
             const productData = {
@@ -295,6 +299,7 @@ router.put(
                 isHit,
                 isNovelty,
                 discount,
+                unit,
                 image: null,
             };
 

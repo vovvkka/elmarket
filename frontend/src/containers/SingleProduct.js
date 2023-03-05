@@ -48,14 +48,16 @@ const SingleProduct = ({ match }) => {
     }, [dispatch, match.params.id, user]);
 
     const handleAdd = () => {
-        dispatch(
-            addProduct({
-                ...product,
-                quantity: 1,
-            })
-        );
+        if (user.role !== 'admin') {
+            dispatch(
+                addProduct({
+                    ...product,
+                    quantity: 1,
+                })
+            );
 
-        toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+            toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+        }
     };
 
     const mainOptions = {
@@ -162,7 +164,7 @@ const SingleProduct = ({ match }) => {
                             <h2 className="product__title">{product.title}</h2>
                             <div className="product__upper-block">
                                 <span className="product__price">
-                                    {product.price} сом
+                                    {product.price} сом за {product.unit ? product.unit : 'шт.'}
                                 </span>
                                 {product.rating ? (
                                     <>
@@ -226,7 +228,7 @@ const SingleProduct = ({ match }) => {
                             </p>
                             <div className="product__subinfo">
                                 <p>Кратность товара: {product.amount}</p>
-                                <p>Единица измерения: шт</p>
+                                <p>Единица измерения: {product.unit ? product.unit : 'шт.'}</p>
                             </div>
                             <div className="product__delivery">
                                 <img src={delivery} alt="Доставка" width={40} />

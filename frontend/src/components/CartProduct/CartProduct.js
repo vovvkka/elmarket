@@ -15,25 +15,28 @@ const CartProduct = ({ p }) => {
                 <img className="cart__product-image" src={imageUrl} alt={p.title} />
                 <h5 className="cart__product-title">{p.title}</h5>
                 <div className="cart__product-amount">
-                    <div className="product-card__buttons">
-                        <button
-                            className="product-card__button"
-                            disabled={p.amount <= p.quantity}
-                            onClick={() =>
-                                dispatch(addProduct({ ...p, quantity: 1 }))
-                            }
-                        >
-                            +
-                        </button>
-                        <span className="cart__product-span">{p.quantity}</span>
-                        <button
-                            className="product-card__button"
-                            onClick={() =>
-                                dispatch(addProduct({ ...p, quantity: -1 }))
-                            }
-                        >
-                            -
-                        </button>
+                    <div>
+                        <div className="product-card__buttons">
+                            <button
+                                className="product-card__button"
+                                disabled={p.amount <= p.quantity}
+                                onClick={() =>
+                                    dispatch(addProduct({ ...p, quantity: 1 }))
+                                }
+                            >
+                                +
+                            </button>
+                            <span className="cart__product-span">{p.quantity}</span>
+                            <button
+                                className="product-card__button"
+                                onClick={() =>
+                                    dispatch(addProduct({ ...p, quantity: -1 }))
+                                }
+                            >
+                                -
+                            </button>
+                        </div>
+                        <p>({p.unit ? p.unit : 'шт.'})</p>
                     </div>
                 </div>
                 <p className="cart__product-discount">{p.discount}%</p>

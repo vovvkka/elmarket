@@ -104,6 +104,9 @@ const productsSlice = createSlice({
             state.products = [];
             state.totalPages = null;
             state.totalItems = null;
+        },
+        clearOne(state) {
+            state.product = null;
         }
     },
 });
@@ -129,7 +132,8 @@ export const {
     deleteProductFailure,
     decreaseAmount,
     clearProductError,
-    clearProducts
+    clearProducts,
+    clearOne
 } = productsSlice.actions;
 
 export default productsSlice;

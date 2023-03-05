@@ -45,6 +45,8 @@ const OrdersTable = ({ orders, isArchive, userTable }) => {
                                             <span>({order?.product?.code})</span>
                                             <b> {order?.product?.title}</b>
                                             <span> x<b>{order?.quantity}</b></span>
+                                            {' '}
+                                            <b>({order?.product?.unit ? order?.product?.unit : 'шт.'})</b>
                                         </p>
                                     ))}
                                 </td>

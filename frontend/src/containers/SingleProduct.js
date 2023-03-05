@@ -48,7 +48,7 @@ const SingleProduct = ({ match }) => {
     }, [dispatch, match.params.id, user]);
 
     const handleAdd = () => {
-        if (user.role !== 'admin') {
+        if (!user || user.role !== 'admin') {
             dispatch(
                 addProduct({
                     ...product,

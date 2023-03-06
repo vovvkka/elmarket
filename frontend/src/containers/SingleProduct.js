@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { apiUrl } from '../config';
+import React, {useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {Splide, SplideSlide} from '@splidejs/react-splide';
+import {apiUrl} from '../config';
 import Rating from 'react-rating';
 import star from '../assets/svg/star.svg';
 import noPhoto from '../assets/no-photo.png';
@@ -10,15 +10,15 @@ import fullStar from '../assets/svg/fullStar.svg';
 import productCart from '../assets/svg/product-cart.svg';
 import delivery from '../assets/svg/delivery.svg';
 import ProductCard from '../components/ProductCard/ProductCard';
-import { fetchOne } from '../store/actions/productsActions';
-import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
-import { clearProducts } from '../store/slices/productsSlice';
+import {fetchOne} from '../store/actions/productsActions';
+import {fetchHistory, sendHistory} from '../store/actions/watchListActions';
+import {clearProducts} from '../store/slices/productsSlice';
 import '@splidejs/react-splide/css';
 import Spinner from '../components/UI/Spinner/Spinner';
-import { addProduct } from '../store/slices/cartSlice';
+import {addProduct} from '../store/slices/cartSlice';
 import {toast} from "react-toastify";
 
-const SingleProduct = ({ match }) => {
+const SingleProduct = ({match}) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const loading = useSelector((state) => state.products.loading);
@@ -97,7 +97,7 @@ const SingleProduct = ({ match }) => {
     };
 
     if (loading) {
-        return <Spinner />;
+        return <Spinner/>;
     }
 
     return (
@@ -164,7 +164,17 @@ const SingleProduct = ({ match }) => {
                             <h2 className="product__title">{product.title}</h2>
                             <div className="product__upper-block">
                                 <span className="product__price">
-                                    {product.price} сом за {product.unit ? product.unit : 'шт.'}
+                                    {
+                                        user ?
+                                            <>
+                                                {product.price - product.discount} сом
+                                                за {product.unit ? product.unit : 'шт.'}
+                                            </> :
+                                            <>
+                                                {product.price} сом за {product.unit ? product.unit : 'шт.'}
+                                            </>
+                                    }
+
                                 </span>
                                 {product.rating ? (
                                     <>
@@ -219,7 +229,7 @@ const SingleProduct = ({ match }) => {
                                         onClick={handleAdd}
                                     >
                                         В корзину
-                                        <img src={productCart} alt="" />
+                                        <img src={productCart} alt=""/>
                                     </button>
                                 </div>
                             </div>
@@ -231,7 +241,7 @@ const SingleProduct = ({ match }) => {
                                 <p>Единица измерения: {product.unit ? product.unit : 'шт.'}</p>
                             </div>
                             <div className="product__delivery">
-                                <img src={delivery} alt="Доставка" width={40} />
+                                <img src={delivery} alt="Доставка" width={40}/>
                                 <span>Доставка курьером</span>
                             </div>
                             <p className="product__subtitle">Описание</p>

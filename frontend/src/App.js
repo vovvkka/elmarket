@@ -49,7 +49,6 @@ const App = () => {
             <Switch>
                 <Route path="/" exact component={MainPage} />
                 <Route path="/payment" exact component={Payment} />
-                <Route path="/sales" exact component={Sales} />
                 <Route path="/delivery" exact component={Delivery} />
                 <Route path="/about-us" exact component={AboutUs} />
                 <Route path="/contacts" exact component={Contacts} />
@@ -59,6 +58,13 @@ const App = () => {
                 <Route path="/catalog" exact component={Catalog} />
                 <Route path="/reviews/:id" exact component={Reviews} />
                 <Route path="/reset-password/:id/:token" exact component={ResetPassword} />
+                <ProtectedRoute
+                    path="/sales"
+                    component={Sales}
+                    isAllowed={user}
+                    redirectTo="/"
+                    exact
+                />
                 <ProtectedRoute
                     path="/cart"
                     component={Cart}

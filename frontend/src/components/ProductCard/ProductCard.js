@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Rating from 'react-rating';
 import star from '../../assets/svg/star.svg';
 import fullStar from '../../assets/svg/fullStar.svg';
 import productCard from '../../assets/svg/product-cart.svg';
 import noPhoto from '../../assets/no-photo.png';
-import { Link } from 'react-router-dom';
-import { apiUrl } from '../../config';
+import {Link} from 'react-router-dom';
+import {apiUrl} from '../../config';
 import {useDispatch, useSelector} from 'react-redux';
-import { addProduct } from '../../store/slices/cartSlice';
-import { addNotification } from '../../store/actions/notifierActions';
-import { decreaseAmount } from '../../store/slices/productsSlice';
+import {addProduct} from '../../store/slices/cartSlice';
+import {addNotification} from '../../store/actions/notifierActions';
+import {decreaseAmount} from '../../store/slices/productsSlice';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({product}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
     const [quantity, setQuantity] = useState(1);
@@ -26,9 +26,9 @@ const ProductCard = ({ product }) => {
 
     const handleAdd = () => {
         if (!user || user.role !== 'admin') {
-            dispatch(decreaseAmount({ id: product._id, quantity }));
+            dispatch(decreaseAmount({id: product._id, quantity}));
 
-            dispatch(addProduct({ ...product, quantity }));
+            dispatch(addProduct({...product, quantity}));
 
             dispatch(
                 addNotification('Товар успешно добавлен в корзину!', 'success')
@@ -36,27 +36,33 @@ const ProductCard = ({ product }) => {
         }
     };
 
+    console.log(product);
+
     return (
         product && (
             <div className="product-card">
                 <div className="product-card__column">
                     <Link to={`/catalog/${product._id}`} className="clickable">
                         <div className="product-card__top">
-                            <div className="product-card__hits">
-                                {product.isNovelty ? (
-                                    <p className="product-card__novelty">
-                                        Новинка
-                                    </p>
-                                ) : null}
-                                {product.isHit ? (
-                                    <p className="product-card__hit">Хит</p>
-                                ) : null}
-                                {product.discount ? (
-                                    <p className="product-card__discount">
-                                        -{product.discount}%
-                                    </p>
-                                ) : null}
-                            </div>
+                            {
+                                user ? (
+                                    <div className="product-card__hits">
+                                        {product.isNovelty ? (
+                                            <p className="product-card__novelty">
+                                                Новинка
+                                            </p>
+                                        ) : null}
+                                        {product.isHit ? (
+                                            <p className="product-card__hit">Хит</p>
+                                        ) : null}
+                                        {product.discount ? (
+                                            <p className="product-card__discount">
+                                                -{product.discount}%
+                                            </p>
+                                        ) : null}
+                                    </div>
+                                ) : null
+                            }
                             {product.rating && (
                                 <Rating
                                     initialRating={product.rating}
@@ -105,17 +111,24 @@ const ProductCard = ({ product }) => {
                             </h5>
                             {product.discount ? (
                                 <div className="product-card__price-discount">
-                                    <p className="product-card__old-price">
-                                        {product.price} сом{' '}
-                                    </p>
-                                    <p className="product-card__price">
-                                        {Math.floor(
-                                            product.price -
-                                                (product.price / 100) *
+                                    {user ?
+                                        <>
+                                            <p className="product-card__old-price">
+                                                {product.price} сом{' '}
+                                            </p>
+                                            <p className="product-card__price">
+                                                {Math.floor(
+                                                    product.price -
+                                                    (product.price / 100) *
                                                     product.discount
-                                        )}{' '}
-                                        сом
-                                    </p>
+                                                )}{' '}
+                                                сом
+                                            </p>
+                                        </> :
+                                        <p className="product-card__price">
+                                            {product.price}{' '} сом
+                                        </p>
+                                    }
                                 </div>
                             ) : (
                                 <p className="product-card__price">
@@ -166,7 +179,7 @@ const ProductCard = ({ product }) => {
                                     onClick={handleAdd}
                                     disabled={product.amount <= 0}
                                 >
-                                    В корзину <img src={productCard} alt="" />
+                                    В корзину <img src={productCard} alt=""/>
                                 </button>
                             </div>
                         </div>

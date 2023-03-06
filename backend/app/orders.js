@@ -58,12 +58,11 @@ router.post('/', async (req, res) => {
             await product.save();
         });
 
-
         const orderWithPrice = await Promise.all(
             order.map(async (i) => {
                 const item = await Product.findById(i.product);
                 let price = item.price;
-                if (item.discount)
+                if (item.discount && userId)
                     price = Math.floor(
                         item.price - (item.price / 100) * item.discount
                     );

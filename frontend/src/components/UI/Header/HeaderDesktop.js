@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Anonymous from '../Anonymous/Anonymous';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser } from '../../../store/actions/usersActions';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {logoutUser} from '../../../store/actions/usersActions';
 import logo from '../../../assets/logo.png';
 import cabinet from '../../../assets/svg/cabinet.svg';
 import logout from '../../../assets/svg/logout.svg';
@@ -10,9 +10,9 @@ import phone from '../../../assets/svg/phone.svg';
 import cart from '../../../assets/svg/cart.svg';
 import searchIcon from '../../../assets/svg/search.svg';
 import admin from '../../../assets/svg/admin.svg';
-import { historyPush } from '../../../store/actions/historyActions';
+import {historyPush} from '../../../store/actions/historyActions';
 
-const HeaderDesktop = ({ mainPage }) => {
+const HeaderDesktop = ({mainPage}) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.users.user);
     const products = useSelector((state) => state.cart.products);
@@ -65,7 +65,7 @@ const HeaderDesktop = ({ mainPage }) => {
                             ) : null}
                             {user?.role !== 'admin' && (
                                 <Link to="/profile">
-                                    <img src={cabinet} alt="Профиль" />
+                                    <img src={cabinet} alt="Профиль"/>
                                 </Link>
                             )}
 
@@ -76,15 +76,19 @@ const HeaderDesktop = ({ mainPage }) => {
                             />
                         </div>
                     ) : (
-                        <Anonymous />
+                        <Anonymous/>
                     )}
                 </div>
                 <div className="header__middle">
                     <div className="header__space"></div>
                     <ul>
-                        <Link to="/sales">
-                            <li>Акции</li>
-                        </Link>
+                        {
+                            user ?
+                                <Link to="/sales">
+                                    <li>Акции</li>
+                                </Link> : null
+                        }
+
                         <Link to="/catalog?page=1">
                             <li>Каталог</li>
                         </Link>
@@ -108,7 +112,7 @@ const HeaderDesktop = ({ mainPage }) => {
                         <div className="header__user-icon">
                             {user?.role !== 'admin' && (
                                 <Link to="/cart" className="clickable">
-                                    <img src={cart} alt="Cart" />
+                                    <img src={cart} alt="Cart"/>
                                     {products.length ? (
                                         <div className="header__badge">
                                             {products.length}
@@ -137,7 +141,7 @@ const HeaderDesktop = ({ mainPage }) => {
                             onChange={(e) => setSearch(e.target.value)}
                         />
                         <button className="search__button" type="submit">
-                            <img src={searchIcon} alt="Search" />
+                            <img src={searchIcon} alt="Search"/>
                         </button>
                     </form>
                 </div>

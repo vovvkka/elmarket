@@ -1,11 +1,12 @@
 import React from 'react';
 import { addProduct, deleteProduct } from '../../store/slices/cartSlice';
 import { apiUrl } from '../../config';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import noPhoto from "../../assets/no-photo.png";
 
 const CartProduct = ({ p }) => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
     let imageUrl;
     p.image[0] ? imageUrl = `${apiUrl}/${p.image[0]}` : imageUrl = noPhoto;
 
@@ -39,11 +40,10 @@ const CartProduct = ({ p }) => {
                         <p>({p.unit ? p.unit : 'шт.'})</p>
                     </div>
                 </div>
-                <p className="cart__product-discount">{p.discount}%</p>
+                <p className="cart__product-discount">{user ? p.discount : 0}%</p>
                 <p className="cart__product-price">{p.price} сом</p>
                 <p className="cart__product-total">
-                    {p.discount
-                        ? Math.floor(p.price * p.quantity - (p.price * p.quantity / 100 * p.discount))
+                    {p.discount && user? Math.floor(p.price * p.quantity - (p.price * p.quantity / 100 * p.discount))
                         : p.price * p.quantity} сом
                 </p>
                 <div

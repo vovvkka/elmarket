@@ -123,6 +123,10 @@ const ProductCard = ({product}) => {
                                                     product.discount
                                                 )}{' '}
                                                 сом
+                                                <span className="product-card__discountForAmount">
+                                                    {product.amountForDiscount > 1 ? ` / ${product.amountForDiscount} ед.` : null}
+                                                </span>
+
                                             </p>
                                         </> :
                                         <p className="product-card__price">

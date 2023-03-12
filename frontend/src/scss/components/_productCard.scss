@@ -156,6 +156,13 @@
         font-size: 23px;
     }
 
+    &__discountForAmount {
+        color: #7e7e7e;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 2px;
+    }
+
     &__in-stock {
         display: inline-block;
         margin: 10px 0;

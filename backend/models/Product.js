@@ -73,7 +73,14 @@ const ProductSchema = new Schema({
     discount: {
         type: Number,
         required: true,
-        default: 0
+        default: 0,
+        min: 0
+    },
+    amountForDiscount: {
+        type: Number,
+        required: true,
+        default: 1,
+        min: 1,
     },
     unit: {
         type: String,

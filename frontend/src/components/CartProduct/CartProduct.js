@@ -10,6 +10,25 @@ const CartProduct = ({ p }) => {
     let imageUrl;
     p.image[0] ? imageUrl = `${apiUrl}/${p.image[0]}` : imageUrl = noPhoto;
 
+    const getTotalPrice = (p) => {
+        const quantity = p.quantity;
+        const price = p.price;
+        const discountThreshold = p.amountForDiscount;
+        const discountRate = p.discount / 100;
+
+        let total = quantity * price;
+
+        if (quantity >= discountThreshold) {
+            const numDiscountedItems = Math.floor(quantity / discountThreshold);
+            const discountedPrice = price - (price * discountRate);
+            const discountedTotal = numDiscountedItems * discountThreshold * discountedPrice;
+            const remainingItems = quantity % discountThreshold;
+            total = discountedTotal + (remainingItems * price);
+        }
+
+        return total;
+    }
+
     return (
         p && (
             <div className="cart__product">
@@ -40,11 +59,12 @@ const CartProduct = ({ p }) => {
                         <p>({p.unit ? p.unit : 'шт.'})</p>
                     </div>
                 </div>
-                <p className="cart__product-discount">{user ? p.discount : 0}%</p>
+                <p className="cart__product-discount">{user && p.quantity >= p.amountForDiscount ? p.discount : 0}% / {p.amountForDiscount} ед.</p>
                 <p className="cart__product-price">{p.price} сом</p>
                 <p className="cart__product-total">
-                    {p.discount && user? Math.floor(p.price * p.quantity - (p.price * p.quantity / 100 * p.discount))
-                        : p.price * p.quantity} сом
+                    {
+                        user ? getTotalPrice(p) : p.price * p.quantity
+                    } сом
                 </p>
                 <div
                     className="cart__product-delete"

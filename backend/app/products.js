@@ -219,7 +219,8 @@ router.post(
                 isHit,
                 isNovelty,
                 discount,
-                unit
+                unit,
+                amountForDiscount
             } = req.body;
 
             const productData = {
@@ -234,6 +235,7 @@ router.post(
                 isNovelty,
                 discount,
                 unit,
+                amountForDiscount,
                 image: null,
             };
 

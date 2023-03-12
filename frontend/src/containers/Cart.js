@@ -1,26 +1,44 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 import Modal from '../components/UI/Modal/Modal';
 import CartProduct from '../components/CartProduct/CartProduct';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Cart = () => {
     const products = useSelector((state) => state.cart.products);
-    const totalSum = useSelector((state) => state.cart.totalSum);
+    const user = useSelector(state => state.users.user);
     const [show, setShow] = useState(false);
     const [order, setOrder] = useState(false);
 
-    const cartProduct = products?.map((p) => <CartProduct key={p._id} p={p} />);
+    const cartProduct = products?.map((p) => <CartProduct key={p._id} p={p}/>);
 
-    const getTotalPrice = Math.floor(
-        products.reduce(
-            (acc, num) =>
-                acc +
-                (num.price * num.quantity -
-                    ((num.price * num.quantity) / 100) * num.discount),
-            0
-        )
-    );
+    const getTotalPrice = () => {
+        if (user) {
+            return products.reduce((acc, p) => {
+                const quantity = p.quantity;
+                const price = p.price;
+                const discountThreshold = p.amountForDiscount;
+                const discountRate = p.discount / 100;
+
+                let total = quantity * price;
+
+                if (quantity >= discountThreshold) {
+                    const numDiscountedItems = Math.floor(quantity / discountThreshold);
+                    const discountedPrice = price - (price * discountRate);
+                    const discountedTotal = numDiscountedItems * discountThreshold * discountedPrice;
+                    const remainingItems = quantity % discountThreshold;
+                    total = discountedTotal + (remainingItems * price);
+                }
+
+                acc = total;
+
+                return acc;
+            }, 0)
+        } else {
+            return products.reduce((acc, p) => acc + p.quantity * p.price, 0);
+        }
+    };
+
 
     return (
         <>
@@ -40,8 +58,8 @@ const Cart = () => {
                         <>
                             <div className="cart__block">
                                 <div className="cart__product">
-                                    <div className="cart__product-image" />
-                                    <p className="cart__product-title" />
+                                    <div className="cart__product-image"/>
+                                    <p className="cart__product-title"/>
                                     <p className="cart__product-amount">
                                         <b>Количество</b>
                                     </p>
@@ -61,7 +79,7 @@ const Cart = () => {
                             <div className="cart__order">
                                 <p className="cart__total">
                                     Общая сумма:{' '}
-                                    {totalSum ? totalSum : getTotalPrice} сом
+                                    {getTotalPrice()} сом
                                 </p>
                                 <button
                                     className="cart__btn"
@@ -75,7 +93,7 @@ const Cart = () => {
                             </div>
                         </>
                     ) : (
-                        <p style={{ textAlign: 'center' }}>
+                        <p style={{textAlign: 'center'}}>
                             Ваша корзина пуста!
                         </p>
                     )}

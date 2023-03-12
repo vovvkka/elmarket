@@ -19,8 +19,9 @@ const AddProduct = ({ match }) => {
         amount: '',
         isHit: false,
         isNovelty: false,
-        discount: '',
+        discount: 0,
         unit: 'шт.',
+        amountForDiscount: 1,
         image: [],
     });
 
@@ -230,6 +231,19 @@ const AddProduct = ({ match }) => {
                             value={product.discount}
                             onChange={(e) => handleChange(e)}
                             className="product-form__input-xs"
+                            min={0}
+                            required
+                        />
+                    </div>
+                    <div className="product-form__row">
+                        <label>Кол-во / Скидка</label>
+                        <input
+                            type="number"
+                            name="amountForDiscount"
+                            value={product.amountForDiscount}
+                            onChange={(e) => handleChange(e)}
+                            className="product-form__input-xs"
+                            min={1}
                             required
                         />
                     </div>

@@ -36,8 +36,6 @@ const ProductCard = ({product}) => {
         }
     };
 
-    console.log(product);
-
     return (
         product && (
             <div className="product-card">

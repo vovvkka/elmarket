@@ -15,7 +15,7 @@ import SingleProduct from './containers/SingleProduct';
 import Feedback from './containers/Feedback';
 import Cart from './containers/Cart';
 import Admin from './containers/Admin';
-import Reviews from "./containers/Reviews";
+import Reviews from './containers/Reviews';
 import {fetchContacts} from "./store/actions/contactsActions";
 import ResetPassword from "./containers/ResetPassword";
 import Sales from "./containers/Sales";
@@ -26,6 +26,7 @@ import {getProfile} from "./store/actions/usersActions";
 import {newVisit} from "./store/actions/visitsActions";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/scss/main.scss';
+import OrderCheckout from "./containers/OrderCheckout";
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
     return isAllowed ? <Route {...props} /> : <Redirect to="/" />;
@@ -58,6 +59,7 @@ const App = () => {
                 <Route path="/catalog" exact component={Catalog} />
                 <Route path="/reviews/:id" exact component={Reviews} />
                 <Route path="/reset-password/:id/:token" exact component={ResetPassword} />
+                <Route path="/order-checkout/:id" exact component={OrderCheckout} />
                 <ProtectedRoute
                     path="/sales"
                     component={Sales}

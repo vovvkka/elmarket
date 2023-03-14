@@ -4,6 +4,7 @@ const name = 'orders';
 
 export const initialState = {
     orders: [],
+    displayOrder: null,
     totalPages: null,
     loading: false,
     createError: null,
@@ -27,12 +28,25 @@ const ordersSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        fetchDisplayRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        fetchDisplaySuccess(state, action) {
+            state.loading = false;
+            state.displayOrder = action.payload;
+        },
+        fetchDisplayFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
         addOrderRequest(state) {
             state.loading = true;
             state.createError = null;
         },
-        addOrderSuccess(state) {
+        addOrderSuccess(state, {payload}) {
             state.loading = false;
+            state.displayOrder = payload;
         },
         addOrderFailure(state, action) {
             state.loading = false;
@@ -62,7 +76,7 @@ const ordersSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-    }
+    },
 });
 
 export const {
@@ -77,7 +91,10 @@ export const {
     changeStatusFailure,
     deleteOrderRequest,
     deleteOrderSuccess,
-    deleteOrderFailure
+    deleteOrderFailure,
+    fetchDisplayRequest,
+    fetchDisplaySuccess,
+    fetchDisplayFailure,
 } = ordersSlice.actions;
 
 export default ordersSlice;

@@ -3,9 +3,15 @@ import { historyPush } from "./historyActions";
 import {
     addOrderFailure,
     addOrderRequest,
-    addOrderSuccess, changeStatusFailure,
+    addOrderSuccess,
+    changeStatusFailure,
     changeStatusRequest,
-    changeStatusSuccess, deleteOrderFailure, deleteOrderRequest, deleteOrderSuccess,
+    changeStatusSuccess,
+    deleteOrderFailure,
+    deleteOrderRequest,
+    deleteOrderSuccess, fetchDisplayFailure,
+    fetchDisplayRequest,
+    fetchDisplaySuccess,
     fetchOrdersFailure,
     fetchOrdersRequest,
     fetchOrdersSuccess,
@@ -47,16 +53,31 @@ export const fetchOrders = query => {
     }
 };
 
+export const fetchDisplayOrder = id => {
+    return async dispatch => {
+        try {
+            dispatch(fetchDisplayRequest());
+
+            const response = await axiosApi.get('/orders/' + id);
+
+            dispatch(fetchDisplaySuccess(response.data));
+        } catch (e) {
+            dispatch(fetchDisplayFailure(e));
+        }
+    }
+};
+
 export const addOrder = orderData => {
     return async (dispatch) => {
         try {
             dispatch(addOrderRequest());
-            await axiosApi.post("/orders", orderData);
+            const response = await axiosApi.post("/orders", orderData);
             dispatch(addOrderSuccess());
 
             dispatch(historyPush("/"));
             dispatch(addNotification('Заказ был успешно оформлен!', "success"));
             dispatch(clearCart());
+            dispatch(historyPush('/order-checkout/' + response.data._id));
         } catch (e) {
             dispatch(addNotification('Произошла ошибка!', "error"));
             if (e.response && e.response.data) {

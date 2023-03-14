@@ -17,6 +17,16 @@ router.get('/user-orders', auth, async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        await Order.populate(order, { path: 'order.product' });
+        res.send(order);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
 router.get('/', auth, permit('admin'), async (req, res) => {
     try {
         let { page, limit } = req.query;
@@ -50,7 +60,7 @@ router.get('/', auth, permit('admin'), async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { userId, customer, phone, order } = req.body;
+        const { userId, customer, phone, order, address } = req.body;
 
         order.map(async i => {
             const product = await Product.findById(i.product);
@@ -74,6 +84,7 @@ router.post('/', async (req, res) => {
             userId,
             customer,
             phone,
+            address,
             order: orderWithPrice,
         };
 
@@ -81,7 +92,7 @@ router.post('/', async (req, res) => {
         const newOrder = new Order(orderData);
         await newOrder.save();
 
-        await res.send(order);
+        await res.send(newOrder);
     } catch (e) {
         res.status(400).send(e);
     }

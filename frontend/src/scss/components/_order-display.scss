@@ -1,0 +1,38 @@
+.order-display {
+  padding-bottom: 30px;
+  h2 {
+    padding: 20px 0;
+  }
+
+  p {
+    margin: 10px 0;
+  }
+
+  &__info-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+
+    td {
+      padding: 5px 10px;
+    }
+  }
+
+  &__wrapper {
+
+    overflow-x: auto;
+  }
+
+  &__products-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 10px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+  }
+}

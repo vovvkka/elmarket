@@ -66,6 +66,9 @@ const OrderCheckout = () => {
                         <td><b>Кому:</b> {order?.customer}</td>
                     </tr>
                     <tr>
+                        <td><b>Телефон:</b> {order?.phone}</td>
+                    </tr>
+                    <tr>
                         <td><b>Адрес доставки:</b> {order?.address}</td>
                     </tr>
                 </table>
@@ -88,7 +91,9 @@ const OrderCheckout = () => {
                             </tr>
                         ))}
                         <tr>
-                            <td colSpan={5} style={{textAlign: 'right'}}>{order?.order.reduce((acc, curr) => acc + curr.quantity * curr.price, 0) }</td>
+                            <td colSpan={5} style={{textAlign: 'right'}}>
+                                Итоговая цена: {order?.order.reduce((acc, curr) => acc + curr.quantity * curr.price, 0) } сом
+                            </td>
                         </tr>
                     </table>
                 </div>

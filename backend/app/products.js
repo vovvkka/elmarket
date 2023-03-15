@@ -264,7 +264,6 @@ router.post(
 
             res.send(newProduct);
         } catch (e) {
-            console.log(e)
             res.status(400).send(e);
         }
     }

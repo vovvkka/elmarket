@@ -26,7 +26,8 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
     const [customer, setCustomer] = useState({
         customer: "",
-        phone: ""
+        phone: "",
+        address: "",
     });
 
     const [email, setEmail] = useState('');
@@ -239,6 +240,18 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         }
                     </InputMask>
                     <p className="modal__error">{getOrderFieldError("phone")}</p>
+                </div>
+                <div className="modal__input-block">
+                    <label>Адрес</label>
+                    <input
+                        type="text"
+                        name="address"
+                        autoComplete="off"
+                        className="modal__input"
+                        value={customer?.address}
+                        onChange={inputCustomerChangeHandler}
+                    />
+                    <p className="modal__error">{getOrderFieldError("address")}</p>
                 </div>
             </div>
         )

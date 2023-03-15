@@ -45,7 +45,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {!!orders.length && orders?.map((order) => {
+                {!!orders?.length && orders?.map((order) => {
                     const classes = [];
 
                     order?.status === 'Новый'
@@ -72,14 +72,22 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                             </td>
                             <td className="table__xs">
                                 {
-                                    order.userId? getTotalPrice(order.order[0]) : Math.floor(order.order.reduce((num, acc) => num + acc.product.price * acc.quantity, 0))
+                                    order.userId ? getTotalPrice(order.order[0]) : Math.floor(order.order.reduce((num, acc) => num + acc.product.price * acc.quantity, 0))
                                 }
                             </td>
                             <td className={classes.join(' ')}>
                                 {order?.status}
                             </td>
                             <td className="table__date">
-                                {new Date(order?.dateTime).toLocaleString()}
+                                <p>{new Date(order?.dateTime).toLocaleString()} </p>
+                                <a
+                                    href={"http://localhost:3000/order-checkout/" + order._id}
+                                    className="table__link"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    Детальная информация...
+                                </a>
                             </td>
                             {!userTable ? (
                                 <td>
@@ -115,6 +123,6 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
             </table>
         </div>
     );
-};
+}
 
 export default OrdersTable;

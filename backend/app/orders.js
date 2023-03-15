@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth');
 const permit = require('../middlewares/permit');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const transporter = require("../service/transporter");
 const router = express.Router();
 
 router.get('/user-orders', auth, async (req, res) => {
@@ -91,6 +92,8 @@ router.post('/', async (req, res) => {
 
         const newOrder = new Order(orderData);
         await newOrder.save();
+
+        transporter.sendNotificationOfNewOrder(newOrder._id);
 
         await res.send(newOrder);
     } catch (e) {

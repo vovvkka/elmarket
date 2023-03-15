@@ -42,9 +42,25 @@ const sendResetPasswordLink = (id, token, email) => {
     transporter.sendMail(mailOptions);
 };
 
+const sendNotificationOfNewOrder = (id) => {
+    const mailOptions = {
+        from: 'altynbek.electro@gmail.com',
+        to: 'altynbek.electro@gmail.com',
+        subject: 'Новый заказ!',
+        html: `
+                    <h3>ElectroMarket.kg</h3> 
+                    <p>Только что был оформлен новый заказ, перейдите по ссылке, для того чтобы просмотреть детальную информацию: </p> 
+                    <a href="${process.env.CLIENT_URL}/order-checkout/${id}">${process.env.CLIENT_URL}/order-checkout/${id}</a> 
+                `,
+    };
+
+    transporter.sendMail(mailOptions);
+};
+
 module.exports = {
     sendActivationLink,
     sendResetPasswordLink,
+    sendNotificationOfNewOrder
 };
 
 

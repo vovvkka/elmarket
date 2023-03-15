@@ -9,7 +9,7 @@ import noOrders from '../assets/404.png';
 const AdminOrders = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    const orders = useSelector((state) => state.orders.orders);
+    const orders = useSelector((state) => state.orders.orders?.orders);
     const urlParams = new URLSearchParams(window.location.search);
     const archive = urlParams.get('archive');
 

@@ -52,6 +52,30 @@
     }
   }
 
+  &__date {
+    p {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__link {
+    position: relative;
+    font-size: 13px;
+    padding-top: 10px;
+    font-weight: 400;
+    color: #272294;
+
+    &::before, &::after {
+      content: "";
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      background: #272294;
+      bottom: -3px;
+      right: 0;
+    }
+  }
+
   &__sm {
     max-width: 220px;
     word-break: break-word;

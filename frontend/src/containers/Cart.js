@@ -32,10 +32,10 @@ const Cart = () => {
 
                 acc = total;
 
-                return acc;
+                return Math.floor(acc);
             }, 0)
         } else {
-            return products.reduce((acc, p) => acc + p.quantity * p.price, 0);
+            return Math.floor(products.reduce((acc, p) => acc + p.quantity * p.price, 0));
         }
     };
 

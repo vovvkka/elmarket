@@ -26,7 +26,7 @@ const CartProduct = ({ p }) => {
             total = discountedTotal + (remainingItems * price);
         }
 
-        return total;
+        return Math.floor(total);
     }
 
     return (

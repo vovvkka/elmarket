@@ -242,7 +242,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                     <p className="modal__error">{getOrderFieldError("phone")}</p>
                 </div>
                 <div className="modal__input-block">
-                    <label>Адрес</label>
+                    <label>Адрес Доставки</label>
                     <input
                         type="text"
                         name="address"

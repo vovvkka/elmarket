@@ -167,7 +167,11 @@ const SingleProduct = ({match}) => {
                                     {
                                         user ?
                                             <>
-                                                {product.price - product.discount} сом
+                                                {Math.floor(
+                                                    product.price -
+                                                    (product.price / 100) *
+                                                    product.discount
+                                                )} сом
                                                 за {product.unit ? product.unit : 'шт.'}
                                             </> :
                                             <>

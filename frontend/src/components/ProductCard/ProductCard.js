@@ -42,25 +42,21 @@ const ProductCard = ({product}) => {
                 <div className="product-card__column">
                     <Link to={`/catalog/${product._id}`} className="clickable">
                         <div className="product-card__top">
-                            {
-                                user ? (
-                                    <div className="product-card__hits">
-                                        {product.isNovelty ? (
-                                            <p className="product-card__novelty">
-                                                Новинка
-                                            </p>
-                                        ) : null}
-                                        {product.isHit ? (
-                                            <p className="product-card__hit">Хит</p>
-                                        ) : null}
-                                        {product.discount ? (
-                                            <p className="product-card__discount">
-                                                -{product.discount}%
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                ) : null
-                            }
+                            <div className="product-card__hits">
+                                {product.isNovelty ? (
+                                    <p className="product-card__novelty">
+                                        Новинка
+                                    </p>
+                                ) : null}
+                                {product.isHit ? (
+                                    <p className="product-card__hit">Хит</p>
+                                ) : null}
+                                {product.discount && user ? (
+                                    <p className="product-card__discount">
+                                        -{product.discount}%
+                                    </p>
+                                ) : null}
+                            </div>
                             {product.rating && (
                                 <Rating
                                     initialRating={product.rating}
@@ -122,7 +118,7 @@ const ProductCard = ({product}) => {
                                                 )}{' '}
                                                 сом
                                                 <span className="product-card__discountForAmount">
-                                                    {product.amountForDiscount > 1 ? ` / ${product.amountForDiscount} ед.` : null}
+                                                    {product.amountForDiscount > 1 ? ` / ${product.amountForDiscount} ${product.unit}.` : null}
                                                 </span>
 
                                             </p>

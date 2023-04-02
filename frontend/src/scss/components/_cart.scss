@@ -36,6 +36,11 @@
         &:hover {
             cursor: pointer;
         }
+
+        &:disabled {
+            background: #ff8652;
+            cursor: default;
+        }
     }
 
     &__total {

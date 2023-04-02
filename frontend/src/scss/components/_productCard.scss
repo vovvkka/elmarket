@@ -68,23 +68,30 @@
 
     &__hits {
         height: 50px;
-    }
+        display: flex;
+        gap: 10px;
+        align-items: center;
 
-    &__novelty {
-        margin: 0 5px;
-        background: #f8ca5a;
-        display: inline-block;
-        padding: 10px 20px;
-        font-weight: 600;
-
-        @include media('<=tablet') {
-            font-size: 13px;
-            padding: 8px 15px;
+        @include media ('<tablet') {
+            gap: 5px;
         }
     }
 
+    &__novelty {
+        background: #f8ca5a;
+        display: inline-block;
+        padding: 10px;
+        font-weight: 600;
+
+        @include media('<=tablet') {
+            font-size: 10px;
+            padding: 8px 15px;
+        }
+
+
+    }
+
     &__hit {
-        margin: 0 5px;
         background: #8cc864;
         display: inline-block;
         padding: 10px 20px;
@@ -93,13 +100,12 @@
         text-transform: uppercase;
 
         @include media('<=tablet') {
-            font-size: 13px;
+            font-size: 10px;
             padding: 8px 15px;
         }
     }
 
     &__discount {
-        margin: 0 5px;
         background: #e11033;
         display: inline-block;
         padding: 10px 20px;
@@ -108,7 +114,7 @@
         text-transform: uppercase;
 
         @include media('<=tablet') {
-            font-size: 13px;
+            font-size: 10px;
             padding: 8px 15px;
         }
     }
@@ -245,5 +251,14 @@
         @include media('<=tablet') {
             margin: 0 10px;
         }
+    }
+
+    &__insert {
+        background: none;
+        border: none;
+        width: 100%;
+        max-width: 100%;
+        font-size: 27px;
+        text-align: center;
     }
 }

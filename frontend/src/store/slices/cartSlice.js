@@ -61,6 +61,15 @@ const cartSlice = createSlice({
                 )
             );
         },
+        insertQuantity(state, action) {
+            const itemInCart = state.products.find(
+                (item) => item._id === action.payload._id
+            );
+
+            if (itemInCart) {
+                itemInCart.quantity = action.payload.quantity;
+            }
+        },
         clearCart(state) {
             state.products = [];
             state.totalSum = null;
@@ -70,6 +79,6 @@ const cartSlice = createSlice({
     },
 });
 
-export const { addProduct, deleteProduct, clearCart } = cartSlice.actions;
+export const { addProduct, deleteProduct, clearCart, insertQuantity } = cartSlice.actions;
 
 export default cartSlice;

@@ -37,7 +37,7 @@ const HeaderMobile = ({ mainPage }) => {
                                     />
                                     {products.length ? (
                                         <div className="header__badge header__badge">
-                                            {products.reduce((acc, obj) => acc + obj.quantity, 0)}
+                                            {products.length}
                                         </div>
                                     ) : null}
                                 </Link>

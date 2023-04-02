@@ -1,14 +1,21 @@
 import React from 'react';
-import { addProduct, deleteProduct } from '../../store/slices/cartSlice';
+import {
+    addProduct,
+    deleteProduct,
+    insertQuantity,
+} from '../../store/slices/cartSlice';
 import { apiUrl } from '../../config';
-import {useDispatch, useSelector} from 'react-redux';
-import noPhoto from "../../assets/no-photo.png";
+import { useDispatch, useSelector } from 'react-redux';
+import noPhoto from '../../assets/no-photo.png';
+import { addNotification } from '../../store/actions/notifierActions';
+import { useMediaQuery } from 'react-responsive';
 
 const CartProduct = ({ p }) => {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.users.user);
+    const user = useSelector((state) => state.users.user);
     let imageUrl;
-    p.image[0] ? imageUrl = `${apiUrl}/${p.image[0]}` : imageUrl = noPhoto;
+    p.image[0] ? (imageUrl = `${apiUrl}/${p.image[0]}`) : (imageUrl = noPhoto);
+    const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
     const getTotalPrice = (p) => {
         const quantity = p.quantity;
@@ -20,51 +27,91 @@ const CartProduct = ({ p }) => {
 
         if (quantity >= discountThreshold) {
             const numDiscountedItems = Math.floor(quantity / discountThreshold);
-            const discountedPrice = price - (price * discountRate);
-            const discountedTotal = numDiscountedItems * discountThreshold * discountedPrice;
+            const discountedPrice = price - price * discountRate;
+            const discountedTotal =
+                numDiscountedItems * discountThreshold * discountedPrice;
             const remainingItems = quantity % discountThreshold;
-            total = discountedTotal + (remainingItems * price);
+            total = discountedTotal + remainingItems * price;
         }
 
         return Math.floor(total);
-    }
+    };
+
+    const handleInsert = (e) => {
+        const { value } = e.target;
+        const number = Number(value);
+        if (number) {
+            if (e.target.value > p.amount) {
+                dispatch(insertQuantity({ ...p, quantity: p.amount }));
+                dispatch(
+                    addNotification(
+                        `Вы можете добавить не более ${p.amount} единиц товара`,
+                        'warn'
+                    )
+                );
+            } else {
+                dispatch(insertQuantity({ ...p, quantity: number }));
+            }
+        }
+
+    };
 
     return (
         p && (
             <div className="cart__product">
-                <img className="cart__product-image" src={imageUrl} alt={p.title} />
+                <img
+                    className="cart__product-image"
+                    src={imageUrl}
+                    alt={p.title}
+                />
                 <h5 className="cart__product-title">{p.title}</h5>
                 <div className="cart__product-amount">
                     <div>
                         <div className="product-card__buttons">
-                            <button
-                                className="product-card__button"
-                                disabled={p.amount <= p.quantity}
-                                onClick={() =>
-                                    dispatch(addProduct({ ...p, quantity: 1 }))
-                                }
-                            >
-                                +
-                            </button>
-                            <span className="cart__product-span">{p.quantity}</span>
-                            <button
-                                className="product-card__button"
-                                onClick={() =>
-                                    dispatch(addProduct({ ...p, quantity: -1 }))
-                                }
-                            >
-                                -
-                            </button>
+                            {!isMobile && (
+                                <button
+                                    className="product-card__button"
+                                    disabled={p.amount <= p.quantity}
+                                    onClick={() =>
+                                        dispatch(
+                                            addProduct({ ...p, quantity: 1 })
+                                        )
+                                    }
+                                >
+                                    +
+                                </button>
+                            )}
+
+                            <input
+                                size=""
+                                className="product-card__insert"
+                                type="text"
+                                value={p.quantity}
+                                onChange={(e) => handleInsert(e)}
+                            />
+                            {!isMobile && (
+                                <button
+                                    className="product-card__button"
+                                    onClick={() =>
+                                        dispatch(
+                                            addProduct({ ...p, quantity: -1 })
+                                        )
+                                    }
+                                >
+                                    -
+                                </button>
+                            )}
                         </div>
                         <p>({p.unit ? p.unit : 'шт.'})</p>
                     </div>
                 </div>
-                <p className="cart__product-discount">{user && p.quantity >= p.amountForDiscount ? p.discount : 0}% / {p.amountForDiscount} ед.</p>
+                <p className="cart__product-discount">
+                    {user && p.quantity >= p.amountForDiscount ? p.discount : 0}
+                    % / {p.amountForDiscount} ед.
+                </p>
                 <p className="cart__product-price">{p.price} сом</p>
                 <p className="cart__product-total">
-                    {
-                        user ? getTotalPrice(p) : p.price * p.quantity
-                    } сом
+                    {user ? getTotalPrice(p) : p.price * p.quantity} сом
                 </p>
                 <div
                     className="cart__product-delete"

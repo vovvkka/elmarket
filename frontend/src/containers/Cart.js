@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import Modal from '../components/UI/Modal/Modal';
 import CartProduct from '../components/CartProduct/CartProduct';
@@ -9,8 +9,13 @@ const Cart = () => {
     const user = useSelector(state => state.users.user);
     const [show, setShow] = useState(false);
     const [order, setOrder] = useState(false);
+    const [validate, setValidate] = useState(false);
 
     const cartProduct = products?.map((p) => <CartProduct key={p._id} p={p}/>);
+
+    useEffect(() => {
+        setValidate(!!products.find(p => p.quantity < 1))
+    }, [products]);
 
     const getTotalPrice = () => {
         if (user) {
@@ -38,7 +43,6 @@ const Cart = () => {
             return Math.floor(products.reduce((acc, p) => acc + p.quantity * p.price, 0));
         }
     };
-
 
     return (
         <>
@@ -87,6 +91,7 @@ const Cart = () => {
                                         setShow(true);
                                         setOrder(true);
                                     }}
+                                    disabled={validate}
                                 >
                                     Оформить заказ
                                 </button>

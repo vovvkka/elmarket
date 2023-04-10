@@ -81,7 +81,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                             <td className="table__date">
                                 <p>{new Date(order?.dateTime).toLocaleString()} </p>
                                 <a
-                                    href={"http://localhost:3000/order-checkout/" + order._id}
+                                    href={"https://electromarket.kg/order-checkout/" + order._id}
                                     className="table__link"
                                     target="_blank"
                                     rel="noreferrer"

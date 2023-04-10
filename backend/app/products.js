@@ -160,7 +160,7 @@ router.get('/:id', async (req, res) => {
 router.get('/admin/:id', async (req, res) => {
     try {
         const product = await Product.findById({ _id: req.params.id }).select(
-            '_id category subCategory title description code price amount image isHit isNovelty discount unit'
+            '_id category subCategory title description code price amount image isHit isNovelty discount amountForDiscount unit'
         );
 
         if (product.subCategory) {
@@ -286,6 +286,7 @@ router.put(
                 isHit,
                 isNovelty,
                 discount,
+                amountForDiscount,
                 unit,
             } = req.body;
 
@@ -301,6 +302,7 @@ router.put(
                 isNovelty,
                 discount,
                 unit,
+                amountForDiscount,
                 image: null,
             };
 

@@ -50,7 +50,7 @@ const sendNotificationOfNewOrder = (id) => {
         html: `
                     <h3>ElectroMarket.kg</h3> 
                     <p>Только что был оформлен новый заказ, перейдите по ссылке, для того чтобы просмотреть детальную информацию: </p> 
-                    <a href="${process.env.CLIENT_URL}/order-checkout/${id}">${process.env.CLIENT_URL}/order-checkout/${id}</a> 
+                    <a href="${process.env.SERVER_URL}/order-checkout/${id}">${process.env.SERVER_URL}/order-checkout/${id}</a> 
                 `,
     };
 

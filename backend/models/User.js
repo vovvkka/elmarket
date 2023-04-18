@@ -26,7 +26,20 @@ const validatePasswordLength = password => {
 const UserSchema = new Schema({
     username: {
         type: String,
+        default: "",
+        validate: {
+            validator: validateUsernameLength,
+            message: "Максимальная длина символов - 50"
+        }
+    },
+    isIndividual: {
+        type: Boolean,
         required: true,
+        default: true,
+    },
+    companyDesc: {
+        type: String,
+        default: "",
         validate: {
             validator: validateUsernameLength,
             message: "Максимальная длина символов - 50"

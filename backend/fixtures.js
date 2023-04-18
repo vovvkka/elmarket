@@ -3,9 +3,6 @@ const {nanoid} = require('nanoid');
 const config = require('./config');
 
 const User = require('./models/User');
-const Product = require("./models/Product");
-const Category = require("./models/Category");
-const SubCategory = require("./models/SubCategory");
 const Contacts = require("./models/Contacts");
 const Visit = require("./models/Visit");
 
@@ -21,6 +18,7 @@ const run = async () => {
     await User.create({
         username: 'admin',
         displayName: 'Админ',
+        isIndividual: true,
         password: 'hf3eGYZNg',
         email: 'altynbek.electro@gmail.com',
         token: nanoid(),

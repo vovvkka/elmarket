@@ -22,12 +22,15 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         username: "",
         password: "",
         email: "",
+        isIndividual: true,
     });
 
     const [customer, setCustomer] = useState({
         customer: "",
         phone: "",
         address: "",
+        companyDesc: "",
+        isIndividual: true,
     });
 
     const [email, setEmail] = useState('');
@@ -42,6 +45,8 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     useEffect(() => {
         if (profile?.phone) setCustomer(prev => ({...prev, phone: profile.phone}));
         if (profile?.username) setCustomer(prev => ({...prev, customer: profile.username}));
+        if (profile?.companyDesc) setCustomer(prev => ({...prev, customer: profile.companyDesc}));
+        if (typeof profile?.isIndividual === "boolean") setCustomer(prev => ({...prev, isIndividual: profile.isIndividual}));
     }, [profile]);
 
     const onCloseModal = () => {
@@ -85,6 +90,11 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
     const inputUserChangeHandler = e => {
         const {name, value} = e.target;
         setUser(prev => ({...prev, [name]: value}));
+    };
+
+    const handleRadioChange = e => {
+        const isIndividual = e.target.value === "individual";
+        setUser((prevUser) => ({ ...prevUser, isIndividual }));
     };
 
     const inputCustomerChangeHandler = e => {
@@ -168,16 +178,41 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
 
         children = (
             <div className="modal__body">
+                <div className="modal__choose-type">
+                    <label>
+                        <input
+                            type="radio"
+                            name="isIndividual"
+                            value="individual"
+                            className="modal__choose-radio"
+                            onChange={handleRadioChange}
+                            checked={user.isIndividual}
+                        />
+                        Физ. лицо
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="isIndividual"
+                            value="company"
+                            className="modal__choose-radio"
+                            onChange={handleRadioChange}
+                            checked={!user.isIndividual}
+                        />
+                        Юр. лицо
+                    </label>
+                </div>
                 <div className="modal__input-block">
-                    <label>ФИО</label>
+                    <label>{user.isIndividual ? "ФИО" : "Информация о компании"}</label>
                     <input
-                        name="username"
+                        name={user.isIndividual? "username" : "companyDesc"}
                         autoComplete="off"
                         className="modal__input"
-                        value={user?.username}
+                        value={user.isIndividual? user?.username : user?.companyDesc}
                         onChange={inputUserChangeHandler}
                     />
-                    <p className="modal__error">{getRegisterFieldError("username")}</p>
+                    <p className="modal__error">{getRegisterFieldError(user.isIndividual? "username" : "companyDesc")}</p>
                 </div>
 
                 <div className="modal__input-block">
@@ -215,7 +250,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         children = (
             <div className="modal__body">
                 <div className="modal__input-block">
-                    <label>ФИО</label>
+                    <label>{customer.isIndividual? "ФИО" : "Информация о компании"}</label>
                     <input
                         type="text"
                         name="customer"

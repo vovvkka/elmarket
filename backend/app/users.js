@@ -36,6 +36,8 @@ router.get('/', auth, async (req, res) => {
         const user = await User.findOne(req.user);
         const {
             username,
+            companyDesc,
+            isIndividual,
             email,
             isActivated,
             phone,
@@ -46,8 +48,12 @@ router.get('/', auth, async (req, res) => {
             flat,
         } = user;
 
+        console.log(user);
+
         res.send({
-            username,
+            username: username || "",
+            companyDesc: companyDesc || "",
+            isIndividual,
             email,
             isActivated,
             phone,
@@ -63,10 +69,21 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {password, email, username} = req.body;
+    const {password, email, username, isIndividual, companyDesc} = req.body;
 
     try {
-        let userData = {password, email, username, activationLink: nanoid(30)};
+        let userData = {
+            password,
+            email,
+            isIndividual,
+            activationLink: nanoid(30)
+        };
+
+        if (Boolean(isIndividual) === true) {
+            userData.username = username;
+        } else {
+            userData.companyDesc = companyDesc;
+        }
 
         const user = new User(userData);
 

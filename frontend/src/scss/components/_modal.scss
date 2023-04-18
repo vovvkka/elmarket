@@ -124,6 +124,34 @@
             cursor: pointer;
         }
     }
+
+    &__choose-type {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 15px;
+
+        label {
+            display: flex;
+            align-items: center;
+            margin-right: 30px;
+            font-size: 14px;
+            letter-spacing: 0.6px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            input {
+                margin-right: 5px;
+
+                &:checked {
+                    border-color: #0074d9; /* новый цвет границы */
+                    background-color: #c02a35;
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: 800px) {

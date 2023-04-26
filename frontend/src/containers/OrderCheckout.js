@@ -63,6 +63,9 @@ const OrderCheckout = () => {
                         <td>БИК 128016 ИНН № 22704198201352</td>
                     </tr>
                     <tr>
+                        <td><b>Реквизиты:</b> {order?.payment === "Optima" ? "Optima Bank 4169585340501575" : "МБанк | Элсом | О!Деньги +996(709)403-955"}</td>
+                    </tr>
+                    <tr>
                         <td><b>Кому:</b> {order?.customer}</td>
                     </tr>
                     <tr>

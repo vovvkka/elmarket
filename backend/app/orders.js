@@ -61,7 +61,7 @@ router.get('/', auth, permit('admin'), async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { userId, customer, phone, order, address } = req.body;
+        const { userId, customer, phone, order, address, payment } = req.body;
 
         order.map(async i => {
             const product = await Product.findById(i.product);
@@ -86,6 +86,7 @@ router.post('/', async (req, res) => {
             customer,
             phone,
             address,
+            payment,
             order: orderWithPrice,
         };
 

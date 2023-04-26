@@ -50,6 +50,11 @@ const OrderSchema = new Schema({
             message: "Неккоректный номер телефона"
         }
     },
+    payment: {
+        type: String,
+        required: true,
+        default: "Optima",
+    },
     address: String,
     order: [ProductsSchema],
     status: {

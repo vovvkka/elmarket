@@ -31,6 +31,7 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
         address: "",
         companyDesc: "",
         isIndividual: true,
+        payment: "Optima",
     });
 
     const [email, setEmail] = useState('');
@@ -287,6 +288,34 @@ const Modal = ({show, closed, login, register, forgot, order, changeModal}) => {
                         onChange={inputCustomerChangeHandler}
                     />
                     <p className="modal__error">{getOrderFieldError("address")}</p>
+                </div>
+                <div className="modal__input-block">
+                    <label>Тип оплаты</label>
+                    <label className="modal__payment-label">
+                        <input
+                            type="radio"
+                            name="payment"
+                            autoComplete="off"
+                            className="modal__input"
+                            value="Optima"
+                            onChange={inputCustomerChangeHandler}
+                            checked={customer?.payment === "Optima"}
+                        />
+                        Оптима Банк
+                    </label>
+                    <label className="modal__payment-label">
+                        <input
+                            type="radio"
+                            name="payment"
+                            autoComplete="off"
+                            className="modal__input"
+                            value="MBank"
+                            onChange={inputCustomerChangeHandler}
+                            checked={customer?.payment === "MBank"}
+                        />
+                        О!Деньги | МБанк | Элсом
+                    </label>
+
                 </div>
             </div>
         )

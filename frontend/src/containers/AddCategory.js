@@ -54,16 +54,11 @@ const AddCategory = ({ match }) => {
 
     const submitFormHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-
-        Object.keys(categoryData).forEach((key) => {
-            formData.append(key, categoryData[key]);
-        });
 
         if (!!match.params.id) {
-            dispatch(editCategory(match.params.id, formData));
+            dispatch(editCategory(match.params.id, categoryData));
         } else {
-            dispatch(createCategory(formData));
+            dispatch(createCategory(categoryData));
         }
     };
 
@@ -83,13 +78,6 @@ const AddCategory = ({ match }) => {
         const { name } = e.target;
 
         setCategoryData((p) => ({ ...p, [name]: !categoryData[name] }));
-    };
-
-    const fileChangeHandler = (e) => {
-        const name = e.target.name;
-        const file = e.target.files[0];
-
-        setCategoryData((prevState) => ({ ...prevState, [name]: file }));
     };
 
     return (
@@ -120,24 +108,6 @@ const AddCategory = ({ match }) => {
                             required
                         />
                     </div>
-                    {(categoryData.parentCategory === 'Без категории' ||
-                        !categoryData.parentCategory) && (
-                        <div className="category-form__row">
-                            <label>Фото</label>
-
-                            <label className="custom-file-upload">
-                                <input
-                                    type="file"
-                                    name="image"
-                                    className="custom-file-input"
-                                    onChange={fileChangeHandler}
-                                />
-                                {categoryData.image
-                                    ? 'Файл выбран'
-                                    : 'Выберите файл'}
-                            </label>
-                        </div>
-                    )}
                     <div className="category-form__check">
                         <label>Популярный раздел</label>
                         <input

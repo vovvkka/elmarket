@@ -85,7 +85,8 @@ const ProductSchema = new Schema({
     unit: {
         type: String,
         required: true,
-        enum: ['шт.', 'уп.', 'килограмм', 'метр']
+        enum: ['шт.', 'уп.', 'килограмм', 'метр'],
+        default: 'шт.',
     },
     rating: [RatingSchema],
 }, {

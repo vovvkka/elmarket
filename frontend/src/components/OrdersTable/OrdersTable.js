@@ -29,6 +29,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
         return total;
     }
 
+    console.log(orders)
 
     return (
         <div className="table table__orders">
@@ -79,7 +80,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                                 {order?.status}
                             </td>
                             <td className="table__date">
-                                <p>{new Date(order?.dateTime).toLocaleString()} </p>
+                                <p>{order?.dateTime} </p>
                                 <a
                                     href={"https://electromarket.kg/order-checkout/" + order._id}
                                     className="table__link"

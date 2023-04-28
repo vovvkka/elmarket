@@ -48,8 +48,6 @@ router.get('/', auth, async (req, res) => {
             flat,
         } = user;
 
-        console.log(user);
-
         res.send({
             username: username || "",
             companyDesc: companyDesc || "",

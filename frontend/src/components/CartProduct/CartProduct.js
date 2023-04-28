@@ -40,7 +40,7 @@ const CartProduct = ({ p }) => {
     const handleInsert = (e) => {
         const { value } = e.target;
         const number = Number(value);
-        if (number) {
+        if (number || number === 0) {
             if (e.target.value > p.amount) {
                 dispatch(insertQuantity({ ...p, quantity: p.amount }));
                 dispatch(
@@ -50,10 +50,13 @@ const CartProduct = ({ p }) => {
                     )
                 );
             } else {
-                dispatch(insertQuantity({ ...p, quantity: number }));
+                if (number === 0) {
+                    dispatch(insertQuantity({ ...p, quantity: '' }));
+                } else {
+                    dispatch(insertQuantity({ ...p, quantity: number }));
+                }
             }
         }
-
     };
 
     return (

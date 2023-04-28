@@ -21,11 +21,12 @@
   }
 
   &__wrapper {
-
     overflow-x: auto;
   }
 
   &__products-table {
+    width: 100%;
+    margin: 0 auto;
     border: 1px solid black;
     border-collapse: collapse;
 

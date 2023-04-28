@@ -64,9 +64,9 @@ const OrderSchema = new Schema({
         enum: ['Новый', 'Закрыт'],
     },
     dateTime: {
-        type: Date,
+        type: String,
         required: true,
-        default: new Date(),
+        default: new Date().toLocaleString(),
     }
 });
 

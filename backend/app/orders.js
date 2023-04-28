@@ -77,7 +77,7 @@ router.post('/', async (req, res) => {
                     price = Math.floor(
                         item.price - (item.price / 100) * item.discount
                     );
-                return { ...i, price };
+                return { ...i, price, discount: item.discount, initialPrice: item.price };
             })
         );
 
@@ -88,8 +88,8 @@ router.post('/', async (req, res) => {
             address,
             payment,
             order: orderWithPrice,
+            dateTime: new Date().toLocaleString(),
         };
-
 
         const newOrder = new Order(orderData);
         await newOrder.save();

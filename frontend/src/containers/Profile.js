@@ -18,8 +18,6 @@ const Profile = () => {
     const PLoading = useSelector(state => state.users.loading);
     const [isAdmin, setIsAdmin] = useState(false);
 
-    console.log(orders);
-
     useEffect(() => {
         if (location.pathname !== "/admin/settings") {
             dispatch(fetchUserOrders());

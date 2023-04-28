@@ -1,8 +1,8 @@
-import React, {useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {Splide, SplideSlide} from '@splidejs/react-splide';
-import {apiUrl} from '../config';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { apiUrl } from '../config';
 import Rating from 'react-rating';
 import star from '../assets/svg/star.svg';
 import noPhoto from '../assets/no-photo.png';
@@ -10,15 +10,16 @@ import fullStar from '../assets/svg/fullStar.svg';
 import productCart from '../assets/svg/product-cart.svg';
 import delivery from '../assets/svg/delivery.svg';
 import ProductCard from '../components/ProductCard/ProductCard';
-import {fetchOne} from '../store/actions/productsActions';
-import {fetchHistory, sendHistory} from '../store/actions/watchListActions';
-import {clearProducts} from '../store/slices/productsSlice';
+import { fetchOne } from '../store/actions/productsActions';
+import { fetchHistory, sendHistory } from '../store/actions/watchListActions';
+import { clearProducts } from '../store/slices/productsSlice';
 import '@splidejs/react-splide/css';
 import Spinner from '../components/UI/Spinner/Spinner';
-import {addProduct} from '../store/slices/cartSlice';
-import {toast} from "react-toastify";
+import { addProduct } from '../store/slices/cartSlice';
+import { toast } from 'react-toastify';
+import { addNotification } from '../store/actions/notifierActions';
 
-const SingleProduct = ({match}) => {
+const SingleProduct = ({ match }) => {
     const dispatch = useDispatch();
     const product = useSelector((state) => state.products.product);
     const loading = useSelector((state) => state.products.loading);
@@ -27,6 +28,9 @@ const SingleProduct = ({match}) => {
     const history = useSelector((state) => state.watchList.history);
     const mainRef = useRef(null);
     const thumbsRef = useRef(null);
+    const [quantity, setQuantity] = useState(1);
+    const { products } = useSelector((state) => state.cart);
+    const productInCart = products?.find((p) => p._id === product?._id);
 
     useEffect(() => {
         if (mainRef.current && thumbsRef.current && thumbsRef.current.splide) {
@@ -52,11 +56,56 @@ const SingleProduct = ({match}) => {
             dispatch(
                 addProduct({
                     ...product,
-                    quantity: 1,
+                    quantity,
                 })
             );
 
-            toast.success('Товар успешно добавлен в корзину!', {position: "bottom-right", theme: "dark"});
+            toast.success('Товар успешно добавлен в корзину!', {
+                position: 'bottom-right',
+                theme: 'dark',
+            });
+        }
+    };
+
+    const addQuantity = () => {
+        if (!user || user.role !== 'admin') {
+            if (quantity < product.amount) {
+                setQuantity((prev) => prev + 1);
+            }
+        }
+    };
+
+    const handleInsert = (e) => {
+        const { value } = e.target;
+        const number = Number(value);
+        if (number || number === 0) {
+            if (productInCart?.quantity) {
+                if (e.target.value > (product.amount - productInCart?.quantity)) {
+                    dispatch(
+                        addNotification(
+                            `Вы можете добавить не более ${
+                                product.amount - productInCart?.quantity
+                            } единиц товара`,
+                            'warn'
+                        )
+                    );
+                    setQuantity(product.amount - productInCart?.quantity);
+                } else {
+                    if (number === 0) {
+                        setQuantity('');
+                    } else {
+                        setQuantity(number);
+                    }
+                }
+            } else {
+                dispatch(
+                    addNotification(
+                        `Вы можете добавить не более ${product.amount} единиц товара`,
+                        'warn'
+                    )
+                );
+                setQuantity(product.amount);
+            }
         }
     };
 
@@ -97,7 +146,7 @@ const SingleProduct = ({match}) => {
     };
 
     if (loading) {
-        return <Spinner/>;
+        return <Spinner />;
     }
 
     return (
@@ -164,21 +213,26 @@ const SingleProduct = ({match}) => {
                             <h2 className="product__title">{product.title}</h2>
                             <div className="product__upper-block">
                                 <span className="product__price">
-                                    {
-                                        user ?
-                                            <>
-                                                {Math.floor(
-                                                    product.price -
+                                    {user ? (
+                                        <>
+                                            {Math.floor(
+                                                product.price -
                                                     (product.price / 100) *
-                                                    product.discount
-                                                )} сом
-                                                за {product.unit ? product.unit : 'шт.'}
-                                            </> :
-                                            <>
-                                                {product.price} сом за {product.unit ? product.unit : 'шт.'}
-                                            </>
-                                    }
-
+                                                        product.discount
+                                            )}{' '}
+                                            сом за{' '}
+                                            {product.unit
+                                                ? product.unit
+                                                : 'шт.'}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {product.price} сом за{' '}
+                                            {product.unit
+                                                ? product.unit
+                                                : 'шт.'}
+                                        </>
+                                    )}
                                 </span>
                                 {product.rating ? (
                                     <>
@@ -227,13 +281,53 @@ const SingleProduct = ({match}) => {
                                     : ' в наличии нет'}
                             </span>
                             <div className="product-card__cart product-card__cart--single">
-                                <div>
+                                <div style={{ display: 'flex' }}>
+                                    <div
+                                        className={`product-card__buttons ${
+                                            product.amount <= 0 ||
+                                            productInCart?.quantity >=
+                                                productInCart?.amount
+                                                ? 'product-card__buttons--disabled'
+                                                : ''
+                                        }`}
+                                        style={{ width: '200px' }}
+                                    >
+                                        <button
+                                            className="product-card__button"
+                                            onClick={addQuantity}
+                                        >
+                                            +
+                                        </button>
+                                        <input
+                                            size=""
+                                            className="product-card__insert"
+                                            type="text"
+                                            value={quantity}
+                                            onChange={(e) => handleInsert(e)}
+                                        />
+                                        <button
+                                            className="product-card__button"
+                                            onClick={() => {
+                                                if (quantity > 1)
+                                                    setQuantity(
+                                                        (prev) => prev - 1
+                                                    );
+                                            }}
+                                        >
+                                            -
+                                        </button>
+                                    </div>
                                     <button
                                         className="product-card__add"
                                         onClick={handleAdd}
+                                        disabled={
+                                            product.amount <= 0 ||
+                                            productInCart?.quantity >=
+                                                productInCart?.amount
+                                        }
                                     >
                                         В корзину
-                                        <img src={productCart} alt=""/>
+                                        <img src={productCart} alt="" />
                                     </button>
                                 </div>
                             </div>
@@ -242,10 +336,13 @@ const SingleProduct = ({match}) => {
                             </p>
                             <div className="product__subinfo">
                                 <p>Кратность товара: {product.amount}</p>
-                                <p>Единица измерения: {product.unit ? product.unit : 'шт.'}</p>
+                                <p>
+                                    Единица измерения:{' '}
+                                    {product.unit ? product.unit : 'шт.'}
+                                </p>
                             </div>
                             <div className="product__delivery">
-                                <img src={delivery} alt="Доставка" width={40}/>
+                                <img src={delivery} alt="Доставка" width={40} />
                                 <span>Доставка курьером</span>
                             </div>
                             <p className="product__subtitle">Описание</p>

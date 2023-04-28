@@ -123,12 +123,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post(
-    '/',
-    auth,
-    permit('admin'),
-    upload.single('image'),
-    async (req, res) => {
+router.post('/', auth, permit('admin'), async (req, res) => {
         try {
             const { title, parentCategory, isPopular } = req.body;
 
@@ -145,10 +140,6 @@ router.post(
 
                 return res.send(categoryData);
             } else {
-                if (req.file) {
-                    categoryData.image = 'uploads/' + req.file.filename;
-                }
-
                 const newCategory = new Category(categoryData);
                 await newCategory.save();
 

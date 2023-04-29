@@ -66,8 +66,10 @@ const OrderSchema = new Schema({
     dateTime: {
         type: String,
         required: true,
-        default: new Date().toLocaleString(),
+        default: new Date().toISOString(),
     }
+}, {
+    timestamps: true,
 });
 
 const Order = mongoose.model('Order', OrderSchema);

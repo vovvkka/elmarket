@@ -2,10 +2,8 @@ import React from 'react';
 import deleteIcon from '../../assets/svg/delete.svg';
 import archive from '../../assets/archiveIcon.png';
 import {useDispatch} from 'react-redux';
-import {
-    changeOrderStatus,
-    deleteOrder,
-} from '../../store/actions/ordersActions';
+import {changeOrderStatus, deleteOrder,} from '../../store/actions/ordersActions';
+import moment from "moment";
 
 const OrdersTable = ({orders, isArchive, userTable}) => {
     const dispatch = useDispatch();
@@ -29,7 +27,10 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
         return total;
     }
 
-    console.log(orders)
+    const utcToLocalTime = (dateString) => {
+        const stillUtc = moment.utc(dateString).toDate();
+        return moment(stillUtc).local().format('DD.MM.YYYY HH:mm:ss');
+    }
 
     return (
         <div className="table table__orders">
@@ -80,7 +81,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                                 {order?.status}
                             </td>
                             <td className="table__date">
-                                <p>{order?.dateTime} </p>
+                                <p>{utcToLocalTime(order?.createdAt)} </p>
                                 <a
                                     href={"https://electromarket.kg/order-checkout/" + order._id}
                                     className="table__link"

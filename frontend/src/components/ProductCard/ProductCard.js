@@ -40,7 +40,7 @@ const ProductCard = ({ product }) => {
     const { value } = e.target;
     const number = Number(value);
     if (number || number === 0) {
-      if (productInCart?.quantity) {
+      // if (productInCart?.quantity) {
         if (e.target.value > (product.amount - productInCart?.quantity)) {
           dispatch(
               addNotification(
@@ -58,15 +58,15 @@ const ProductCard = ({ product }) => {
             setQuantity(number);
           }
         }
-      } else {
-        dispatch(
-            addNotification(
-                `Вы можете добавить не более ${product.amount} единиц товара`,
-                'warn'
-            )
-        );
-        setQuantity(product.amount);
-      }
+      // } else {
+      //   dispatch(
+      //       addNotification(
+      //           `Вы можете добавить не более ${product.amount} единиц товара`,
+      //           'warn'
+      //       )
+      //   );
+      //   setQuantity(product.amount);
+      // }
     }
   };
 

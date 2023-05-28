@@ -9,22 +9,27 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
     const dispatch = useDispatch();
 
     const getTotalPrice = (order) => {
-        const quantity = order.quantity;
-        const price = order.product.price;
-        const discountThreshold = order.product.amountForDiscount;
-        const discountRate = order.product.discount / 100;
+        if (order.product) {
+            const quantity = order.quantity;
+            const price = order.product.price;
+            const discountThreshold = order.product.amountForDiscount;
+            const discountRate = order.product.discount / 100;
 
-        let total = quantity * price;
+            let total = quantity * price;
 
-        if (quantity >= discountThreshold) {
-            const numDiscountedItems = Math.floor(quantity / discountThreshold);
-            const discountedPrice = price - (price * discountRate);
-            const discountedTotal = numDiscountedItems * discountThreshold * discountedPrice;
-            const remainingItems = quantity % discountThreshold;
-            total = discountedTotal + (remainingItems * price);
+            if (quantity >= discountThreshold) {
+                const numDiscountedItems = Math.floor(quantity / discountThreshold);
+                const discountedPrice = price - (price * discountRate);
+                const discountedTotal = numDiscountedItems * discountThreshold * discountedPrice;
+                const remainingItems = quantity % discountThreshold;
+                total = discountedTotal + (remainingItems * price);
+            }
+
+            return total;
+        } else {
+            return 0;
         }
 
-        return total;
     }
 
     const utcToLocalTime = (dateString) => {
@@ -54,7 +59,7 @@ const OrdersTable = ({orders, isArchive, userTable}) => {
                         ? classes.push('table__red')
                         : classes.push('table__green');
 
-                    return (
+                    return !order.order.every(product => product) ? null : (
                         <tr key={order?._id}>
                             <td className="table__sm">{order?.customer}</td>
                             <td className="table__s">{order?.phone}</td>

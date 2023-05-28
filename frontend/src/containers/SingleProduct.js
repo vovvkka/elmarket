@@ -79,7 +79,7 @@ const SingleProduct = ({ match }) => {
         const { value } = e.target;
         const number = Number(value);
         if (number || number === 0) {
-            if (productInCart?.quantity) {
+            // if (productInCart?.quantity) {
                 if (e.target.value > (product.amount - productInCart?.quantity)) {
                     dispatch(
                         addNotification(
@@ -97,15 +97,16 @@ const SingleProduct = ({ match }) => {
                         setQuantity(number);
                     }
                 }
-            } else {
-                dispatch(
-                    addNotification(
-                        `Вы можете добавить не более ${product.amount} единиц товара`,
-                        'warn'
-                    )
-                );
-                setQuantity(product.amount);
-            }
+            // } else {
+            //     console.log('here');
+            //     dispatch(
+            //         addNotification(
+            //             `Вы можете добавить не более ${product.amount} единиц товара`,
+            //             'warn'
+            //         )
+            //     );
+            //     setQuantity(product.amount);
+            // }
         }
     };
 
